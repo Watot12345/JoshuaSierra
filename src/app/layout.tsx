@@ -14,36 +14,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Joshua Sierra — Senior Full-Stack Engineer & UI Architect",
+  title: "Joshua Sierra — Full-Stack Software Engineer",
   description:
-    "Award-winning portfolio of Joshua Sierra, a Senior Full-Stack Engineer crafting immersive digital experiences where engineering meets art. 8+ years building scalable, performant web applications.",
+    "Portfolio of Joshua Sierra, a Full-Stack Software Engineer based in Manila, Philippines. Built a live government health platform (civentral.tech) serving 1,000+ citizens. Open for freelance & full-time opportunities.",
   keywords: [
     "Joshua Sierra",
     "Full-Stack Engineer",
-    "Frontend Architect",
-    "React",
+    "React Developer",
     "Next.js",
     "TypeScript",
-    "WebGL",
-    "UI Engineering",
+    "React Native",
+    "PHP Developer",
+    "Manila Philippines",
     "Portfolio",
+    "Civentral",
+    "Government Web App",
   ],
   authors: [{ name: "Joshua Sierra" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Joshua Sierra — Senior Full-Stack Engineer & UI Architect",
+    title: "Joshua Sierra — Full-Stack Software Engineer",
     description:
-      "Award-winning portfolio. Immersive digital experiences where engineering meets art.",
-    url: "https://joshuasierra.dev",
-    siteName: "Joshua Sierra",
+      "Built a live government health platform serving 1,000+ citizens while still in college. Open to freelance & partnerships.",
+    url: "https://civentral.tech",
+    siteName: "Joshua Sierra Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joshua Sierra — Senior Full-Stack Engineer",
-    description: "Award-winning portfolio. Immersive digital experiences.",
+    title: "Joshua Sierra — Full-Stack Software Engineer",
+    description: "Built a live government health platform serving 1,000+ citizens while still in college.",
   },
 };
 
