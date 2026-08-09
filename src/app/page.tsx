@@ -1,5 +1,6 @@
 import { LoadingScreen } from "@/components/layouts/loading-screen";
 import { ScrollProgress } from "@/components/layouts/scroll-progress";
+import { CustomCursor } from "@/components/layouts/custom-cursor";
 import { Navbar } from "@/components/layouts/navbar";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { Footer } from "@/components/layouts/footer";
@@ -8,6 +9,7 @@ import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Skills } from "@/components/sections/skills";
 import { TechStack } from "@/components/sections/tech-stack";
+import { GithubContributions } from "@/components/sections/github-contributions";
 import { Services } from "@/components/sections/services";
 import { Experience } from "@/components/sections/experience";
 import { Education } from "@/components/sections/education";
@@ -18,17 +20,14 @@ import { Contact } from "@/components/sections/contact";
 
 /**
  * Portfolio home — a single-page, award-winning-style portfolio for
- * Adrian Mercer (Senior Full-Stack Engineer & UI Architect).
- *
- * Layout uses min-h-screen flex flex-col with mt-auto on the footer so the
- * footer sticks to the viewport bottom on short pages and is pushed down
- * naturally when content overflows.
+ * Joshua Sierra (Junior Full-Stack Software Engineer).
  */
 export default function Home() {
   return (
     <>
       <LoadingScreen />
       <ScrollProgress />
+      <CustomCursor />
       <AnimatedBackground />
 
       <div className="relative flex min-h-screen flex-col">
@@ -39,6 +38,7 @@ export default function Home() {
           <About />
           <Skills />
           <TechStack />
+          <GithubContributions />
           <Services />
           <Experience />
           <Education />

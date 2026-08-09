@@ -75,7 +75,7 @@ export function Navbar() {
                   "linear-gradient(135deg, rgba(220,38,38,0.2), rgba(18,18,18,0.6))",
               }}
             >
-              <span className="text-gradient-fire">AM</span>
+              <span className="text-gradient-fire">JS</span>
             </div>
             <span className="hidden text-sm font-semibold tracking-wide sm:block">
               {profile.fullName}
