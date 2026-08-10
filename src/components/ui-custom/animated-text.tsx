@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
+import { cn } from "@/lib/utils";
+
 interface AnimatedTextProps {
   text: string;
   className?: string;
@@ -25,14 +27,19 @@ export function AnimatedText({
   const words = text.split(" ");
 
   return (
-    <span className={className} style={{ display: "inline-block" }}>
+    <span
+      className={cn(
+        "inline-flex flex-wrap items-center justify-center text-center lg:justify-start lg:text-left",
+        className
+      )}
+    >
       {words.map((word, index) => (
         <span
           key={`${word}-${index}`}
-          style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top" }}
+          className="inline-block overflow-hidden align-top"
         >
           <motion.span
-            style={{ display: "inline-block" }}
+            className="inline-block"
             initial={{ y: "100%" }}
             whileInView={{ y: 0 }}
             viewport={{ once }}

@@ -29,6 +29,10 @@ export function MagneticButton({
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>): void => {
+    // Disable magnetic offset calculations on touch screen devices
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -48,22 +52,33 @@ export function MagneticButton({
       onMouseLeave={handleMouseLeave}
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className={cn("inline-block", className)}
+      className={cn("w-full h-full", className)}
     >
       {children}
     </motion.div>
   );
 
   if (href) {
+    const isInternal = href.startsWith("#");
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" download={download}>
+      <a
+        href={href}
+        target={isInternal ? undefined : "_blank"}
+        rel={isInternal ? undefined : "noopener noreferrer"}
+        download={download}
+        className={cn("inline-block w-full sm:w-auto text-center", className)}
+      >
         {content}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className="inline-block">
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn("inline-block w-full sm:w-auto text-center", className)}
+    >
       {content}
     </button>
   );

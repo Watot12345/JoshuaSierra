@@ -44,7 +44,7 @@ export function Experience() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6 }}
-                  className={`relative pl-12 md:w-1/2 md:pl-0 ${
+                  className={`relative pl-8 sm:pl-12 md:w-1/2 md:pl-0 ${
                     isLeft
                       ? "md:pr-12 md:text-right"
                       : "md:ml-auto md:pl-12"
@@ -62,7 +62,7 @@ export function Experience() {
                   </div>
 
                   {/* Card */}
-                  <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300 hover:border-crimson/30">
+                  <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 transition-colors duration-300 hover:border-crimson/30">
                     {/* Header */}
                     <div
                       className={`flex flex-wrap items-center gap-2 text-xs text-muted-foreground ${

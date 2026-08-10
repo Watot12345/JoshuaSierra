@@ -16,6 +16,7 @@ import {
 import { projects } from "@/data/portfolio";
 import type { Project } from "@/types/portfolio";
 import { SectionHeading } from "@/components/ui-custom/section-heading";
+import { MobileBottomSheet } from "@/components/ui-custom/mobile-bottom-sheet";
 import { cn } from "@/lib/utils";
 
 /**
@@ -123,7 +124,7 @@ export function Projects() {
                   ) : null}
 
                   {/* Quick links */}
-                  <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute bottom-4 right-4 flex gap-2 opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100">
                     <a
                       href={project.githubUrl}
                       target="_blank"
@@ -183,17 +184,35 @@ export function Projects() {
         </motion.div>
       </div>
 
-      {/* Details modal */}
-      <ProjectDetailsModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Desktop details modal */}
+      <div className="hidden md:block">
+        <ProjectDetailsModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      </div>
+
+      {/* Native mobile drag-to-dismiss bottom sheet */}
+      <div className="md:hidden">
+        <MobileBottomSheet
+          open={Boolean(selectedProject)}
+          onOpenChange={(open) => {
+            if (!open) setSelectedProject(null);
+          }}
+          title={selectedProject?.title}
+          category={selectedProject?.category}
+        >
+          {selectedProject ? (
+            <ProjectDetailsContent project={selectedProject} />
+          ) : null}
+        </MobileBottomSheet>
+      </div>
     </section>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Project Details Modal
+// Project Details Modal & Content
 // ---------------------------------------------------------------------------
 interface ProjectDetailsModalProps {
   project: Project | null;
@@ -205,7 +224,7 @@ function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
     <AnimatePresence>
       {project ? (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -222,13 +241,13 @@ function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="glass-strong relative z-10 max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10"
+            className="glass-strong relative z-10 max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10"
           >
             {/* Close button */}
             <button
               type="button"
               onClick={onClose}
-              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 text-white backdrop-blur transition-colors hover:bg-crimson"
+              className="sticky right-4 top-4 z-30 float-right m-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/70 text-white backdrop-blur transition-colors hover:bg-crimson"
               aria-label="Close project details"
             >
               <X className="h-5 w-5" />
@@ -258,145 +277,150 @@ function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
               </div>
             </div>
 
-            {/* Body */}
-            <div className="p-6 sm:p-8">
-              {/* Meta grid */}
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <MetaItem icon={Calendar} label="Year" value={String(project.year)} />
-                <MetaItem icon={User} label="Role" value={project.role} />
-                <MetaItem icon={Clock} label="Duration" value={project.duration} />
-                <MetaItem icon={Folder} label="Category" value={project.category} />
-              </div>
-
-              {/* Description */}
-              <section className="mt-8">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  Overview
-                </h3>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  {project.fullDescription}
-                </p>
-              </section>
-
-              {/* Features */}
-              <section className="mt-8">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  Key Features
-                </h3>
-                <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                  {project.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-sm text-muted-foreground"
-                    >
-                      <span
-                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ backgroundColor: "#dc2626" }}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-              {/* Challenges */}
-              <section className="mt-8">
-                <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  <Target className="h-4 w-4" style={{ color: "#dc2626" }} />
-                  The Challenge
-                </h3>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  {project.challenges}
-                </p>
-              </section>
-
-              {/* Results */}
-              <section className="mt-8">
-                <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  <TrendingUp className="h-4 w-4" style={{ color: "#dc2626" }} />
-                  Results & Impact
-                </h3>
-                <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                  {project.results.map((result) => (
-                    <li
-                      key={result}
-                      className="flex items-start gap-2.5 rounded-xl border border-crimson/20 p-3 text-sm text-white"
-                      style={{
-                        backgroundColor: "rgba(220,38,38,0.06)",
-                        borderColor: "rgba(220,38,38,0.2)",
-                      }}
-                    >
-                      <TrendingUp className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#dc2626" }} />
-                      {result}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-              {/* Tech stack */}
-              <section className="mt-8">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  Tech Stack
-                </h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </section>
-
-              {/* Gallery */}
-              <section className="mt-8">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  Gallery
-                </h3>
-                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {project.gallery.map((img, i) => (
-                    <img
-                      key={i}
-                      src={img}
-                      alt={`${project.title} screenshot ${i + 1}`}
-                      className="aspect-video w-full rounded-xl border border-white/10 object-cover"
-                    />
-                  ))}
-                </div>
-              </section>
-
-              {/* Actions */}
-              <div className="mt-8 flex flex-wrap gap-3 border-t border-white/10 pt-6">
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-                >
-                  <Github className="h-4 w-4" />
-                  View Code
-                </a>
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105"
-                  style={{
-                    background: "linear-gradient(135deg, #dc2626, #991b1b)",
-                    boxShadow: "0 8px 25px -5px rgba(220,38,38,0.5)",
-                  }}
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  Live Demo
-                </a>
-              </div>
-            </div>
+            <ProjectDetailsContent project={project} />
           </motion.div>
         </motion.div>
       ) : null}
     </AnimatePresence>
+  );
+}
+
+function ProjectDetailsContent({ project }: { project: Project }) {
+  return (
+    <div className="p-1 sm:p-4">
+      {/* Meta grid */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <MetaItem icon={Calendar} label="Year" value={String(project.year)} />
+        <MetaItem icon={User} label="Role" value={project.role} />
+        <MetaItem icon={Clock} label="Duration" value={project.duration} />
+        <MetaItem icon={Folder} label="Category" value={project.category} />
+      </div>
+
+      {/* Description */}
+      <section className="mt-6">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Overview
+        </h3>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+          {project.fullDescription}
+        </p>
+      </section>
+
+      {/* Features */}
+      <section className="mt-6">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Key Features
+        </h3>
+        <ul className="mt-2.5 grid gap-2 sm:grid-cols-2">
+          {project.features.map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-sm text-muted-foreground"
+            >
+              <span
+                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ backgroundColor: "#dc2626" }}
+              />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Challenges */}
+      <section className="mt-6">
+        <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <Target className="h-4 w-4" style={{ color: "#dc2626" }} />
+          The Challenge
+        </h3>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+          {project.challenges}
+        </p>
+      </section>
+
+      {/* Results */}
+      <section className="mt-6">
+        <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <TrendingUp className="h-4 w-4" style={{ color: "#dc2626" }} />
+          Results & Impact
+        </h3>
+        <ul className="mt-2.5 grid gap-2 sm:grid-cols-2">
+          {project.results.map((result) => (
+            <li
+              key={result}
+              className="flex items-start gap-2.5 rounded-xl border border-crimson/20 p-3 text-sm text-white"
+              style={{
+                backgroundColor: "rgba(220,38,38,0.06)",
+                borderColor: "rgba(220,38,38,0.2)",
+              }}
+            >
+              <TrendingUp className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#dc2626" }} />
+              {result}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Tech stack */}
+      <section className="mt-6">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Tech Stack
+        </h3>
+        <div className="mt-2.5 flex flex-wrap gap-2">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="mt-6">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Gallery
+        </h3>
+        <div className="mt-2.5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {project.gallery.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              alt={`${project.title} screenshot ${i + 1}`}
+              className="aspect-video w-full rounded-xl border border-white/10 object-cover"
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Actions */}
+      <div className="mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-6">
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition-colors hover:bg-white/10"
+        >
+          <Github className="h-4 w-4" />
+          View Code
+        </a>
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105"
+          style={{
+            background: "linear-gradient(135deg, #dc2626, #991b1b)",
+            boxShadow: "0 8px 25px -5px rgba(220,38,38,0.5)",
+          }}
+        >
+          <ExternalLink className="h-4 w-4" />
+          Live Demo
+        </a>
+      </div>
+    </div>
   );
 }
 

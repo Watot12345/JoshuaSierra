@@ -64,7 +64,7 @@ export function Certifications() {
                     <Icon className="h-5 w-5 text-white" />
                   </div>
                   <ExternalLink
-                    className="h-4 w-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
+                    className="h-4 w-4 text-muted-foreground opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100"
                   />
                 </div>
 

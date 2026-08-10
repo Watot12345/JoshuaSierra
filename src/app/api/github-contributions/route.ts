@@ -1,19 +1,12 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const username = searchParams.get("username") || "Watot12345";
-  const year = searchParams.get("year") || "2026";
+interface DayData {
+  date: string;
+  level: number;
+}
 
-  let url = `https://github.com/users/${username}/contributions`;
-  if (year === "2026") {
-    url += "?from=2026-01-01&to=2026-12-31";
-  } else if (year === "2025") {
-    url += "?from=2025-01-01&to=2025-12-31";
-  } else if (year === "2024") {
-    url += "?from=2024-01-01&to=2024-12-31";
-  }
-
+async function fetchYearContributions(username: string, year: string) {
+  const url = `https://github.com/users/${username}/contributions?from=${year}-01-01&to=${year}-12-31`;
   try {
     const res = await fetch(url, {
       headers: {
@@ -24,15 +17,12 @@ export async function GET(request: Request) {
     });
 
     if (!res.ok) {
-      return NextResponse.json(
-        { error: "Failed to fetch GitHub contributions" },
-        { status: 500 }
-      );
+      return { year, totalText: "", totalCount: 0, days: [] as DayData[] };
     }
 
     const html = await res.text();
 
-    // Extract contribution title text (e.g., "389 contributions in 2026")
+    // Extract contribution title text (e.g., "392 contributions in 2026")
     const titleMatch = html.match(
       /<h2[^>]*id="js-contribution-activity-description"[^>]*>\s*([\s\S]*?)\s*<\/h2>/i
     );
@@ -41,23 +31,88 @@ export async function GET(request: Request) {
       totalText = titleMatch[1].replace(/\s+/g, " ").trim();
     }
 
-    // Extract days array (data-date, data-level, tooltips)
-    const days: { date: string; level: number }[] = [];
+    // Extract numeric contribution count
+    const countMatch = totalText.match(/([\d,]+)\s+contribution/i);
+    const totalCount = countMatch
+      ? parseInt(countMatch[1].replace(/,/g, ""), 10)
+      : 0;
+
+    // Extract days array (data-date, data-level)
+    const daysMap = new Map<string, DayData>();
     const dayRegex = /data-date="([^"]+)"[^>]*data-level="([^"]+)"/gi;
     let match;
     while ((match = dayRegex.exec(html)) !== null) {
       const date = match[1];
       const level = parseInt(match[2], 10) || 0;
-      days.push({ date, level });
+      if (date && !daysMap.has(date)) {
+        daysMap.set(date, { date, level });
+      }
     }
+
+    const days = Array.from(daysMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+
+    return { year, totalText, totalCount, days };
+  } catch {
+    return { year, totalText: "", totalCount: 0, days: [] as DayData[] };
+  }
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const username = searchParams.get("username") || "Watot12345";
+  const requestedYear = searchParams.get("year") || "2026";
+
+  try {
+    // Fetch all active profile years in parallel
+    const [data2026, data2025, data2024] = await Promise.all([
+      fetchYearContributions(username, "2026"),
+      fetchYearContributions(username, "2025"),
+      fetchYearContributions(username, "2024"),
+    ]);
+
+    const allTimeTotal =
+      data2026.totalCount + data2025.totalCount + data2024.totalCount;
+
+    const yearTotals: Record<string, number> = {
+      "2026": data2026.totalCount,
+      "2025": data2025.totalCount,
+      "2024": data2024.totalCount,
+      "All Time": allTimeTotal,
+    };
+
+    if (requestedYear === "All Time" || requestedYear === "all") {
+      const combinedDays = [...data2024.days, ...data2025.days, ...data2026.days];
+      return NextResponse.json({
+        username,
+        year: "All Time",
+        totalText: `${allTimeTotal} total contributions across all years`,
+        totalCount: allTimeTotal,
+        allTimeTotal,
+        yearTotals,
+        days: combinedDays.length > 0 ? combinedDays : data2026.days,
+      });
+    }
+
+    const currentYearData =
+      requestedYear === "2025"
+        ? data2025
+        : requestedYear === "2024"
+        ? data2024
+        : data2026;
 
     return NextResponse.json({
       username,
-      year,
-      totalText: totalText || (year === "2026" ? "389 contributions in 2026" : year === "2025" ? "249 contributions in 2025" : year === "2024" ? "1 contribution in 2024" : "639 contributions total"),
-      days,
+      year: currentYearData.year,
+      totalText:
+        currentYearData.totalText ||
+        `${currentYearData.totalCount} contributions in ${currentYearData.year}`,
+      totalCount: currentYearData.totalCount,
+      allTimeTotal,
+      yearTotals,
+      days: currentYearData.days,
     });
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+

@@ -101,7 +101,7 @@ export function Services() {
                           .getElementById("contact")
                           ?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-crimson opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-crimson opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100"
                       style={{ color: "#dc2626" }}
                     >
                       Get started

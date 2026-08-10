@@ -44,7 +44,7 @@ export function About() {
             </div>
 
             {/* Focus areas */}
-            <div className="mt-8 grid grid-cols-2 gap-3">
+            <div className="mt-8 grid grid-cols-1 xs:grid-cols-2 gap-3">
               {focusAreas.map((area, index) => {
                 const Icon = area.icon;
                 return (
@@ -78,26 +78,26 @@ export function About() {
                 Quick Facts
               </h3>
               <dl className="mt-4 flex flex-col gap-3 text-sm">
-                <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                  <dt className="text-muted-foreground">Name</dt>
-                  <dd className="font-medium text-white">{profile.fullName}</dd>
+                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+                  <dt className="shrink-0 text-muted-foreground">Name</dt>
+                  <dd className="truncate text-right font-medium text-white">{profile.fullName}</dd>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                  <dt className="text-muted-foreground">Email</dt>
-                  <dd className="font-medium text-white">{profile.email}</dd>
+                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+                  <dt className="shrink-0 text-muted-foreground">Email</dt>
+                  <dd className="truncate text-right font-medium text-white">{profile.email}</dd>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                  <dt className="text-muted-foreground">Location</dt>
-                  <dd className="font-medium text-white">{profile.location}</dd>
+                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+                  <dt className="shrink-0 text-muted-foreground">Location</dt>
+                  <dd className="truncate text-right font-medium text-white">{profile.location}</dd>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                  <dt className="text-muted-foreground">Experience</dt>
+                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-3">
+                  <dt className="shrink-0 text-muted-foreground">Experience</dt>
                   <dd className="font-medium text-white">
                     {profile.yearsOfExperience}+ years
                   </dd>
                 </div>
-                <div className="flex items-center justify-between">
-                  <dt className="text-muted-foreground">Availability</dt>
+                <div className="flex items-center justify-between gap-2">
+                  <dt className="shrink-0 text-muted-foreground">Availability</dt>
                   <dd className="flex items-center gap-1.5 font-medium text-white">
                     <span
                       className="h-2 w-2 rounded-full"

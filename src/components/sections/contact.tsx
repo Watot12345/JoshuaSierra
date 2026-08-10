@@ -62,6 +62,7 @@ export function Contact() {
       email: String(formData.get("email") ?? ""),
       subject: String(formData.get("subject") ?? ""),
       message: String(formData.get("message") ?? ""),
+      hp_field: String(formData.get("hp_field") ?? ""),
     };
 
     setStatus("loading");
@@ -193,6 +194,14 @@ export function Contact() {
               onSubmit={handleSubmit}
               className="glass-strong rounded-2xl border border-white/10 p-6 sm:p-8"
             >
+              {/* Spam Honeypot Field */}
+              <input
+                type="text"
+                name="hp_field"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden opacity-0 pointer-events-none absolute w-0 h-0"
+              />
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Your Name" htmlFor="name">
                   <input
