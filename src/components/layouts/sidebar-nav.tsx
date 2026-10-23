@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useThemeTransition } from "@/hooks/use-theme-transition";
 import {
   FolderKanban,
   Briefcase,
@@ -18,7 +18,7 @@ import {
   Laptop,
 } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
-import { profile } from "@/data/portfolio";
+import { profile, socialLinks } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -34,7 +34,7 @@ const NAV_LINKS = [
 export function SidebarNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeId, setActiveId] = useState("projects");
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, changeTheme } = useThemeTransition();
   const mounted = useMounted();
 
   // Update active section on scroll
@@ -85,7 +85,7 @@ export function SidebarNav() {
               {profile.fullName}
             </h1>
             <p className="mt-1 font-mono text-xs text-muted-foreground">
-              Full-Stack Developer
+              Software Engineer
             </p>
           </a>
 
@@ -133,6 +133,31 @@ export function SidebarNav() {
               <FileText className="h-3.5 w-3.5 shrink-0" />
               <span>Resume (PDF) ↗</span>
             </a>
+
+            {/* Social profiles row */}
+            <div className="mt-3 pt-3 border-t border-border">
+              <span className="block text-[10px] font-mono uppercase tracking-wider text-muted-foreground mb-2">
+                Socials
+              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {socialLinks.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.id}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all duration-200 hover:border-foreground/40 hover:bg-muted hover:text-foreground"
+                      title={`${s.label} (${s.username})`}
+                      aria-label={s.label}
+                    >
+                      <Icon className="h-3.5 w-3.5" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </nav>
         </div>
 
@@ -149,7 +174,7 @@ export function SidebarNav() {
               >
                 <button
                   type="button"
-                  onClick={() => setTheme("system")}
+                  onClick={(e) => changeTheme("system", e)}
                   className={cn(
                     "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
                     theme === "system"
@@ -162,7 +187,7 @@ export function SidebarNav() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTheme("light")}
+                  onClick={(e) => changeTheme("light", e)}
                   className={cn(
                     "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
                     theme === "light"
@@ -175,7 +200,7 @@ export function SidebarNav() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTheme("dark")}
+                  onClick={(e) => changeTheme("dark", e)}
                   className={cn(
                     "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
                     theme === "dark"
@@ -215,18 +240,37 @@ export function SidebarNav() {
             {profile.fullName}
           </a>
           <span className="block text-[10px] font-mono text-muted-foreground">
-            Full-Stack Developer
+            Software Engineer
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setMobileOpen(true)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground"
-          aria-label="Open navigation menu"
-        >
-          <Menu className="h-4 w-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          {mounted && (
+            <button
+              type="button"
+              onClick={(e) =>
+                changeTheme(resolvedTheme === "dark" ? "light" : "dark", e)
+              }
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
+              aria-label="Toggle theme"
+            >
+              {resolvedTheme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground"
+            aria-label="Open navigation menu"
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+        </div>
       </header>
 
       {/* ── Mobile Fullscreen Menu Drawer ── */}
@@ -284,6 +328,31 @@ export function SidebarNav() {
               <FileText className="h-4 w-4" />
               <span>Download Resume (PDF) ↗</span>
             </a>
+
+            {/* Mobile Socials */}
+            <div className="mt-2 pt-3 border-t border-border">
+              <span className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground mb-2">
+                Socials
+              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                {socialLinks.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.id}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      title={s.label}
+                      aria-label={s.label}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </nav>
 
           <div className="border-t border-border pt-4">
@@ -293,7 +362,7 @@ export function SidebarNav() {
                 <div className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40">
                   <button
                     type="button"
-                    onClick={() => setTheme("system")}
+                    onClick={(e) => changeTheme("system", e)}
                     className={cn(
                       "flex h-7 w-7 items-center justify-center rounded-full text-xs",
                       theme === "system" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
@@ -303,7 +372,7 @@ export function SidebarNav() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTheme("light")}
+                    onClick={(e) => changeTheme("light", e)}
                     className={cn(
                       "flex h-7 w-7 items-center justify-center rounded-full text-xs",
                       theme === "light" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
@@ -313,7 +382,7 @@ export function SidebarNav() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTheme("dark")}
+                    onClick={(e) => changeTheme("dark", e)}
                     className={cn(
                       "flex h-7 w-7 items-center justify-center rounded-full text-xs",
                       theme === "dark" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"

@@ -137,14 +137,81 @@ export async function POST(
     // ALWAYS save inquiry entry to Excel/CSV & JSON database first (100% Guaranteed Success)
     saveInquiry({ id, timestamp, name, email, subject, message });
 
-    // Optional: Attempt Resend email dispatch if configured
+    // Email Dispatch: 1. Try Brevo (primary) -> 2. Fall back to Resend if Brevo fails
+    const brevoKey = process.env.BREVO_KEY || process.env.BREVO_API_KEY;
     const resendApiKey = process.env.RESEND_API_KEY;
-    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "joshuaarncel@gmail.com";
-    const fromEmail = process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
+    const primaryReceiver = process.env.CONTACT_RECEIVER_EMAIL || "joshuaarncel@gmail.com";
+    const resendReceiver = process.env.RESEND_RECEIVER_EMAIL || "asierra389@gmail.com";
 
-    if (resendApiKey) {
+    const subjectLine = `[Portfolio Inquiry] ${subject} - from ${name}`;
+    const textContent = `New Portfolio Inquiry from ${name}\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`;
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; color: #111827; background-color: #ffffff;">
+        <div style="border-bottom: 2px solid #09090b; padding-bottom: 12px; margin-bottom: 20px;">
+          <h2 style="color: #09090b; margin: 0; font-size: 20px;">New Inquiry from ${name}</h2>
+          <p style="margin: 4px 0 0 0; color: #6b7280; font-size: 13px;">Received via portfolio contact form</p>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
+          <tr>
+            <td style="padding: 8px 0; font-weight: bold; width: 90px; color: #4b5563;">Name:</td>
+            <td style="padding: 8px 0; color: #111827;">${name}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Email:</td>
+            <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #09090b; text-decoration: underline; font-weight: 500;">${email}</a></td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Subject:</td>
+            <td style="padding: 8px 0; font-weight: 600; color: #111827;">${subject}</td>
+          </tr>
+        </table>
+        <div style="background-color: #f9fafb; border-left: 4px solid #09090b; padding: 16px; border-radius: 6px;">
+          <p style="margin: 0 0 8px 0; font-weight: bold; color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Message Content:</p>
+          <p style="margin: 0; white-space: pre-wrap; line-height: 1.6; color: #1f2937; font-size: 14px;">${message}</p>
+        </div>
+      </div>
+    `;
+
+    let emailDelivered = false;
+
+    // ── 1. Attempt Brevo (Direct delivery to work email) ──
+    if (brevoKey) {
       try {
-        await fetch("https://api.resend.com/emails", {
+        const brevoSender = process.env.BREVO_SENDER_EMAIL || "joshuaarncel@gmail.com";
+        const brevoRes = await fetch("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: {
+            "api-key": brevoKey,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            sender: { name: "Portfolio Contact", email: brevoSender },
+            to: [{ name: "Joshua Sierra", email: primaryReceiver }],
+            replyTo: { name, email },
+            subject: subjectLine,
+            textContent: textContent,
+            htmlContent: htmlContent,
+          }),
+        });
+
+        if (brevoRes.ok) {
+          emailDelivered = true;
+          console.log("Inquiry dispatched via Brevo directly to", primaryReceiver);
+        } else {
+          const errData = await brevoRes.json().catch(() => ({}));
+          console.warn("Brevo failed, activating Resend fallback:", brevoRes.status, errData);
+        }
+      } catch (brevoErr) {
+        console.warn("Brevo network error, activating Resend fallback:", brevoErr);
+      }
+    }
+
+    // ── 2. Fallback to Resend (Guaranteed delivery if Brevo failed) ──
+    if (!emailDelivered && resendApiKey) {
+      try {
+        const fromEmail = process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
+        const emailRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${resendApiKey}`,
@@ -152,40 +219,23 @@ export async function POST(
           },
           body: JSON.stringify({
             from: fromEmail,
-            to: [receiverEmail],
+            to: [resendReceiver],
             reply_to: email,
-            subject: `[Portfolio Inquiry] ${subject}`,
-            text: `New Portfolio Inquiry from ${name}\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; color: #111827; background-color: #ffffff;">
-                <div style="border-bottom: 2px solid #dc2626; padding-bottom: 12px; margin-bottom: 20px;">
-                  <h2 style="color: #dc2626; margin: 0; font-size: 20px;">New Inquiry from ${name}</h2>
-                  <p style="margin: 4px 0 0 0; color: #6b7280; font-size: 13px;">Received via portfolio contact form</p>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 90px; color: #4b5563;">Name:</td>
-                    <td style="padding: 8px 0; color: #111827;">${name}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Email:</td>
-                    <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #dc2626; text-decoration: none; font-weight: 500;">${email}</a></td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Subject:</td>
-                    <td style="padding: 8px 0; font-weight: 600; color: #111827;">${subject}</td>
-                  </tr>
-                </table>
-                <div style="background-color: #f9fafb; border-left: 4px solid #dc2626; padding: 16px; border-radius: 6px;">
-                  <p style="margin: 0 0 8px 0; font-weight: bold; color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Message Content:</p>
-                  <p style="margin: 0; white-space: pre-wrap; line-height: 1.6; color: #1f2937; font-size: 14px;">${message}</p>
-                </div>
-              </div>
-            `,
+            subject: subjectLine,
+            text: textContent,
+            html: htmlContent,
           }),
         });
-      } catch (err) {
-        console.warn("Resend email dispatch skipped/failed, but inquiry was saved to storage:", err);
+
+        if (emailRes.ok) {
+          emailDelivered = true;
+          console.log("Inquiry dispatched via Resend fallback to", resendReceiver);
+        } else {
+          const errData = await emailRes.json().catch(() => ({}));
+          console.error("Resend fallback API error:", emailRes.status, errData);
+        }
+      } catch (resendErr) {
+        console.error("Resend fallback network error:", resendErr);
       }
     }
 

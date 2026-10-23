@@ -19,12 +19,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "Joshua Sierra — Full-Stack Software Engineer",
+  title: "Joshua Sierra — Software Engineer",
   description:
-    "Portfolio of Joshua Sierra, a Full-Stack Software Engineer based in Manila, Philippines. Built a live government health platform (civentral.tech) serving 1,000+ citizens. Open for freelance & full-time opportunities.",
+    "Portfolio of Joshua Sierra, a Software Engineer based in Manila, Philippines. Built a live government health platform (civentral.tech) serving 1,000+ citizens. Open for freelance & full-time opportunities.",
   keywords: [
     "Joshua Sierra",
-    "Full-Stack Engineer",
+    "Software Engineer",
+    "Full-Stack Developer",
     "React Developer",
     "Next.js",
     "TypeScript",
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "Joshua Sierra — Full-Stack Software Engineer",
+    title: "Joshua Sierra — Software Engineer",
     description:
       "Built a live government health platform serving 1,000+ citizens while still in college. Open to freelance & partnerships.",
     url: "https://joshuasierra.vercel.app",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joshua Sierra — Full-Stack Software Engineer",
+    title: "Joshua Sierra — Software Engineer",
     description: "Built a live government health platform serving 1,000+ citizens while still in college.",
   },
   verification: {

@@ -7,6 +7,8 @@ import {
   FaGithub,
   FaLinkedin,
   FaFacebook,
+  FaInstagram,
+  FaTiktok,
   FaReact,
   FaNodeJs,
   FaPython,
@@ -78,9 +80,9 @@ export const profile: Profile = {
   fullName: "Joshua Sierra",
   firstName: "Joshua",
   lastName: "Sierra",
-  title: "Full-Stack Software Engineer",
+  title: "Software Engineer",
   tagline: "I build real products for real people — from government portals to mobile apps.",
-  bio: "Full-Stack Software Engineer with 2+ years shipping production software. I've built a live government health platform serving 1,000+ citizens in Caloocan City — while still in college.",
+  bio: "Software Engineer with 2+ years shipping production software. I've built a live government health platform serving 1,000+ citizens in Caloocan City — while still in college.",
   longBio: [
     "I'm a software engineer based in Manila, Philippines, specializing in full-stack web and mobile applications that solve real-world problems.",
     "My flagship project — Civentral Web & App — is a live government health and sanitation platform actively used by 1,000+ citizens in Caloocan City, built using PHP, React Native, Supabase, and PostgreSQL.",
@@ -114,7 +116,7 @@ export const socialLinks: SocialLink[] = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275",
     icon: FaLinkedin,
-    username: "in/joshua arncel sierra",
+    username: "in/joshua-arncel-sierra",
   },
   {
     id: "facebook",
@@ -122,6 +124,20 @@ export const socialLinks: SocialLink[] = [
     href: "https://www.facebook.com/profile.php?id=61590879324960",
     icon: FaFacebook,
     username: "Joshua Sierra",
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/jus_wa143?vrfl=cmd6bzlkeDh6eGhi",
+    icon: FaInstagram,
+    username: "@jus_wa143",
+  },
+  {
+    id: "tiktok",
+    label: "TikTok",
+    href: "https://www.tiktok.com/@joshuasierra143",
+    icon: FaTiktok,
+    username: "@joshuasierra143",
   },
 ];
 

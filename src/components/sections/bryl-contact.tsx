@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
-import { profile } from "@/data/portfolio";
+import { profile, socialLinks } from "@/data/portfolio";
 import type { ContactFormResponse } from "@/types/portfolio";
 
 export function BrylContact() {
@@ -86,6 +86,30 @@ export function BrylContact() {
               <div className="flex items-center gap-2.5 text-muted-foreground">
                 <MapPin className="h-3.5 w-3.5 shrink-0" />
                 <span>Manila, Philippines</span>
+              </div>
+            </div>
+
+            {/* Social Profiles */}
+            <div className="mt-5 pt-4 border-t border-border">
+              <span className="block font-mono text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
+                Social Profiles
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {socialLinks.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.id}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-muted-foreground transition-all duration-200 hover:border-foreground/40 hover:text-foreground"
+                    >
+                      <Icon className="h-3 w-3" />
+                      <span>{s.label}</span>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -192,8 +216,29 @@ export function BrylContact() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-14 border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-muted-foreground">
+      <footer className="mt-14 border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
         <span>&copy; {new Date().getFullYear()} Joshua Sierra</span>
+
+        {/* Social Icons Strip in Footer */}
+        <div className="flex items-center gap-2">
+          {socialLinks.map((s) => {
+            const Icon = s.icon;
+            return (
+              <a
+                key={s.id}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all duration-200 hover:border-foreground/40 hover:bg-muted hover:text-foreground"
+                title={`${s.label} (${s.username})`}
+                aria-label={s.label}
+              >
+                <Icon className="h-3.5 w-3.5" />
+              </a>
+            );
+          })}
+        </div>
+
         <span>Engineered with Next.js & TypeScript</span>
       </footer>
     </section>

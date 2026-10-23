@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { ExternalLink, Github, Folder } from "lucide-react";
+import { ExternalLink, Github, Code2, Sparkles, Rocket } from "lucide-react";
+
+type ProjectCategory = "all" | "personal" | "gov" | "client";
 
 interface ProjectItem {
   id: string;
+  category: "gov" | "client" | "personal";
   badge: string;
+  role?: string;
   tag: string;
   title: string;
   description: string;
-  image: string;
+  image?: string;
   liveUrl?: string;
   githubUrl?: string;
   tech: string[];
@@ -17,13 +21,16 @@ interface ProjectItem {
 }
 
 const PROJECTS_DATA: ProjectItem[] = [
+  // ── 1. Flagship Government Platforms ──
   {
     id: "civentral-web",
+    category: "gov",
     badge: "Live Government Platform",
+    role: "Co-Founder & Lead Dev",
     tag: "South Caloocan City",
     title: "Civentral Web",
     description:
-      "A digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management.",
+      "A production digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management.",
     image: "/civentral-web.png",
     liveUrl: "https://civentral.tech",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
@@ -32,7 +39,9 @@ const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: "civentral-app",
+    category: "gov",
     badge: "Cross-Platform Mobile App",
+    role: "Co-Founder & Mobile Lead",
     tag: "Expo / Android & iOS",
     title: "Civentral Mobile App",
     description:
@@ -43,38 +52,153 @@ const PROJECTS_DATA: ProjectItem[] = [
     tech: ["React Native", "Expo", "Supabase", "Tailwind CSS", "REST API"],
     metrics: "Real-time Push & Sync",
   },
+
+  // ── 2. Founder & Personal Projects ──
+  {
+    id: "sarisari-app",
+    category: "personal",
+    badge: "Startup Mobile App",
+    role: "Founder & Lead Developer",
+    tag: "Flutter / Dart",
+    title: "SariSari App — Retail POS & Inventory",
+    description:
+      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines. Streamlines daily micro-transactions, supplier re-orders, and offline-capable credit bookkeeping.",
+    githubUrl: "https://github.com/Watot12345/sarisariApp",
+    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First", "State Management"],
+    metrics: "Founder Project",
+  },
+  {
+    id: "mystartup-app",
+    category: "personal",
+    badge: "Startup Venture",
+    role: "Founder / Co-Founder",
+    tag: "Web Architecture",
+    title: "MyStartUp Platform",
+    description:
+      "A digital business launchpad framework designed to rapidly prototype and launch digital micro-services, customer onboarding funnels, and automated payment/billing flows.",
+    githubUrl: "https://github.com/Watot12345/MystartUp",
+    tech: ["JavaScript", "Web Architecture", "REST APIs", "Modern UI", "Modular Design"],
+    metrics: "Startup Venture",
+  },
+  {
+    id: "tenera-app",
+    category: "personal",
+    badge: "Personal Venture",
+    role: "Co-Founder & Creator",
+    tag: "Full-Stack Ecosystem",
+    title: "Tenera Platform",
+    description:
+      "Modular full-stack web and cloud service ecosystem exploring automated business workflows, multi-tenant database models, and responsive client interfaces.",
+    githubUrl: "https://github.com/Watot12345/Tenera",
+    tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
+    metrics: "Personal Venture",
+  },
+  {
+    id: "soleverse-chronos",
+    category: "personal",
+    badge: "E-Commerce Storefront",
+    role: "Creator & Lead Dev",
+    tag: "Next.js & TypeScript",
+    title: "SoleVerse Chronos Storefront",
+    description:
+      "Modern high-performance footwear and apparel storefront featuring dynamic product catalogs, cart state management, responsive checkout preview, and Vercel edge deployment.",
+    liveUrl: "https://sole-verse-chronos-main.vercel.app",
+    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "State Management"],
+    metrics: "Live on Vercel",
+  },
+  {
+    id: "expense-tracker",
+    category: "personal",
+    badge: "Fintech Utility",
+    role: "Personal Project",
+    tag: "TypeScript & React",
+    title: "Expense Tracker Utility",
+    description:
+      "Personal budgeting and expenditure logger with monthly analytics visualization, category tagging, and local persistence for financial health tracking.",
+    githubUrl: "https://github.com/Watot12345/Expense-Tracker",
+    tech: ["TypeScript", "React", "Data Visualization", "Tailwind CSS"],
+    metrics: "Financial Analytics",
+  },
+  {
+    id: "attendance-qr",
+    category: "personal",
+    badge: "Identity & Security",
+    role: "Creator & Developer",
+    tag: "QR Code Check-in",
+    title: "Attendance Management with QR Login",
+    description:
+      "Real-time QR-code scanning attendance management platform with instant clock-in timestamps, role-based access, and automated timesheet reporting.",
+    githubUrl: "https://github.com/Watot12345/Attendance-_Management_System",
+    tech: ["PHP", "JavaScript", "QR Scanner Integration", "MySQL"],
+    metrics: "Automated Clock-In",
+  },
+
+  // ── 3. Government & Public Sector Systems ──
+  {
+    id: "sjdm-legislative",
+    category: "gov",
+    badge: "City Council Archive",
+    role: "Lead Backend Engineer",
+    tag: "City of San Jose Del Monte",
+    title: "SJDM Legislative Research Portal",
+    description:
+      "Legislative research repository and public ordinance search system engineered for city government researchers, legal staff, and local governance analysis.",
+    githubUrl: "https://github.com/Watot12345/sjdm-legislative-research",
+    tech: ["PHP", "MySQL", "Full-Text Search", "Document Management"],
+    metrics: "City Council Portal",
+  },
+  {
+    id: "barangay-web",
+    category: "gov",
+    badge: "Public Sector Portal",
+    role: "Full-Stack Developer",
+    tag: "Local Government Unit",
+    title: "Barangay Resident & Attendance Portal",
+    description:
+      "Community digital records and resident issuance portal for barangay operations. Handles clearance requests, resident profiling, and official record issuance.",
+    liveUrl: "https://barangay-web-sigma.vercel.app",
+    githubUrl: "https://github.com/Watot12345/BarangayWeb",
+    tech: ["HTML5", "JavaScript", "Tailwind CSS", "Vercel"],
+    metrics: "Live on Vercel",
+  },
+
+  // ── 4. Client & Enterprise Systems ──
   {
     id: "clinic-management",
-    badge: "Production Client System",
+    category: "client",
+    badge: "Client Management System",
+    role: "Full-Stack Freelance",
     tag: "Healthcare & Services",
     title: "Clinic & Salon Management Systems",
     description:
       "End-to-end management systems built for local clinics and service businesses. Includes online appointment scheduling, patient records, staff assignment, and automated billing workflows.",
-    image: "/1.png",
     githubUrl: "https://github.com/Watot12345",
     tech: ["Laravel", "PHP", "React", "MySQL", "Tailwind CSS"],
     metrics: "Full CRUD & Billing",
   },
   {
-    id: "barangay-san-roque",
-    badge: "Public Sector Portal",
-    tag: "Local Government Unit",
-    title: "Barangay Information & Attendance System",
+    id: "logistics-system",
+    category: "client",
+    badge: "Supply Chain System",
+    role: "Backend Developer",
+    tag: "Fleet Operations",
+    title: "Logistics & Freight Tracking System",
     description:
-      "Community digital record system for Barangay San Roque. Manages resident profiling, barangay clearance issuance, and staff attendance tracking.",
-    image: "/profile.png",
-    githubUrl: "https://github.com/Watot12345",
-    tech: ["JavaScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS"],
-    metrics: "Digitalized Records",
+      "End-to-end cargo shipment, driver assignment, vehicle dispatch, and warehouse freight tracker with automated delivery status updates.",
+    githubUrl: "https://github.com/Watot12345/Logistics-System",
+    tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database"],
+    metrics: "Freight & Delivery Dispatch",
   },
 ];
 
 export function BrylProjects() {
-  const [filter, setFilter] = useState<"all" | "gov" | "client">("all");
+  const [filter, setFilter] = useState<ProjectCategory>("all");
 
   const filtered = PROJECTS_DATA.filter((p) => {
-    if (filter === "gov") return p.id.includes("civentral") || p.id.includes("barangay");
-    if (filter === "client") return p.id.includes("clinic");
+    if (filter === "personal") return p.category === "personal";
+    if (filter === "gov") return p.category === "gov";
+    if (filter === "client") return p.category === "client";
     return true;
   });
 
@@ -91,12 +215,12 @@ export function BrylProjects() {
           rel="noopener noreferrer"
           className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
-          all repositories ↗
+          all repositories (@Watot12345) ↗
         </a>
       </div>
 
       {/* Filter Tabs */}
-      <div className="mb-7 flex gap-1.5 font-mono text-xs">
+      <div className="mb-7 flex flex-wrap gap-1.5 font-mono text-xs">
         <button
           type="button"
           onClick={() => setFilter("all")}
@@ -106,7 +230,18 @@ export function BrylProjects() {
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          All
+          All ({PROJECTS_DATA.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setFilter("personal")}
+          className={`rounded-md px-3 py-1 transition-colors ${
+            filter === "personal"
+              ? "bg-muted font-semibold text-foreground"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Personal & Startups ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
         </button>
         <button
           type="button"
@@ -117,7 +252,7 @@ export function BrylProjects() {
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          Government Platforms
+          Government Platforms ({PROJECTS_DATA.filter((p) => p.category === "gov").length})
         </button>
         <button
           type="button"
@@ -128,7 +263,7 @@ export function BrylProjects() {
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          Client Systems
+          Client Systems ({PROJECTS_DATA.filter((p) => p.category === "client").length})
         </button>
       </div>
 
@@ -144,9 +279,18 @@ export function BrylProjects() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
                 {project.badge}
               </span>
+
+              {project.role && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <Sparkles className="h-2.5 w-2.5" />
+                  {project.role}
+                </span>
+              )}
+
               <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                 {project.tag}
               </span>
+
               {project.metrics && (
                 <span className="ml-auto font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                   {project.metrics}
@@ -156,14 +300,32 @@ export function BrylProjects() {
 
             {/* Content & Media Layout */}
             <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start">
-              {/* Thumbnail */}
-              <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl border border-border bg-muted sm:w-48 sm:aspect-[4/3]">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
+              {/* Thumbnail / Architecture schematic */}
+              {project.image ? (
+                <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl border border-border bg-muted sm:w-48 sm:aspect-[4/3]">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover grayscale contrast-105 transition-all duration-300 group-hover:grayscale-0 group-hover:scale-105"
+                  />
+                </div>
+              ) : (
+                <div className="relative flex aspect-[16/10] w-full shrink-0 flex-col items-center justify-center rounded-xl border border-border bg-muted/30 p-4 font-mono text-xs sm:w-48 sm:aspect-[4/3]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card shadow-xs">
+                    {project.category === "personal" ? (
+                      <Rocket className="h-5 w-5 text-foreground" />
+                    ) : (
+                      <Code2 className="h-5 w-5 text-foreground" />
+                    )}
+                  </div>
+                  <span className="mt-2 text-[11px] font-semibold text-foreground text-center">
+                    {project.category === "personal" ? "Startup Architecture" : "System Architecture"}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">
+                    {project.role ? project.role : "Open Source"}
+                  </span>
+                </div>
+              )}
 
               {/* Text Description */}
               <div className="flex-1 min-w-0">

@@ -1,11 +1,11 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
+import { useThemeTransition } from "@/hooks/use-theme-transition";
 
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, changeTheme } = useThemeTransition();
   const mounted = useMounted();
 
   if (!mounted) {
@@ -19,7 +19,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={(e) => changeTheme(isDark ? "light" : "dark", e)}
       className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background/80 text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
