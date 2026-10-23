@@ -43,7 +43,7 @@ import { VscVscode } from "react-icons/vsc";
 interface StackItem {
   name: string;
   icon: IconType;
-  hoverColor: string;
+  colorClass: string;
   hoverBorder: string;
 }
 
@@ -59,55 +59,55 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "React",
         icon: SiReact,
-        hoverColor: "group-hover:text-[#61DAFB]",
-        hoverBorder: "hover:border-[#61DAFB]/40",
+        colorClass: "text-[#0284c7] dark:text-muted-foreground dark:group-hover:text-[#61DAFB]",
+        hoverBorder: "hover:border-[#0284c7]/40 dark:hover:border-[#61DAFB]/40",
       },
       {
         name: "Next.js",
         icon: SiNextdotjs,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
       {
         name: "TypeScript",
         icon: SiTypescript,
-        hoverColor: "group-hover:text-[#3178C6]",
+        colorClass: "text-[#3178C6] dark:text-muted-foreground dark:group-hover:text-[#3178C6]",
         hoverBorder: "hover:border-[#3178C6]/40",
       },
       {
         name: "JavaScript",
         icon: SiJavascript,
-        hoverColor: "group-hover:text-[#F7DF1E]",
-        hoverBorder: "hover:border-[#F7DF1E]/40",
+        colorClass: "text-[#ca8a04] dark:text-muted-foreground dark:group-hover:text-[#F7DF1E]",
+        hoverBorder: "hover:border-[#ca8a04]/40 dark:hover:border-[#F7DF1E]/40",
       },
       {
         name: "Tailwind CSS",
         icon: SiTailwindcss,
-        hoverColor: "group-hover:text-[#06B6D4]",
+        colorClass: "text-[#06B6D4] dark:text-muted-foreground dark:group-hover:text-[#06B6D4]",
         hoverBorder: "hover:border-[#06B6D4]/40",
       },
       {
         name: "HTML5",
         icon: SiHtml5,
-        hoverColor: "group-hover:text-[#E34F26]",
+        colorClass: "text-[#E34F26] dark:text-muted-foreground dark:group-hover:text-[#E34F26]",
         hoverBorder: "hover:border-[#E34F26]/40",
       },
       {
         name: "CSS3",
         icon: FaCss3Alt,
-        hoverColor: "group-hover:text-[#1572B6]",
+        colorClass: "text-[#1572B6] dark:text-muted-foreground dark:group-hover:text-[#1572B6]",
         hoverBorder: "hover:border-[#1572B6]/40",
       },
       {
         name: "Vite",
         icon: SiVite,
-        hoverColor: "group-hover:text-[#646CFF]",
+        colorClass: "text-[#646CFF] dark:text-muted-foreground dark:group-hover:text-[#646CFF]",
         hoverBorder: "hover:border-[#646CFF]/40",
       },
       {
         name: "Bootstrap",
         icon: SiBootstrap,
-        hoverColor: "group-hover:text-[#7952B3]",
+        colorClass: "text-[#7952B3] dark:text-muted-foreground dark:group-hover:text-[#7952B3]",
         hoverBorder: "hover:border-[#7952B3]/40",
       },
     ],
@@ -118,44 +118,44 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "PHP",
         icon: SiPhp,
-        hoverColor: "group-hover:text-[#777BB4]",
+        colorClass: "text-[#777BB4] dark:text-muted-foreground dark:group-hover:text-[#777BB4]",
         hoverBorder: "hover:border-[#777BB4]/40",
       },
       {
         name: "Laravel",
         icon: SiLaravel,
-        hoverColor: "group-hover:text-[#FF2D20]",
+        colorClass: "text-[#FF2D20] dark:text-muted-foreground dark:group-hover:text-[#FF2D20]",
         hoverBorder: "hover:border-[#FF2D20]/40",
       },
       {
         name: "Node.js",
         icon: SiNodedotjs,
-        hoverColor: "group-hover:text-[#5FA04E]",
+        colorClass: "text-[#5FA04E] dark:text-muted-foreground dark:group-hover:text-[#5FA04E]",
         hoverBorder: "hover:border-[#5FA04E]/40",
       },
       {
         name: "Express.js",
         icon: SiExpress,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
       {
         name: "Python",
         icon: SiPython,
-        hoverColor: "group-hover:text-[#3776AB]",
+        colorClass: "text-[#3776AB] dark:text-muted-foreground dark:group-hover:text-[#3776AB]",
         hoverBorder: "hover:border-[#3776AB]/40",
       },
       {
         name: "REST APIs",
         icon: TbApi,
-        hoverColor: "group-hover:text-[#0D9488]",
+        colorClass: "text-[#0D9488] dark:text-muted-foreground dark:group-hover:text-[#0D9488]",
         hoverBorder: "hover:border-[#0D9488]/40",
       },
       {
         name: "Redis",
         icon: SiRedis,
-        hoverColor: "group-hover:text-[#FF4438]",
-        hoverBorder: "hover:border-[#FF4438]/40",
+        colorClass: "text-[#DC2626] dark:text-muted-foreground dark:group-hover:text-[#FF4438]",
+        hoverBorder: "hover:border-[#DC2626]/40 dark:hover:border-[#FF4438]/40",
       },
     ],
   },
@@ -165,31 +165,31 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "React Native",
         icon: SiReact,
-        hoverColor: "group-hover:text-[#61DAFB]",
-        hoverBorder: "hover:border-[#61DAFB]/40",
+        colorClass: "text-[#0284c7] dark:text-muted-foreground dark:group-hover:text-[#61DAFB]",
+        hoverBorder: "hover:border-[#0284c7]/40 dark:hover:border-[#61DAFB]/40",
       },
       {
         name: "Expo",
         icon: SiExpo,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
       {
         name: "Flutter",
         icon: SiFlutter,
-        hoverColor: "group-hover:text-[#02569B] dark:group-hover:text-[#54C5F8]",
+        colorClass: "text-[#02569B] dark:text-muted-foreground dark:group-hover:text-[#54C5F8]",
         hoverBorder: "hover:border-[#02569B]/40 dark:hover:border-[#54C5F8]/40",
       },
       {
         name: "Android",
         icon: SiAndroid,
-        hoverColor: "group-hover:text-[#3DDC84]",
-        hoverBorder: "hover:border-[#3DDC84]/40",
+        colorClass: "text-[#16a34a] dark:text-muted-foreground dark:group-hover:text-[#3DDC84]",
+        hoverBorder: "hover:border-[#16a34a]/40 dark:hover:border-[#3DDC84]/40",
       },
       {
         name: "iOS",
         icon: SiApple,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
     ],
@@ -200,31 +200,31 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "PostgreSQL",
         icon: SiPostgresql,
-        hoverColor: "group-hover:text-[#4169E1]",
+        colorClass: "text-[#4169E1] dark:text-muted-foreground dark:group-hover:text-[#4169E1]",
         hoverBorder: "hover:border-[#4169E1]/40",
       },
       {
         name: "MySQL",
         icon: SiMysql,
-        hoverColor: "group-hover:text-[#00758F] dark:group-hover:text-[#4479A1]",
+        colorClass: "text-[#00758F] dark:text-muted-foreground dark:group-hover:text-[#4479A1]",
         hoverBorder: "hover:border-[#00758F]/40 dark:hover:border-[#4479A1]/40",
       },
       {
         name: "Supabase",
         icon: SiSupabase,
-        hoverColor: "group-hover:text-[#3ECF8E]",
-        hoverBorder: "hover:border-[#3ECF8E]/40",
+        colorClass: "text-[#16a34a] dark:text-muted-foreground dark:group-hover:text-[#3ECF8E]",
+        hoverBorder: "hover:border-[#16a34a]/40 dark:hover:border-[#3ECF8E]/40",
       },
       {
         name: "Prisma ORM",
         icon: SiPrisma,
-        hoverColor: "group-hover:text-[#2D3748] dark:group-hover:text-[#5A67D8]",
+        colorClass: "text-[#2D3748] dark:text-muted-foreground dark:group-hover:text-[#5A67D8]",
         hoverBorder: "hover:border-[#2D3748]/40 dark:hover:border-[#5A67D8]/40",
       },
       {
         name: "SQLite",
         icon: SiSqlite,
-        hoverColor: "group-hover:text-[#003B57] dark:group-hover:text-[#0080CD]",
+        colorClass: "text-[#003B57] dark:text-muted-foreground dark:group-hover:text-[#0080CD]",
         hoverBorder: "hover:border-[#003B57]/40 dark:hover:border-[#0080CD]/40",
       },
     ],
@@ -235,43 +235,43 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "Git",
         icon: SiGit,
-        hoverColor: "group-hover:text-[#F05032]",
+        colorClass: "text-[#F05032] dark:text-muted-foreground dark:group-hover:text-[#F05032]",
         hoverBorder: "hover:border-[#F05032]/40",
       },
       {
         name: "GitHub",
         icon: SiGithub,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
       {
         name: "GitHub Actions",
         icon: SiGithubactions,
-        hoverColor: "group-hover:text-[#2088FF]",
+        colorClass: "text-[#2088FF] dark:text-muted-foreground dark:group-hover:text-[#2088FF]",
         hoverBorder: "hover:border-[#2088FF]/40",
       },
       {
         name: "Docker",
         icon: SiDocker,
-        hoverColor: "group-hover:text-[#2496ED]",
+        colorClass: "text-[#2496ED] dark:text-muted-foreground dark:group-hover:text-[#2496ED]",
         hoverBorder: "hover:border-[#2496ED]/40",
       },
       {
         name: "Linux",
         icon: SiLinux,
-        hoverColor: "group-hover:text-[#FCC624]",
-        hoverBorder: "hover:border-[#FCC624]/40",
+        colorClass: "text-[#d97706] dark:text-muted-foreground dark:group-hover:text-[#FCC624]",
+        hoverBorder: "hover:border-[#d97706]/40 dark:hover:border-[#FCC624]/40",
       },
       {
         name: "Vercel",
         icon: SiVercel,
-        hoverColor: "group-hover:text-black dark:group-hover:text-white",
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
         hoverBorder: "hover:border-foreground/40",
       },
       {
         name: "AWS",
         icon: FaAws,
-        hoverColor: "group-hover:text-[#FF9900]",
+        colorClass: "text-[#FF9900] dark:text-muted-foreground dark:group-hover:text-[#FF9900]",
         hoverBorder: "hover:border-[#FF9900]/40",
       },
     ],
@@ -282,31 +282,31 @@ const STACK_CATEGORIES: StackCategory[] = [
       {
         name: "Figma",
         icon: SiFigma,
-        hoverColor: "group-hover:text-[#F24E1E]",
+        colorClass: "text-[#F24E1E] dark:text-muted-foreground dark:group-hover:text-[#F24E1E]",
         hoverBorder: "hover:border-[#F24E1E]/40",
       },
       {
         name: "Postman",
         icon: SiPostman,
-        hoverColor: "group-hover:text-[#FF6C37]",
+        colorClass: "text-[#FF6C37] dark:text-muted-foreground dark:group-hover:text-[#FF6C37]",
         hoverBorder: "hover:border-[#FF6C37]/40",
       },
       {
         name: "VS Code",
         icon: VscVscode,
-        hoverColor: "group-hover:text-[#007ACC]",
+        colorClass: "text-[#007ACC] dark:text-muted-foreground dark:group-hover:text-[#007ACC]",
         hoverBorder: "hover:border-[#007ACC]/40",
       },
       {
         name: "Claude AI",
         icon: SiAnthropic,
-        hoverColor: "group-hover:text-[#D97706]",
+        colorClass: "text-[#D97706] dark:text-muted-foreground dark:group-hover:text-[#D97706]",
         hoverBorder: "hover:border-[#D97706]/40",
       },
       {
         name: "Google AI",
         icon: SiGoogle,
-        hoverColor: "group-hover:text-[#4285F4]",
+        colorClass: "text-[#4285F4] dark:text-muted-foreground dark:group-hover:text-[#4285F4]",
         hoverBorder: "hover:border-[#4285F4]/40",
       },
     ],
@@ -343,11 +343,11 @@ export function BrylStack() {
                 return (
                   <div
                     key={item.name}
-                    className={`group relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground transition-all duration-200 hover:bg-muted/70 shadow-xs cursor-default ${item.hoverBorder}`}
+                    className={`group relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-xs cursor-default ${item.hoverBorder}`}
                     title={item.name}
                     aria-label={item.name}
                   >
-                    <Icon className={`h-5 w-5 transition-all duration-200 group-hover:scale-115 shrink-0 ${item.hoverColor}`} />
+                    <Icon className={`h-5 w-5 transition-all duration-200 group-hover:scale-115 shrink-0 ${item.colorClass}`} />
 
                     {/* Smooth hover tooltip pill */}
                     <span

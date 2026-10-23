@@ -153,13 +153,24 @@ export function SidebarNav() {
               <div className="flex items-center gap-1.5 flex-wrap">
                 {socialLinks.map((s) => {
                   const Icon = s.icon;
+                  const socialColor =
+                    s.id === "linkedin"
+                      ? "text-[#0A66C2] dark:text-muted-foreground dark:hover:text-[#0A66C2]"
+                      : s.id === "facebook"
+                      ? "text-[#1877F2] dark:text-muted-foreground dark:hover:text-[#1877F2]"
+                      : s.id === "instagram"
+                      ? "text-[#E4405F] dark:text-muted-foreground dark:hover:text-[#E4405F]"
+                      : "text-foreground dark:text-muted-foreground dark:hover:text-foreground";
                   return (
                     <a
                       key={s.id}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all duration-200 hover:border-foreground/40 hover:bg-muted hover:text-foreground"
+                      className={cn(
+                        "flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card transition-all duration-200 hover:border-foreground/40 hover:bg-muted",
+                        socialColor
+                      )}
                       title={`${s.label} (${s.username})`}
                       aria-label={s.label}
                     >
@@ -358,13 +369,24 @@ export function SidebarNav() {
               <div className="flex items-center gap-2 flex-wrap">
                 {socialLinks.map((s) => {
                   const Icon = s.icon;
+                  const socialColor =
+                    s.id === "linkedin"
+                      ? "text-[#0A66C2] dark:text-muted-foreground dark:hover:text-[#0A66C2]"
+                      : s.id === "facebook"
+                      ? "text-[#1877F2] dark:text-muted-foreground dark:hover:text-[#1877F2]"
+                      : s.id === "instagram"
+                      ? "text-[#E4405F] dark:text-muted-foreground dark:hover:text-[#E4405F]"
+                      : "text-foreground dark:text-muted-foreground dark:hover:text-foreground";
                   return (
                     <a
                       key={s.id}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      className={cn(
+                        "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card transition-colors hover:bg-muted",
+                        socialColor
+                      )}
                       title={s.label}
                       aria-label={s.label}
                     >
