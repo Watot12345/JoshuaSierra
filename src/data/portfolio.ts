@@ -386,7 +386,7 @@ export const projects: Project[] = [
       "Responsive design — works on government kiosks, desktops & mobile",
     ],
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
-    liveUrl: "https://civentral.tech",
+    liveUrl: "https://healthsanitation.civentral.tech/",
     featured: true,
     year: 2026,
     role: "Lead Developer",

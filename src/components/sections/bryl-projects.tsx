@@ -32,7 +32,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     description:
       "Production digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management for 1,000+ residents.",
     image: "/civentral-web.png",
-    liveUrl: "https://civentral.tech",
+    liveUrl: "https://healthsanitation.civentral.tech/",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
     tech: ["PHP", "JavaScript", "Tailwind CSS", "Supabase", "PostgreSQL"],
     metrics: "1,000+ Active Citizens Served",
@@ -47,7 +47,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     description:
       "Companion mobile application for Caloocan citizens. Allows residents to submit service requests, receive live status notifications, and access city healthcare information on their phones.",
     image: "/civentral-app.png",
-    liveUrl: "https://civentral.tech",
     githubUrl: "https://github.com/Raffy-3350/CitizenApp-HealthSanitation.git",
     tech: ["React Native", "Expo", "Supabase", "Tailwind CSS", "REST API"],
     metrics: "Real-time Push & Sync",
@@ -124,6 +123,21 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Automated Data Pipeline",
   },
   {
+    id: "soleverse",
+    category: "personal",
+    badge: "E-Commerce Experience",
+    role: "Creator & Developer",
+    tag: "Next.js & Tailwind CSS",
+    title: "SoleVerse — Footwear E-Commerce Platform",
+    description:
+      "Modern futuristic sneaker showcase and e-commerce web platform featuring interactive catalog navigation, dark aesthetic design, and responsive shopping workflows.",
+    image: "/soleverse.png",
+    liveUrl: "https://sole-verse-chronos-main-6vqzi6j5d-joshua-sierras-projects.vercel.app",
+    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main.git",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+    metrics: "Live on Vercel",
+  },
+  {
     id: "sarisari-app",
     category: "personal",
     badge: "Startup Mobile App",
@@ -132,9 +146,10 @@ const PROJECTS_DATA: ProjectItem[] = [
     title: "SariSari App — Retail POS & Inventory",
     description:
       "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
+    liveUrl: "https://watot12345.github.io/sarisariApp/",
     githubUrl: "https://github.com/Watot12345/sarisariApp.git",
     tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
-    metrics: "Founder Project",
+    metrics: "Live on GitHub Pages",
   },
   {
     id: "tenera-app",
@@ -179,11 +194,11 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Production Live Portal",
   },
 
-  // ── SCHOOL PROJECTS ──
+  // ── SCHOOL / ACADEMIC PROJECTS ──
   {
     id: "attendance-payroll",
     category: "school",
-    badge: "Academic Capstone",
+    badge: "Academic Project",
     role: "Main Developer",
     tag: "Enterprise System",
     title: "Attendance & Payroll Management System",
@@ -196,7 +211,7 @@ const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "inventory-system",
     category: "school",
-    badge: "Academic System",
+    badge: "Academic Project",
     role: "Main Developer",
     tag: "Warehouse Management",
     title: "Enterprise Inventory System",
@@ -209,7 +224,7 @@ const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "logistics-system",
     category: "school",
-    badge: "Academic System",
+    badge: "Academic Project",
     role: "Main Developer",
     tag: "Fleet Operations",
     title: "Logistics & Freight Tracking System",
@@ -222,7 +237,7 @@ const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "barkadahub-app",
     category: "school",
-    badge: "Academic Mobile Project",
+    badge: "Academic Project",
     role: "Co-Developer",
     tag: "Campus Social Platform",
     title: "BarkadaHub Mobile App",
@@ -391,11 +406,11 @@ export function BrylProjects() {
                     {project.category === "personal"
                       ? "Personal Project"
                       : project.category === "school"
-                      ? "School System"
+                      ? "Academic Project"
                       : "Client System"}
                   </span>
-                  <span className="text-[10px] text-muted-foreground">
-                    {project.role ? project.role : "Open Source"}
+                  <span className="text-[10px] text-muted-foreground font-mono">
+                    System Architecture
                   </span>
                 </div>
               )}
