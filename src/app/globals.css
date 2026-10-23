@@ -175,6 +175,13 @@
     }
   }
 
+  /* Mobile & Touch devices without hover: display images in full color */
+  @media (hover: none), (max-width: 640px) {
+    img {
+      filter: grayscale(0) contrast(1) brightness(1) !important;
+    }
+  }
+
   /* Smooth touch scrolling */
   .overflow-x-auto,
   .overflow-y-auto {

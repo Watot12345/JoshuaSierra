@@ -101,14 +101,15 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "gov",
     badge: "Public Sector Portal",
     role: "Full-Stack Developer",
-    tag: "Local Government Unit",
-    title: "Barangay Resident & Attendance Portal",
+    tag: "Barangay San Agustin",
+    title: "Barangay San Agustin — Community & Resident Portal",
     description:
-      "Community digital records and resident issuance portal for barangay operations. Handles clearance requests, resident profiling, and official record issuance.",
-    liveUrl: "https://barangay-web-sigma.vercel.app",
+      "Integrated community platform for resident profiling, disaster relief operations, healthcare records, job matching, and scholarship assistance deployed live at barangay-san-agustin.onrender.com.",
+    image: "/barangay-san-agustin.png",
+    liveUrl: "https://barangay-san-agustin.onrender.com",
     githubUrl: "https://github.com/Watot12345/BarangayWeb",
-    tech: ["HTML5", "JavaScript", "Tailwind CSS", "Vercel"],
-    metrics: "Live on Vercel",
+    tech: ["HTML5", "JavaScript", "Tailwind CSS", "Render"],
+    metrics: "12,000+ Resident Records",
   },
 
   // ── PERSONAL & STARTUPS ──
@@ -375,7 +376,7 @@ export function BrylProjects() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-full w-full object-cover grayscale-0 contrast-100 dark:grayscale dark:contrast-105 transition-all duration-300 dark:group-hover:grayscale-0 group-hover:scale-105"
+                    className="h-full w-full object-cover grayscale-0 contrast-100 sm:dark:grayscale sm:dark:contrast-105 transition-all duration-300 sm:dark:group-hover:grayscale-0 group-hover:scale-105"
                   />
                 </div>
               ) : (

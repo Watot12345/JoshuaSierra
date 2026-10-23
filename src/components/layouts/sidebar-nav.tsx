@@ -16,6 +16,7 @@ import {
   Sun,
   Moon,
   Laptop,
+  ArrowRight,
 } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
 import { profile, socialLinks } from "@/data/portfolio";
@@ -109,14 +110,24 @@ export function SidebarNav() {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors",
+                    "group flex items-center justify-between rounded-md px-2.5 py-2 transition-all duration-200",
                     isActive
-                      ? "bg-muted font-semibold text-foreground"
+                      ? "bg-muted font-semibold text-foreground shadow-2xs"
                       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                   )}
                 >
-                  <Icon className="h-3.5 w-3.5 shrink-0" />
-                  <span>{link.label}</span>
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <Icon className="h-3.5 w-3.5 shrink-0" />
+                    <span className="truncate">{link.label}</span>
+                  </div>
+                  <ArrowRight
+                    className={cn(
+                      "h-3.5 w-3.5 shrink-0 transition-all duration-200",
+                      isActive
+                        ? "translate-x-0 opacity-100 text-foreground"
+                        : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-40 text-muted-foreground"
+                    )}
+                  />
                 </a>
               );
             })}
@@ -305,14 +316,24 @@ export function SidebarNav() {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
-                    "flex items-center gap-3 rounded-lg px-3.5 py-2.5 transition-colors",
+                    "group flex items-center justify-between rounded-lg px-3.5 py-2.5 transition-all duration-200",
                     isActive
-                      ? "bg-muted font-bold text-foreground"
+                      ? "bg-muted font-bold text-foreground shadow-2xs"
                       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                   )}
                 >
-                  <Icon className="h-4 w-4" />
-                  <span>{link.label}</span>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span>{link.label}</span>
+                  </div>
+                  <ArrowRight
+                    className={cn(
+                      "h-4 w-4 shrink-0 transition-all duration-200",
+                      isActive
+                        ? "translate-x-0 opacity-100 text-foreground"
+                        : "-translate-x-1 opacity-0 text-muted-foreground"
+                    )}
+                  />
                 </a>
               );
             })}

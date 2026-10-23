@@ -61,7 +61,7 @@ export function BrylHero() {
             <img
               src={profile.avatar}
               alt={profile.fullName}
-              className="h-full w-full object-cover object-top grayscale-0 contrast-100 brightness-100 dark:grayscale dark:contrast-[1.08] dark:brightness-[0.98] transition-all duration-500 ease-out dark:group-hover:grayscale-0 dark:group-hover:contrast-100 dark:group-hover:brightness-100 group-hover:scale-105"
+              className="h-full w-full object-cover object-top grayscale-0 contrast-100 brightness-100 sm:dark:grayscale sm:dark:contrast-[1.08] sm:dark:brightness-[0.98] transition-all duration-500 ease-out sm:dark:group-hover:grayscale-0 sm:dark:group-hover:contrast-100 sm:dark:group-hover:brightness-100 group-hover:scale-105"
             />
           </div>
           <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background shadow-xs">
