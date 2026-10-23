@@ -55,13 +55,13 @@ export function BrylHero() {
           </div>
         </div>
 
-        {/* Profile Avatar — enlarged & grayscale monochromatic */}
-        <div className="relative shrink-0 self-center sm:self-start">
-          <div className="relative h-32 w-32 overflow-hidden rounded-2xl border-2 border-border/80 bg-muted/40 shadow-sm sm:h-40 sm:w-40 md:h-44 md:w-44">
+        {/* Profile Avatar — grayscale by default, reveals color on hover */}
+        <div className="group relative shrink-0 self-center sm:self-start">
+          <div className="relative h-32 w-32 overflow-hidden rounded-2xl border-2 border-border/80 bg-muted/40 shadow-sm transition-all duration-300 group-hover:border-foreground/50 sm:h-40 sm:w-40 md:h-44 md:w-44">
             <img
               src={profile.avatar}
               alt={profile.fullName}
-              className="h-full w-full object-cover object-top grayscale contrast-[1.08] brightness-[0.98] transition-all duration-300"
+              className="h-full w-full object-cover object-top grayscale contrast-[1.08] brightness-[0.98] transition-all duration-500 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:scale-105"
             />
           </div>
           <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background shadow-xs">

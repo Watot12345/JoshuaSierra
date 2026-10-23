@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { ExternalLink, Github, Code2, Sparkles, Rocket } from "lucide-react";
+import { ExternalLink, Github, Code2, Sparkles, Rocket, GraduationCap } from "lucide-react";
 
-type ProjectCategory = "all" | "personal" | "gov" | "client";
+type ProjectCategory = "all" | "client" | "personal" | "gov" | "school";
 
 interface ProjectItem {
   id: string;
-  category: "gov" | "client" | "personal";
+  category: "gov" | "client" | "personal" | "school";
   badge: string;
   role?: string;
   tag: string;
@@ -21,7 +21,7 @@ interface ProjectItem {
 }
 
 const PROJECTS_DATA: ProjectItem[] = [
-  // ── 1. Flagship Government Platforms ──
+  // ── LIVE SITES FIRST (Always pinned at top) ──
   {
     id: "civentral-web",
     category: "gov",
@@ -30,7 +30,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     tag: "South Caloocan City",
     title: "Civentral Web",
     description:
-      "A production digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management.",
+      "Production digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management for 1,000+ residents.",
     image: "/civentral-web.png",
     liveUrl: "https://civentral.tech",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
@@ -52,101 +52,47 @@ const PROJECTS_DATA: ProjectItem[] = [
     tech: ["React Native", "Expo", "Supabase", "Tailwind CSS", "REST API"],
     metrics: "Real-time Push & Sync",
   },
-
-  // ── 2. Founder & Personal Projects ──
-  {
-    id: "sarisari-app",
-    category: "personal",
-    badge: "Startup Mobile App",
-    role: "Founder & Lead Developer",
-    tag: "Flutter / Dart",
-    title: "SariSari App — Retail POS & Inventory",
-    description:
-      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines. Streamlines daily micro-transactions, supplier re-orders, and offline-capable credit bookkeeping.",
-    githubUrl: "https://github.com/Watot12345/sarisariApp",
-    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First", "State Management"],
-    metrics: "Founder Project",
-  },
-  {
-    id: "mystartup-app",
-    category: "personal",
-    badge: "Startup Venture",
-    role: "Founder / Co-Founder",
-    tag: "Web Architecture",
-    title: "MyStartUp Platform",
-    description:
-      "A digital business launchpad framework designed to rapidly prototype and launch digital micro-services, customer onboarding funnels, and automated payment/billing flows.",
-    githubUrl: "https://github.com/Watot12345/MystartUp",
-    tech: ["JavaScript", "Web Architecture", "REST APIs", "Modern UI", "Modular Design"],
-    metrics: "Startup Venture",
-  },
-  {
-    id: "tenera-app",
-    category: "personal",
-    badge: "Personal Venture",
-    role: "Co-Founder & Creator",
-    tag: "Full-Stack Ecosystem",
-    title: "Tenera Platform",
-    description:
-      "Modular full-stack web and cloud service ecosystem exploring automated business workflows, multi-tenant database models, and responsive client interfaces.",
-    githubUrl: "https://github.com/Watot12345/Tenera",
-    tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
-    metrics: "Personal Venture",
-  },
-  {
-    id: "soleverse-chronos",
-    category: "personal",
-    badge: "E-Commerce Storefront",
-    role: "Creator & Lead Dev",
-    tag: "Next.js & TypeScript",
-    title: "SoleVerse Chronos Storefront",
-    description:
-      "Modern high-performance footwear and apparel storefront featuring dynamic product catalogs, cart state management, responsive checkout preview, and Vercel edge deployment.",
-    liveUrl: "https://sole-verse-chronos-main.vercel.app",
-    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "State Management"],
-    metrics: "Live on Vercel",
-  },
-  {
-    id: "expense-tracker",
-    category: "personal",
-    badge: "Fintech Utility",
-    role: "Personal Project",
-    tag: "TypeScript & React",
-    title: "Expense Tracker Utility",
-    description:
-      "Personal budgeting and expenditure logger with monthly analytics visualization, category tagging, and local persistence for financial health tracking.",
-    githubUrl: "https://github.com/Watot12345/Expense-Tracker",
-    tech: ["TypeScript", "React", "Data Visualization", "Tailwind CSS"],
-    metrics: "Financial Analytics",
-  },
-  {
-    id: "attendance-qr",
-    category: "personal",
-    badge: "Identity & Security",
-    role: "Creator & Developer",
-    tag: "QR Code Check-in",
-    title: "Attendance Management with QR Login",
-    description:
-      "Real-time QR-code scanning attendance management platform with instant clock-in timestamps, role-based access, and automated timesheet reporting.",
-    githubUrl: "https://github.com/Watot12345/Attendance-_Management_System",
-    tech: ["PHP", "JavaScript", "QR Scanner Integration", "MySQL"],
-    metrics: "Automated Clock-In",
-  },
-
-  // ── 3. Government & Public Sector Systems ──
   {
     id: "sjdm-legislative",
-    category: "gov",
-    badge: "City Council Archive",
-    role: "Lead Backend Engineer",
+    category: "client",
+    badge: "Municipal Archive System",
+    role: "Main Developer",
     tag: "City of San Jose Del Monte",
-    title: "SJDM Legislative Research Portal",
+    title: "SJDM Legislative Research & Ordinance Archive",
     description:
-      "Legislative research repository and public ordinance search system engineered for city government researchers, legal staff, and local governance analysis.",
-    githubUrl: "https://github.com/Watot12345/sjdm-legislative-research",
-    tech: ["PHP", "MySQL", "Full-Text Search", "Document Management"],
-    metrics: "City Council Portal",
+      "Official municipal legislative records, city ordinance search engine, and council resolution archive platform live at lrpaies.sjdm-legislative.com.",
+    liveUrl: "https://lrpaies.sjdm-legislative.com",
+    githubUrl: "https://github.com/Watot12345/sjdm-legislative-research.git",
+    tech: ["PHP", "MySQL", "Full-Text Search", "Municipal Archive"],
+    metrics: "Production Live Portal",
+  },
+  {
+    id: "performance-development",
+    category: "client",
+    badge: "Hospitality Operations",
+    role: "Co-Developer",
+    tag: "Oxford Suites Makati",
+    title: "Oxford Suites Makati — Performance Development System",
+    description:
+      "Corporate staff performance evaluation, KPI tracking, and hospitality operations management system deployed for Oxford Suites Makati.",
+    liveUrl: "https://performancedevelopment.oxfordsuitesmakati.io/",
+    githubUrl: "https://github.com/Watot12345/PerformanceDevelopment.git",
+    tech: ["JavaScript", "Web Architecture", "Hospitality Management", "Performance KPIs"],
+    metrics: "Production Live Portal",
+  },
+  {
+    id: "bcp-attendance",
+    category: "client",
+    badge: "Institutional Attendance",
+    role: "Co-Developer",
+    tag: "Bestlink College (BCP)",
+    title: "BCP Student & Staff Attendance Portal",
+    description:
+      "Production school attendance monitoring portal deployed at attendancem.bcpsms1.com. Features QR check-in, real-time logging, and administrative reporting.",
+    liveUrl: "https://attendancem.bcpsms1.com",
+    githubUrl: "https://github.com/Watot12345/Attendance-_Management_System.git",
+    tech: ["PHP", "MySQL", "QR Verification", "Production Portal"],
+    metrics: "Production Live Portal",
   },
   {
     id: "barangay-web",
@@ -163,32 +109,128 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Live on Vercel",
   },
 
-  // ── 4. Client & Enterprise Systems ──
+  // ── PERSONAL & STARTUPS ──
   {
-    id: "clinic-management",
-    category: "client",
-    badge: "Client Management System",
-    role: "Full-Stack Freelance",
-    tag: "Healthcare & Services",
-    title: "Clinic & Salon Management Systems",
+    id: "hjobscraper",
+    category: "personal",
+    badge: "Automation Tool",
+    role: "Lead Developer",
+    tag: "Web Crawler & Scraper",
+    title: "HJobScraper — Automated Job Crawler",
     description:
-      "End-to-end management systems built for local clinics and service businesses. Includes online appointment scheduling, patient records, staff assignment, and automated billing workflows.",
-    githubUrl: "https://github.com/Watot12345",
-    tech: ["Laravel", "PHP", "React", "MySQL", "Tailwind CSS"],
-    metrics: "Full CRUD & Billing",
+      "Automated web crawler and job listing aggregator extracting real-time engineering opportunities and filtering openings by tech stack and location.",
+    githubUrl: "https://github.com/Watot12345/hjobscraper.git",
+    tech: ["Python", "Web Scraping", "Data Extraction", "Automation"],
+    metrics: "Automated Data Pipeline",
+  },
+  {
+    id: "sarisari-app",
+    category: "personal",
+    badge: "Startup Mobile App",
+    role: "Founder & Lead Developer",
+    tag: "Flutter / Dart",
+    title: "SariSari App — Retail POS & Inventory",
+    description:
+      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
+    githubUrl: "https://github.com/Watot12345/sarisariApp.git",
+    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
+    metrics: "Founder Project",
+  },
+  {
+    id: "tenera-app",
+    category: "personal",
+    badge: "Personal Venture",
+    role: "Co-Founder & Architect",
+    tag: "Full-Stack Ecosystem",
+    title: "Tenera Platform",
+    description:
+      "Modular full-stack web and cloud service ecosystem exploring automated business workflows, multi-tenant database models, and modern UI engineering.",
+    githubUrl: "https://github.com/Watot12345/Tenera.git",
+    tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
+    metrics: "Personal Venture",
+  },
+  {
+    id: "expense-tracker",
+    category: "personal",
+    badge: "Fintech Utility",
+    role: "Creator & Developer",
+    tag: "TypeScript & React",
+    title: "Expense Tracker Utility",
+    description:
+      "Personal budgeting and expenditure logger with monthly analytics visualization, category tagging, and local persistence for financial tracking.",
+    githubUrl: "https://github.com/Watot12345/Expense-Tracker.git",
+    tech: ["TypeScript", "React", "Data Visualization", "Tailwind CSS"],
+    metrics: "Financial Analytics",
+  },
+
+  // ── CLIENT SYSTEMS (Continued) ──
+  {
+    id: "roppet-app",
+    category: "client",
+    badge: "Client Production System",
+    role: "Main Developer",
+    tag: "Theater & Events",
+    title: "Roppets Puppet Production Management",
+    description:
+      "Internal production management, event scheduling, bookings, and inventory platform deployed live at roppets.onlinewebshop.net.",
+    liveUrl: "http://roppets.onlinewebshop.net",
+    githubUrl: "https://github.com/Watot12345/roppet.git",
+    tech: ["PHP", "MySQL", "Event Booking", "Management System"],
+    metrics: "Production Live Portal",
+  },
+
+  // ── SCHOOL PROJECTS ──
+  {
+    id: "attendance-payroll",
+    category: "school",
+    badge: "Academic Capstone",
+    role: "Main Developer",
+    tag: "Enterprise System",
+    title: "Attendance & Payroll Management System",
+    description:
+      "Automated employee attendance tracking with biometric/clock-in logging, tax calculations, government deductions, and automated payroll generation.",
+    githubUrl: "https://github.com/Watot12345/Attendance-Management-payroll.git",
+    tech: ["PHP", "MySQL", "Payroll Computation", "Attendance Logging"],
+    metrics: "Full Payroll Automation",
+  },
+  {
+    id: "inventory-system",
+    category: "school",
+    badge: "Academic System",
+    role: "Main Developer",
+    tag: "Warehouse Management",
+    title: "Enterprise Inventory System",
+    description:
+      "Digital warehouse inventory tracking, stock in/out logging, reorder threshold alerts, and supplier record management.",
+    githubUrl: "https://github.com/Watot12345/inventory-system.git",
+    tech: ["PHP", "MySQL", "Inventory Tracking", "Bootstrap"],
+    metrics: "Stock & Reorder Alerts",
   },
   {
     id: "logistics-system",
-    category: "client",
-    badge: "Supply Chain System",
-    role: "Backend Developer",
+    category: "school",
+    badge: "Academic System",
+    role: "Main Developer",
     tag: "Fleet Operations",
     title: "Logistics & Freight Tracking System",
     description:
       "End-to-end cargo shipment, driver assignment, vehicle dispatch, and warehouse freight tracker with automated delivery status updates.",
-    githubUrl: "https://github.com/Watot12345/Logistics-System",
+    githubUrl: "https://github.com/Watot12345/Logistics-System.git",
     tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database"],
-    metrics: "Freight & Delivery Dispatch",
+    metrics: "Fleet & Cargo Dispatch",
+  },
+  {
+    id: "barkadahub-app",
+    category: "school",
+    badge: "Academic Mobile Project",
+    role: "Co-Developer",
+    tag: "Campus Social Platform",
+    title: "BarkadaHub Mobile App",
+    description:
+      "Collaborative mobile social connection platform built for student groups and campus communities.",
+    githubUrl: "https://github.com/zel-asp/BarkadaHubApp.git",
+    tech: ["HTML5", "JavaScript", "Mobile App", "CSS3"],
+    metrics: "Campus Mobile Hub",
   },
 ];
 
@@ -196,11 +238,15 @@ export function BrylProjects() {
   const [filter, setFilter] = useState<ProjectCategory>("all");
 
   const filtered = PROJECTS_DATA.filter((p) => {
+    if (filter === "client") return p.category === "client";
     if (filter === "personal") return p.category === "personal";
     if (filter === "gov") return p.category === "gov";
-    if (filter === "client") return p.category === "client";
+    if (filter === "school") return p.category === "school";
     return true;
   });
+
+  // Always ensure projects with liveUrl appear at the top
+  const sorted = [...filtered].sort((a, b) => (b.liveUrl ? 1 : 0) - (a.liveUrl ? 1 : 0));
 
   return (
     <section id="projects" className="py-12 border-b border-border">
@@ -234,6 +280,17 @@ export function BrylProjects() {
         </button>
         <button
           type="button"
+          onClick={() => setFilter("client")}
+          className={`rounded-md px-3 py-1 transition-colors ${
+            filter === "client"
+              ? "bg-muted font-semibold text-foreground"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Client Systems ({PROJECTS_DATA.filter((p) => p.category === "client").length})
+        </button>
+        <button
+          type="button"
           onClick={() => setFilter("personal")}
           className={`rounded-md px-3 py-1 transition-colors ${
             filter === "personal"
@@ -241,7 +298,7 @@ export function BrylProjects() {
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          Personal & Startups ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
+          Personal Projects ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
         </button>
         <button
           type="button"
@@ -256,20 +313,20 @@ export function BrylProjects() {
         </button>
         <button
           type="button"
-          onClick={() => setFilter("client")}
+          onClick={() => setFilter("school")}
           className={`rounded-md px-3 py-1 transition-colors ${
-            filter === "client"
+            filter === "school"
               ? "bg-muted font-semibold text-foreground"
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          Client Systems ({PROJECTS_DATA.filter((p) => p.category === "client").length})
+          School Projects ({PROJECTS_DATA.filter((p) => p.category === "school").length})
         </button>
       </div>
 
       {/* Projects List */}
       <div className="flex flex-col gap-6">
-        {filtered.map((project) => (
+        {sorted.map((project) => (
           <article
             key={project.id}
             className="group relative rounded-2xl border border-border bg-card p-5 sm:p-6 transition-all duration-200 hover:border-foreground/30 shadow-xs"
@@ -284,6 +341,16 @@ export function BrylProjects() {
                 <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                   <Sparkles className="h-2.5 w-2.5" />
                   {project.role}
+                </span>
+              )}
+
+              {project.liveUrl && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  Live Site
                 </span>
               )}
 
@@ -314,12 +381,18 @@ export function BrylProjects() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card shadow-xs">
                     {project.category === "personal" ? (
                       <Rocket className="h-5 w-5 text-foreground" />
+                    ) : project.category === "school" ? (
+                      <GraduationCap className="h-5 w-5 text-foreground" />
                     ) : (
                       <Code2 className="h-5 w-5 text-foreground" />
                     )}
                   </div>
                   <span className="mt-2 text-[11px] font-semibold text-foreground text-center">
-                    {project.category === "personal" ? "Startup Architecture" : "System Architecture"}
+                    {project.category === "personal"
+                      ? "Personal Project"
+                      : project.category === "school"
+                      ? "School System"
+                      : "Client System"}
                   </span>
                   <span className="text-[10px] text-muted-foreground">
                     {project.role ? project.role : "Open Source"}
