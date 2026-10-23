@@ -7,8 +7,7 @@ import { testimonials } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui-custom/section-heading";
 
 /**
- * Testimonials section: auto-advancing carousel of client quotes
- * with star ratings, avatars, and manual navigation controls.
+ * Clean, formal testimonials section with client endorsements.
  */
 export function Testimonials() {
   const [index, setIndex] = useState(0);
@@ -45,74 +44,68 @@ export function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative px-4 py-24 sm:px-6 lg:px-8 sm:py-32"
+      className="relative px-4 py-20 sm:px-6 lg:px-8 sm:py-28"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-4xl">
         <SectionHeading
           eyebrow="Testimonials"
           title={
             <>
-              What clients{" "}
-              <span className="text-gradient-fire">say</span>
+              What clients <span className="text-gradient-fire">say</span>
             </>
           }
-          description="The measure of my work is the trust of the people I build for. Here's what they have to say."
+          description="The measure of my work is the trust of the teams and clients I build for."
         />
 
         <div
-          className="relative mt-14"
+          className="relative mt-12"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           {/* Main quote card */}
-          <div className="relative min-h-[340px] sm:min-h-[300px]">
+          <div className="relative min-h-[300px]">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active.id}
                 custom={direction}
-                initial={{ opacity: 0, x: direction > 0 ? 60 : -60 }}
+                initial={{ opacity: 0, x: direction > 0 ? 30 : -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: direction > 0 ? -60 : 60 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="glass-strong relative rounded-3xl border border-white/10 p-8 sm:p-10"
+                exit={{ opacity: 0, x: direction > 0 ? -30 : 30 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="relative rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xs"
               >
-                {/* Big quote mark */}
-                <Quote
-                  className="absolute right-8 top-8 h-16 w-16 opacity-10"
-                  style={{ color: "#dc2626" }}
-                />
+                {/* Quote mark */}
+                <Quote className="absolute right-6 top-6 h-12 w-12 text-muted-foreground/15" />
 
                 {/* Stars */}
                 <div className="flex gap-1">
                   {Array.from({ length: active.rating }).map((_, i) => (
                     <Star
                       key={i}
-                      className="h-5 w-5 fill-current"
-                      style={{ color: "#dc2626" }}
+                      className="h-4 w-4 fill-amber-500 text-amber-500"
                     />
                   ))}
                 </div>
 
                 {/* Quote */}
-                <blockquote className="mt-6 text-pretty text-lg leading-relaxed text-white sm:text-xl">
+                <blockquote className="mt-5 text-pretty text-base leading-relaxed text-foreground sm:text-lg">
                   &ldquo;{active.quote}&rdquo;
                 </blockquote>
 
                 {/* Author */}
-                <div className="mt-8 flex items-center gap-4 border-t border-white/10 pt-6">
+                <div className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
                   <img
                     src={active.avatar}
                     alt={active.name}
-                    className="h-14 w-14 rounded-full border-2 object-cover"
-                    style={{ borderColor: "rgba(220,38,38,0.4)" }}
+                    className="h-12 w-12 rounded-full border border-border object-cover"
                   />
                   <div>
-                    <p className="font-bold text-white">{active.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="font-bold text-foreground text-sm sm:text-base">{active.name}</p>
+                    <p className="text-xs text-muted-foreground">
                       {active.role} · {active.company}
                     </p>
                   </div>
-                  <span className="ml-auto text-xs text-muted-foreground">
+                  <span className="ml-auto text-xs text-muted-foreground hidden xs:block">
                     {active.date}
                   </span>
                 </div>
@@ -121,41 +114,38 @@ export function Testimonials() {
           </div>
 
           {/* Controls */}
-          <div className="mt-8 flex items-center justify-between">
+          <div className="mt-6 flex items-center justify-between">
             {/* Prev / Next */}
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => paginate(-1)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-colors hover:border-crimson/40 hover:bg-crimson/10"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
                 aria-label="Previous testimonial"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 type="button"
                 onClick={() => paginate(1)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-colors hover:border-crimson/40 hover:bg-crimson/10"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
                 aria-label="Next testimonial"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
 
             {/* Dots */}
-            <div className="flex gap-2">
+            <div className="flex gap-1.5">
               {testimonials.map((t, i) => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => goTo(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className="h-2 rounded-full transition-all duration-300"
-                  style={{
-                    width: i === index ? 28 : 8,
-                    backgroundColor:
-                      i === index ? "#dc2626" : "rgba(255,255,255,0.15)",
-                  }}
+                  className={`h-1.5 rounded-full transition-all duration-200 ${
+                    i === index ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/30"
+                  }`}
                 />
               ))}
             </div>

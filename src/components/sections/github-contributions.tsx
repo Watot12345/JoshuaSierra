@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 import {
   FaGithub,
   FaCodeBranch,
@@ -50,19 +51,34 @@ const YEAR_DETAILS: Record<
   },
 };
 
-// Portfolio Crimson/Red Scale (Levels 0 - 4)
-function getLevelColor(level: number) {
-  switch (level) {
-    case 1:
-      return "#4a0b0b";
-    case 2:
-      return "#8b1111";
-    case 3:
-      return "#dc2626";
-    case 4:
-      return "#ff4d4d";
-    default:
-      return "#161b22";
+// Authentic GitHub Contribution Palette (Adapts to Dark/Light theme)
+function getLevelColor(level: number, isDark = true) {
+  if (isDark) {
+    switch (level) {
+      case 1:
+        return "#0e4429";
+      case 2:
+        return "#006d32";
+      case 3:
+        return "#26a641";
+      case 4:
+        return "#39d353";
+      default:
+        return "#1c2128";
+    }
+  } else {
+    switch (level) {
+      case 1:
+        return "#9be9a8";
+      case 2:
+        return "#40c463";
+      case 3:
+        return "#30a14e";
+      case 4:
+        return "#216e39";
+      default:
+        return "#ebedf0";
+    }
   }
 }
 
@@ -98,11 +114,12 @@ function formatTooltipText(day: DayData | null) {
 }
 
 export function GithubContributions() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [selectedYear, setSelectedYear] = useState<YearFilter>("2026");
   const [days, setDays] = useState<DayData[]>([]);
   const [loading, setLoading] = useState(true);
   const [publicRepos, setPublicRepos] = useState<number | null>(null);
-  const [totalText, setTotalText] = useState("");
   const [yearCommits, setYearCommits] = useState<number | null>(null);
   const [allTimeCommits, setAllTimeCommits] = useState<number | null>(null);
   const [liveYearTotals, setLiveYearTotals] = useState<Record<string, number>>({});
@@ -110,6 +127,11 @@ export function GithubContributions() {
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted ? resolvedTheme === "dark" : true;
   const username = "Watot12345";
   const years: YearFilter[] = ["2026", "2025", "2024", "All Time"];
   const currentDetail = YEAR_DETAILS[selectedYear];
@@ -127,7 +149,6 @@ export function GithubContributions() {
     let cancelled = false;
     setLoading(true);
     setDays([]);
-    setTotalText("");
     setHoveredDay(null);
 
     fetch(`/api/github-contributions?username=${username}&year=${selectedYear}`)
@@ -135,7 +156,6 @@ export function GithubContributions() {
       .then((data) => {
         if (!cancelled) {
           setDays(data.days ?? []);
-          setTotalText(data.totalText ?? currentDetail.description);
           if (data.totalCount !== undefined) setYearCommits(data.totalCount);
           if (data.allTimeTotal !== undefined) setAllTimeCommits(data.allTimeTotal);
           if (data.yearTotals) setLiveYearTotals(data.yearTotals);
@@ -149,7 +169,7 @@ export function GithubContributions() {
     return () => {
       cancelled = true;
     };
-  }, [selectedYear, currentDetail.description]);
+  }, [selectedYear]);
 
   // Group into 7-row Sunday-to-Saturday week columns
   const weeksMatrix = useMemo(() => {
@@ -158,7 +178,6 @@ export function GithubContributions() {
     const matrix: (DayData | null)[][] = [];
     let currentWeek: (DayData | null)[] = [];
 
-    // Parse the first day date to get its Sunday-relative weekday (0 = Sun, 6 = Sat)
     const firstDateStr = days[0].date;
     const parts = firstDateStr.split("-");
     if (parts.length === 3) {
@@ -166,9 +185,8 @@ export function GithubContributions() {
       const month = parseInt(parts[1], 10) - 1;
       const day = parseInt(parts[2], 10);
       const dateObj = new Date(Date.UTC(year, month, day));
-      const startDayOfWeek = dateObj.getUTCDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+      const startDayOfWeek = dateObj.getUTCDay();
 
-      // Fill leading empty cells in week 0
       for (let i = 0; i < startDayOfWeek; i++) {
         currentWeek.push(null);
       }
@@ -192,72 +210,52 @@ export function GithubContributions() {
     return matrix;
   }, [days]);
 
-  // Dynamically calculate month label positions matching real GitHub month spacing
+  // Calculate month labels
   const monthLabels = useMemo(() => {
     const labels: { name: string; weekIndex: number }[] = [];
     const seenMonths = new Set<string>();
     let lastWeekIndex = -4;
 
     weeksMatrix.forEach((week, wIndex) => {
-      const validDay = week.find((d) => d !== null && d.date);
-      if (validDay && validDay.date) {
-        const parts = validDay.date.split("-");
+      const firstValidDay = week.find((d) => d !== null);
+      if (firstValidDay) {
+        const parts = firstValidDay.date.split("-");
         if (parts.length === 3) {
-          const year = parts[0];
-          const monthIndex = parseInt(parts[1], 10) - 1;
-          const monthKey =
-            selectedYear === "All Time" ? `${year}-${monthIndex}` : `${monthIndex}`;
-
-          if (
-            monthIndex >= 0 &&
-            monthIndex < 12 &&
-            !seenMonths.has(monthKey) &&
-            wIndex - lastWeekIndex >= 3
-          ) {
-            labels.push({ name: MONTH_NAMES[monthIndex], weekIndex: wIndex });
+          const monthIdx = parseInt(parts[1], 10) - 1;
+          const monthKey = `${parts[0]}-${parts[1]}`;
+          if (!seenMonths.has(monthKey) && wIndex - lastWeekIndex >= 3) {
             seenMonths.add(monthKey);
+            labels.push({ name: MONTH_NAMES[monthIdx], weekIndex: wIndex });
             lastWeekIndex = wIndex;
           }
         }
       }
     });
+
     return labels;
-  }, [weeksMatrix, selectedYear]);
+  }, [weeksMatrix]);
 
-  // Zoomed cell sizing for legibility: 15px cell size, 3.5px gap (18.5px step)
-  const CELL = 15;
-  const GAP = 3.5;
+  const CELL = 13;
+  const GAP = 3;
   const STEP = CELL + GAP;
-  const svgH = 7 * STEP; // ~130px
-  const topMonthOffset = 22; // 22px top space for Month labels
-
-  // Auto-scroll to align to current / recent contributions
-  useEffect(() => {
-    if (!loading && scrollContainerRef.current) {
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
-        }
-      }, 120);
-    }
-  }, [days, loading]);
+  const topMonthOffset = 22;
+  const svgH = 7 * STEP;
 
   const displayYearCommits =
-    yearCommits !== null ? String(yearCommits) : currentDetail.commits;
+    liveYearTotals[selectedYear] !== undefined
+      ? String(liveYearTotals[selectedYear])
+      : yearCommits !== null
+      ? String(yearCommits)
+      : currentDetail.commits;
+
   const displayAllTimeCommits =
-    allTimeCommits !== null ? String(allTimeCommits) : "642";
+    allTimeCommits !== null
+      ? String(allTimeCommits)
+      : YEAR_DETAILS["All Time"].commits;
 
   return (
-    <section id="github-activity" className="relative px-4 py-24 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Crimson ambient background glow */}
-      <div
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[600px] rounded-full opacity-20 blur-[120px]"
-        style={{
-          background: "radial-gradient(circle, rgba(220,38,38,0.5), transparent 70%)",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl">
+    <section id="github-activity" className="relative px-4 py-20 sm:px-6 lg:px-8 sm:py-28">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Open Source & Live Sync"
           title={
@@ -265,11 +263,11 @@ export function GithubContributions() {
               GitHub <span className="text-gradient-fire">Contributions</span>
             </>
           }
-          description={`Live real-time contribution calendar for @${username}`}
+          description={`Live real-time activity and contribution timeline for @${username}`}
         />
 
-        {/* ── Year Filter Tabs ── */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        {/* Year Filter Tabs */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
           {years.map((year) => {
             const count =
               liveYearTotals[year] !== undefined
@@ -282,26 +280,18 @@ export function GithubContributions() {
                 type="button"
                 onClick={() => setSelectedYear(year)}
                 className={cn(
-                  "flex items-center gap-2 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all duration-300 active:scale-95",
+                  "flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors sm:text-sm",
                   isSelected
-                    ? "text-white scale-105 shadow-lg shadow-crimson/30"
-                    : "text-muted-foreground hover:text-white hover:bg-white/5 border border-white/10"
+                    ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                    : "border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
-                style={
-                  isSelected
-                    ? {
-                        background: "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)",
-                        border: "1px solid rgba(255,255,255,0.2)",
-                      }
-                    : { backgroundColor: "rgba(18,18,18,0.7)" }
-                }
               >
-                <FaCalendarAlt className="h-3.5 w-3.5" />
+                <FaCalendarAlt className="h-3 w-3" />
                 <span>{year}</span>
                 <span
                   className={cn(
-                    "ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold",
-                    isSelected ? "bg-white/20 text-white" : "bg-white/10 text-muted-foreground"
+                    "ml-1 rounded-md px-1.5 py-0.2 text-[10px] font-bold",
+                    isSelected ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-muted-foreground"
                   )}
                 >
                   {count}
@@ -311,102 +301,82 @@ export function GithubContributions() {
           })}
         </div>
 
-        {/* ── Stat Cards ── */}
+        {/* Stat Cards */}
         <div className="mt-8 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {[
             {
-              icon: <FaFire className="h-6 w-6 text-crimson" />,
+              icon: <FaFire className="h-5 w-5 text-primary" />,
               label: `Commits (${selectedYear})`,
               value: displayYearCommits,
-              highlight: true,
             },
             {
-              icon: <FaCodeBranch className="h-6 w-6 text-crimson" />,
+              icon: <FaCodeBranch className="h-5 w-5 text-primary" />,
               label: "All-Time Commits",
               value: displayAllTimeCommits,
-              highlight: false,
             },
             {
-              icon: <FaStar className="h-6 w-6 text-crimson" />,
+              icon: <FaStar className="h-5 w-5 text-primary" />,
               label: "Public Repositories",
               value: publicRepos ? String(publicRepos) : "—",
-              highlight: false,
             },
             {
-              icon: <FaGithub className="h-6 w-6 text-crimson" />,
+              icon: <FaGithub className="h-5 w-5 text-primary" />,
               label: "GitHub Handle",
               value: `@${username}`,
-              highlight: false,
             },
           ].map((card, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className={cn(
-                "group relative overflow-hidden rounded-2xl border p-4.5 transition-all duration-300 backdrop-blur-xl",
-                card.highlight
-                  ? "border-crimson/40 bg-crimson/10 shadow-lg shadow-crimson/10"
-                  : "border-white/10 bg-[#121212]/80 hover:border-crimson/30 hover:bg-[#161616]"
-              )}
+              transition={{ delay: i * 0.05 }}
+              className="rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:border-foreground/30"
             >
-              <div className="flex items-center gap-3.5">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 shrink-0 transition-transform duration-300 group-hover:scale-110">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted/60 shrink-0">
                   {card.icon}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground truncate">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground truncate">
                     {card.label}
                   </p>
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={`${card.label}-${card.value}`}
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className={cn(
-                        "font-black mt-0.5 truncate tracking-tight text-xl sm:text-2xl",
-                        card.highlight ? "text-gradient-fire" : "text-white"
-                      )}
-                    >
-                      {card.value}
-                    </motion.p>
-                  </AnimatePresence>
+                  <p className="mt-0.5 text-lg font-bold text-foreground truncate sm:text-xl">
+                    {card.value}
+                  </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* ── Official GitHub Structure + Portfolio Crimson Theme Heatmap Card ── */}
+        {/* GitHub Contribution Heatmap Card */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="relative mt-8 overflow-hidden rounded-3xl border border-white/12 bg-[#0c0d12]/90 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl text-center"
+          transition={{ duration: 0.4 }}
+          className="relative mt-8 overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xs text-center"
         >
           {/* Card Header */}
-          <div className="flex flex-col items-center justify-center gap-1.5 border-b border-white/10 pb-5 text-center">
-            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+          <div className="flex flex-col items-center justify-center gap-1.5 border-b border-border pb-5 text-center">
+            <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
               {displayYearCommits} contributions in {selectedYear === "All Time" ? "all years" : selectedYear}
             </h3>
 
-            {/* Hover Tooltip display badge matching GitHub exact tooltip text */}
-            <div className="min-h-[30px] mt-1 flex items-center justify-center">
+            {/* Hover Tooltip display badge */}
+            <div className="min-h-[26px] mt-1 flex items-center justify-center">
               {hoveredDay ? (
-                <div className="inline-flex items-center gap-2 rounded-lg border border-crimson/40 bg-crimson/20 px-3.5 py-1 text-xs font-mono text-white shadow-md backdrop-blur-md">
+                <div className="inline-flex items-center gap-2 rounded-md border border-border bg-muted/80 px-3 py-1 text-xs font-mono text-foreground shadow-xs">
                   <span
-                    className="h-2.5 w-2.5 rounded-sm"
-                    style={{ backgroundColor: getLevelColor(hoveredDay.level) }}
+                    className="h-2.5 w-2.5 rounded-xs"
+                    style={{ backgroundColor: getLevelColor(hoveredDay.level, isDark) }}
                   />
                   <span>{formatTooltipText(hoveredDay)}</span>
                 </div>
               ) : (
-                <span className="text-xs text-muted-foreground/75 inline-block font-mono">
-                  Hover over squares for details · Scroll horizontally to navigate
+                <span className="text-xs text-muted-foreground inline-block font-mono">
+                  Hover over squares for details
                 </span>
               )}
             </div>
@@ -416,29 +386,29 @@ export function GithubContributions() {
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedYear}
-              initial={{ opacity: 0, scale: 0.99 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.99 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               ref={scrollContainerRef}
-              className="no-scrollbar overflow-x-auto pt-6 pb-2 scroll-smooth flex justify-center"
+              className="no-scrollbar overflow-x-auto pt-6 pb-2 flex justify-center"
             >
               {loading ? (
-                <div className="flex flex-col items-center justify-center gap-3 py-20 text-muted-foreground">
-                  <FaSpinner className="h-8 w-8 animate-spin text-crimson" />
-                  <p className="text-sm font-mono text-slate-300">
+                <div className="flex flex-col items-center justify-center gap-3 py-16 text-muted-foreground">
+                  <FaSpinner className="h-6 w-6 animate-spin text-primary" />
+                  <p className="text-xs font-mono">
                     Loading @{username} contribution graph…
                   </p>
                 </div>
               ) : (
-                <div className="mx-auto flex items-start gap-3 justify-center py-2 select-none">
-                  {/* Left Day Labels: Mon (row 1), Wed (row 3), Fri (row 5) ONLY */}
+                <div className="mx-auto flex items-start gap-2.5 justify-center py-2 select-none">
+                  {/* Day Labels */}
                   <div
-                    className="flex flex-col text-[11px] font-mono font-medium text-slate-400 shrink-0 pr-1 text-right"
+                    className="flex flex-col text-[10px] font-mono font-medium text-muted-foreground shrink-0 pr-1 text-right"
                     style={{
-                      gap: `${STEP - 11}px`,
-                      paddingTop: `${topMonthOffset + STEP - 1}px`, // align with Mon (row 1)
-                      width: "32px",
+                      gap: `${STEP - 10}px`,
+                      paddingTop: `${topMonthOffset + STEP - 2}px`,
+                      width: "28px",
                     }}
                   >
                     <span>Mon</span>
@@ -446,20 +416,20 @@ export function GithubContributions() {
                     <span>Fri</span>
                   </div>
 
-                  {/* SVG Grid: 15px cells, 3.5px gap, Sun-Sat 7 rows */}
+                  {/* SVG Grid */}
                   <svg
                     width={weeksMatrix.length * STEP}
                     height={topMonthOffset + svgH}
                     className="overflow-visible"
                   >
-                    {/* Month Labels inside SVG coordinate space */}
                     {monthLabels.map((lbl) => (
                       <text
                         key={`${lbl.name}-${lbl.weekIndex}`}
                         x={lbl.weekIndex * STEP}
                         y={14}
-                        fill="#94a3b8"
-                        fontSize="12"
+                        fill="currentColor"
+                        className="text-muted-foreground"
+                        fontSize="11"
                         fontFamily="monospace"
                         fontWeight="600"
                       >
@@ -467,7 +437,6 @@ export function GithubContributions() {
                       </text>
                     ))}
 
-                    {/* Daily contribution cells: 7 rows (Sun=0 .. Sat=6) */}
                     {weeksMatrix.map((week, wIndex) =>
                       week.map((day, dIndex) => {
                         if (!day) {
@@ -478,14 +447,14 @@ export function GithubContributions() {
                               y={topMonthOffset + dIndex * STEP}
                               width={CELL}
                               height={CELL}
-                              rx="3.5"
-                              ry="3.5"
+                              rx="2.5"
+                              ry="2.5"
                               fill="transparent"
                             />
                           );
                         }
 
-                        const color = getLevelColor(day.level);
+                        const color = getLevelColor(day.level, isDark);
                         const cellY = topMonthOffset + dIndex * STEP;
                         return (
                           <rect
@@ -494,16 +463,14 @@ export function GithubContributions() {
                             y={cellY}
                             width={CELL}
                             height={CELL}
-                            rx="3.5"
-                            ry="3.5"
+                            rx="2.5"
+                            ry="2.5"
                             fill={color}
-                            stroke="rgba(255,255,255,0.04)"
+                            stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
                             strokeWidth="1"
                             onMouseEnter={() => setHoveredDay(day)}
                             onMouseLeave={() => setHoveredDay(null)}
-                            style={{
-                              cursor: "pointer",
-                            }}
+                            style={{ cursor: "pointer" }}
                           >
                             <title>{formatTooltipText(day)}</title>
                           </rect>
@@ -516,21 +483,19 @@ export function GithubContributions() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Footer Legend with Crimson Palette */}
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-400 border-t border-white/10 pt-4 px-2">
-            <span className="text-slate-400">
-              Learn how we count contributions
-            </span>
-            <div className="flex items-center gap-2">
+          {/* Footer Legend */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-muted-foreground border-t border-border pt-4 px-2">
+            <span>Real-time GitHub activity</span>
+            <div className="flex items-center gap-1.5">
               <span>Less</span>
               {[0, 1, 2, 3, 4].map((l) => (
                 <span
                   key={l}
-                  className="inline-block rounded-md border border-white/10"
+                  className="inline-block rounded-xs border border-border"
                   style={{
                     width: CELL,
                     height: CELL,
-                    backgroundColor: getLevelColor(l),
+                    backgroundColor: getLevelColor(l, isDark),
                   }}
                 />
               ))}
@@ -542,6 +507,3 @@ export function GithubContributions() {
     </section>
   );
 }
-
-
-

@@ -1,6 +1,3 @@
-import { LoadingScreen } from "@/components/layouts/loading-screen";
-import { ScrollProgress } from "@/components/layouts/scroll-progress";
-import { CustomCursor } from "@/components/layouts/custom-cursor";
 import { Navbar } from "@/components/layouts/navbar";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { Footer } from "@/components/layouts/footer";
@@ -19,15 +16,12 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { Contact } from "@/components/sections/contact";
 
 /**
- * Portfolio home — a single-page, award-winning-style portfolio for
- * Joshua Sierra (Junior Full-Stack Software Engineer).
+ * Portfolio home — clean, formal, high-reliability software engineer portfolio
+ * for Joshua Sierra.
  */
 export default function Home() {
   return (
     <>
-      <LoadingScreen />
-      <ScrollProgress />
-      <CustomCursor />
       <AnimatedBackground />
 
       <div className="relative flex min-h-screen flex-col">

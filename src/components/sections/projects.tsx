@@ -20,8 +20,7 @@ import { MobileBottomSheet } from "@/components/ui-custom/mobile-bottom-sheet";
 import { cn } from "@/lib/utils";
 
 /**
- * Projects section: filterable grid of featured project cards that
- * open a detailed modal with gallery, features, challenges, and results.
+ * Clean, formal projects section with interactive details modal.
  */
 export function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -30,20 +29,17 @@ export function Projects() {
   const visibleProjects =
     filter === "Featured" ? projects.filter((p) => p.featured) : projects;
 
-  const categories = Array.from(new Set(projects.map((p) => p.category)));
-
   return (
-    <section id="projects" className="relative px-4 py-24 sm:px-6 lg:px-8 sm:py-32">
+    <section id="projects" className="relative px-4 py-20 sm:px-6 lg:px-8 sm:py-28">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Featured Work"
           title={
             <>
-              Projects I&apos;m{" "}
-              <span className="text-gradient-fire">proud of</span>
+              Projects I&apos;m <span className="text-gradient-fire">proud of</span>
             </>
           }
-          description="A selection of products and experiences I've designed and engineered. Click any project to dive deeper."
+          description="A selection of software platforms and web experiences I've engineered. Click any project to view case study details."
         />
 
         {/* Filter */}
@@ -54,20 +50,11 @@ export function Projects() {
               type="button"
               onClick={() => setFilter(f)}
               className={cn(
-                "rounded-full px-5 py-2 text-sm font-medium transition-colors",
-                filter === f ? "text-white" : "text-muted-foreground hover:text-white"
-              )}
-              style={
+                "rounded-lg px-4 py-1.5 text-xs font-medium transition-colors sm:text-sm",
                 filter === f
-                  ? {
-                      background: "linear-gradient(135deg, #dc2626, #991b1b)",
-                      boxShadow: "0 4px 15px -3px rgba(220,38,38,0.4)",
-                    }
-                  : {
-                      backgroundColor: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                    }
-              }
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
             >
               {f === "Featured" ? "⭐ Featured" : "All Projects"}
             </button>
@@ -77,7 +64,7 @@ export function Projects() {
         {/* Grid */}
         <motion.div
           layout
-          className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2"
+          className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2"
         >
           <AnimatePresence mode="popLayout">
             {visibleProjects.map((project) => (
@@ -86,51 +73,40 @@ export function Projects() {
                 layout
                 type="button"
                 onClick={() => setSelectedProject(project)}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                whileHover={{ y: -6 }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-colors hover:border-crimson/40"
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.25 }}
+                whileHover={{ y: -3 }}
+                className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card text-left shadow-xs transition-colors hover:border-foreground/30"
               >
                 {/* Image */}
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
-
                   {/* Category badge */}
-                  <span
-                    className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur"
-                  >
+                  <span className="absolute left-3.5 top-3.5 rounded-md border border-border/80 bg-background/90 px-2.5 py-1 text-xs font-medium text-foreground shadow-xs backdrop-blur-md">
                     {project.category}
                   </span>
 
-                  {/* Featured star */}
+                  {/* Featured badge */}
                   {project.featured ? (
-                    <span
-                      className="absolute right-4 top-4 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-white backdrop-blur"
-                      style={{
-                        backgroundColor: "rgba(220,38,38,0.3)",
-                        border: "1px solid rgba(220,38,38,0.5)",
-                      }}
-                    >
+                    <span className="absolute right-3.5 top-3.5 flex items-center gap-1 rounded-md border border-border/80 bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-xs backdrop-blur-md">
                       ⭐ Featured
                     </span>
                   ) : null}
 
                   {/* Quick links */}
-                  <div className="absolute bottom-4 right-4 flex gap-2 opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100">
+                  <div className="absolute bottom-3.5 right-3.5 flex gap-2 opacity-100 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100">
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-black/60 text-white backdrop-blur transition-colors hover:bg-crimson"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background/90 text-foreground shadow-xs backdrop-blur-md transition-colors hover:bg-muted"
                       aria-label="View source on GitHub"
                     >
                       <Github className="h-4 w-4" />
@@ -140,7 +116,7 @@ export function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-black/60 text-white backdrop-blur transition-colors hover:bg-crimson"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background/90 text-foreground shadow-xs backdrop-blur-md transition-colors hover:bg-muted"
                       aria-label="Visit live site"
                     >
                       <ExternalLink className="h-4 w-4" />
@@ -149,30 +125,30 @@ export function Projects() {
                 </div>
 
                 {/* Body */}
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Folder className="h-3.5 w-3.5" />
                     {project.year}
                   </div>
-                  <h3 className="mt-2 text-xl font-bold text-white transition-colors group-hover:text-crimson">
+                  <h3 className="mt-1.5 text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
                     {project.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
                     {project.shortDescription}
                   </p>
 
                   {/* Tech tags */}
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-1.5">
                     {project.techStack.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-muted-foreground"
+                        className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.techStack.length > 4 ? (
-                      <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                      <span className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
                         +{project.techStack.length - 4}
                       </span>
                     ) : null}
@@ -224,54 +200,47 @@ function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
     <AnimatePresence>
       {project ? (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
             onClick={onClose}
           />
 
           {/* Panel */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.98, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="glass-strong relative z-10 max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10"
+            exit={{ opacity: 0, scale: 0.98, y: 15 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="relative z-10 max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-border bg-card text-card-foreground shadow-2xl"
           >
             {/* Close button */}
             <button
               type="button"
               onClick={onClose}
-              className="sticky right-4 top-4 z-30 float-right m-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/70 text-white backdrop-blur transition-colors hover:bg-crimson"
+              className="sticky right-4 top-4 z-30 float-right m-4 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground shadow-xs transition-colors hover:bg-muted"
               aria-label="Close project details"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </button>
 
             {/* Hero image */}
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-t-3xl">
+            <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border bg-muted">
               <img
                 src={project.image}
                 alt={project.title}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <span
-                  className="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white backdrop-blur"
-                  style={{
-                    backgroundColor: "rgba(220,38,38,0.3)",
-                    border: "1px solid rgba(220,38,38,0.5)",
-                  }}
-                >
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-card via-card/70 to-transparent p-6 sm:p-8">
+                <span className="inline-block rounded-md border border-border bg-background/80 px-2.5 py-1 text-xs font-semibold text-foreground backdrop-blur-md">
                   {project.category}
                 </span>
-                <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">
+                <h2 className="mt-2 text-2xl font-bold text-foreground sm:text-3xl">
                   {project.title}
                 </h2>
               </div>
@@ -287,9 +256,9 @@ function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
 
 function ProjectDetailsContent({ project }: { project: Project }) {
   return (
-    <div className="p-1 sm:p-4">
+    <div className="p-4 sm:p-6">
       {/* Meta grid */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
         <MetaItem icon={Calendar} label="Year" value={String(project.year)} />
         <MetaItem icon={User} label="Role" value={project.role} />
         <MetaItem icon={Clock} label="Duration" value={project.duration} />
@@ -301,7 +270,7 @@ function ProjectDetailsContent({ project }: { project: Project }) {
         <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Overview
         </h3>
-        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
           {project.fullDescription}
         </p>
       </section>
@@ -315,12 +284,9 @@ function ProjectDetailsContent({ project }: { project: Project }) {
           {project.features.map((feature) => (
             <li
               key={feature}
-              className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-sm text-muted-foreground"
+              className="flex items-start gap-2.5 rounded-lg border border-border bg-muted/40 p-3 text-xs text-foreground sm:text-sm"
             >
-              <span
-                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ backgroundColor: "#dc2626" }}
-              />
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
               {feature}
             </li>
           ))}
@@ -330,10 +296,10 @@ function ProjectDetailsContent({ project }: { project: Project }) {
       {/* Challenges */}
       <section className="mt-6">
         <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <Target className="h-4 w-4" style={{ color: "#dc2626" }} />
+          <Target className="h-4 w-4 text-primary" />
           The Challenge
         </h3>
-        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
           {project.challenges}
         </p>
       </section>
@@ -341,20 +307,16 @@ function ProjectDetailsContent({ project }: { project: Project }) {
       {/* Results */}
       <section className="mt-6">
         <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <TrendingUp className="h-4 w-4" style={{ color: "#dc2626" }} />
+          <TrendingUp className="h-4 w-4 text-primary" />
           Results & Impact
         </h3>
         <ul className="mt-2.5 grid gap-2 sm:grid-cols-2">
           {project.results.map((result) => (
             <li
               key={result}
-              className="flex items-start gap-2.5 rounded-xl border border-crimson/20 p-3 text-sm text-white"
-              style={{
-                backgroundColor: "rgba(220,38,38,0.06)",
-                borderColor: "rgba(220,38,38,0.2)",
-              }}
+              className="flex items-start gap-2.5 rounded-lg border border-border bg-muted/40 p-3 text-xs font-medium text-foreground sm:text-sm"
             >
-              <TrendingUp className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "#dc2626" }} />
+              <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               {result}
             </li>
           ))}
@@ -366,11 +328,11 @@ function ProjectDetailsContent({ project }: { project: Project }) {
         <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Tech Stack
         </h3>
-        <div className="mt-2.5 flex flex-wrap gap-2">
+        <div className="mt-2.5 flex flex-wrap gap-1.5">
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white"
+              className="rounded-md border border-border bg-muted/60 px-2.5 py-1 text-xs font-medium text-foreground"
             >
               {tech}
             </span>
@@ -389,19 +351,19 @@ function ProjectDetailsContent({ project }: { project: Project }) {
               key={i}
               src={img}
               alt={`${project.title} screenshot ${i + 1}`}
-              className="aspect-video w-full rounded-xl border border-white/10 object-cover"
+              className="aspect-video w-full rounded-lg border border-border object-cover"
             />
           ))}
         </div>
       </section>
 
       {/* Actions */}
-      <div className="mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-6">
+      <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-6">
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition-colors hover:bg-white/10"
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-muted sm:text-sm"
         >
           <Github className="h-4 w-4" />
           View Code
@@ -410,11 +372,7 @@ function ProjectDetailsContent({ project }: { project: Project }) {
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105"
-          style={{
-            background: "linear-gradient(135deg, #dc2626, #991b1b)",
-            boxShadow: "0 8px 25px -5px rgba(220,38,38,0.5)",
-          }}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 sm:text-sm"
         >
           <ExternalLink className="h-4 w-4" />
           Live Demo
@@ -434,12 +392,12 @@ function MetaItem({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+    <div className="rounded-lg border border-border bg-muted/40 p-3">
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-        <Icon className="h-3.5 w-3.5" style={{ color: "#dc2626" }} />
+        <Icon className="h-3.5 w-3.5 text-primary" />
         {label}
       </div>
-      <p className="mt-1.5 text-sm font-semibold text-white">{value}</p>
+      <p className="mt-1 text-xs font-bold text-foreground sm:text-sm">{value}</p>
     </div>
   );
 }

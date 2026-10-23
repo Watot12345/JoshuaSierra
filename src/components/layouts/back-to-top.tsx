@@ -13,7 +13,7 @@ export function BackToTop() {
 
   useEffect(() => {
     const onScroll = (): void => {
-      setVisible(window.scrollY > 600);
+      setVisible(window.scrollY > 500);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -31,19 +31,14 @@ export function BackToTop() {
           type="button"
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-110 sm:bottom-8 sm:right-8"
-          style={{
-            background: "linear-gradient(135deg, #dc2626, #991b1b)",
-            boxShadow: "0 8px 30px -5px rgba(220,38,38,0.5)",
-          }}
-          initial={{ opacity: 0, scale: 0, y: 20 }}
+          className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground shadow-sm transition-colors hover:bg-muted sm:bottom-8 sm:right-8"
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0, y: 20 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          whileHover={{ y: -3 }}
+          exit={{ opacity: 0, scale: 0.8, y: 10 }}
+          transition={{ duration: 0.2 }}
           whileTap={{ scale: 0.95 }}
         >
-          <ArrowUp className="h-5 w-5" />
+          <ArrowUp className="h-4 w-4" />
         </motion.button>
       ) : null}
     </AnimatePresence>

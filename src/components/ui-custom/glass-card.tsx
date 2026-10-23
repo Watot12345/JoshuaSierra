@@ -13,7 +13,7 @@ interface GlassCardProps extends HTMLMotionProps<"div"> {
 }
 
 /**
- * Reusable glassmorphism card with optional hover lift and crimson glow.
+ * Reusable card with subtle hover lift and formal borders.
  */
 export function GlassCard({
   children,
@@ -26,18 +26,14 @@ export function GlassCard({
   return (
     <motion.div
       className={cn(
-        strong ? "glass-strong" : "glass",
-        "rounded-2xl transition-colors duration-300",
-        hover && "hover:border-crimson/30",
-        glow && "glow-crimson",
+        "rounded-xl border border-border bg-card text-card-foreground transition-all duration-200",
+        hover && "hover:border-border/80 hover:shadow-xs",
+        strong && "shadow-xs",
         className
       )}
-      style={{
-        ...(hover ? { borderColor: undefined } : {}),
-      }}
       whileHover={
         hover
-          ? { y: -6, transition: { duration: 0.3, ease: "easeOut" } }
+          ? { y: -2, transition: { duration: 0.15, ease: "easeOut" } }
           : undefined
       }
       {...props}
