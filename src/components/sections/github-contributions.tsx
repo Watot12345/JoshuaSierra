@@ -12,6 +12,7 @@ import {
   FaSpinner,
 } from "react-icons/fa";
 import { SectionHeading } from "@/components/ui-custom/section-heading";
+import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 
 type YearFilter = "2026" | "2025" | "2024" | "All Time";
@@ -115,7 +116,7 @@ function formatTooltipText(day: DayData | null) {
 
 export function GithubContributions() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [selectedYear, setSelectedYear] = useState<YearFilter>("2026");
   const [days, setDays] = useState<DayData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,10 +127,6 @@ export function GithubContributions() {
   const [hoveredDay, setHoveredDay] = useState<DayData | null>(null);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isDark = mounted ? resolvedTheme === "dark" : true;
   const username = "Watot12345";
@@ -147,6 +144,7 @@ export function GithubContributions() {
   // Fetch real contribution heatmap data per year
   useEffect(() => {
     let cancelled = false;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     setDays([]);
     setHoveredDay(null);
@@ -254,17 +252,20 @@ export function GithubContributions() {
       : YEAR_DETAILS["All Time"].commits;
 
   return (
-    <section id="github-activity" className="relative px-4 py-20 sm:px-6 lg:px-8 sm:py-28">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Open Source & Live Sync"
-          title={
-            <>
-              GitHub <span className="text-gradient-fire">Contributions</span>
-            </>
-          }
-          description={`Live real-time activity and contribution timeline for @${username}`}
-        />
+    <section id="github-activity" className="py-12 border-b border-border">
+      <div className="mb-6 flex items-baseline justify-between">
+        <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          05 — github activity
+        </h2>
+        <a
+          href={`https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          @{username} ↗
+        </a>
+      </div>
 
         {/* Year Filter Tabs */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
@@ -503,7 +504,6 @@ export function GithubContributions() {
             </div>
           </div>
         </motion.div>
-      </div>
     </section>
   );
 }

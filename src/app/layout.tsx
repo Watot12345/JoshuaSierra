@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joshuasierra.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   title: "Joshua Sierra — Full-Stack Software Engineer",
   description:
     "Portfolio of Joshua Sierra, a Full-Stack Software Engineer based in Manila, Philippines. Built a live government health platform (civentral.tech) serving 1,000+ citizens. Open for freelance & full-time opportunities.",

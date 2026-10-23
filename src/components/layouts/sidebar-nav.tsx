@@ -1,0 +1,342 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import {
+  FolderKanban,
+  Briefcase,
+  Layers,
+  GitBranch,
+  GraduationCap,
+  MessageSquareQuote,
+  Mail,
+  FileText,
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Laptop,
+} from "lucide-react";
+import { useMounted } from "@/hooks/use-mounted";
+import { profile } from "@/data/portfolio";
+import { cn } from "@/lib/utils";
+
+const NAV_LINKS = [
+  { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
+  { id: "experience", label: "Experience", href: "#experience", icon: Briefcase },
+  { id: "stack", label: "Stack", href: "#stack", icon: Layers },
+  { id: "education", label: "Education", href: "#education", icon: GraduationCap },
+  { id: "github", label: "GitHub Activity", href: "#github-activity", icon: GitBranch },
+  { id: "testimonials", label: "Recommendations", href: "#testimonials", icon: MessageSquareQuote },
+  { id: "contact", label: "Contact", href: "#contact", icon: Mail },
+];
+
+export function SidebarNav() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeId, setActiveId] = useState("projects");
+  const { theme, setTheme } = useTheme();
+  const mounted = useMounted();
+
+  // Update active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 200;
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const item = NAV_LINKS[i];
+        const el = document.querySelector(item.href);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY;
+          if (scrollPos >= top) {
+            setActiveId(item.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setMobileOpen(false);
+  };
+
+  return (
+    <>
+      {/* ── Fixed Desktop Left Sidebar (lg+) ── */}
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 xl:w-64 flex-col justify-between border-r border-border bg-card/60 backdrop-blur-md px-6 py-8 lg:flex">
+        {/* Top: Brand info */}
+        <div>
+          <a
+            href="#home"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="group block"
+          >
+            <h1 className="font-mono text-base font-bold tracking-tight text-foreground transition-opacity group-hover:opacity-75">
+              {profile.fullName}
+            </h1>
+            <p className="mt-1 font-mono text-xs text-muted-foreground">
+              Full-Stack Developer
+            </p>
+          </a>
+
+          {/* Availability pill */}
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            <span>Available for work</span>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="mt-8 flex flex-col gap-1 font-mono text-xs">
+            {NAV_LINKS.map((link) => {
+              const Icon = link.icon;
+              const isActive = activeId === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors",
+                    isActive
+                      ? "bg-muted font-semibold text-foreground"
+                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                  )}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span>{link.label}</span>
+                </a>
+              );
+            })}
+
+            <div className="my-2 h-px bg-border" />
+
+            {/* Quick Resume Link */}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+            >
+              <FileText className="h-3.5 w-3.5 shrink-0" />
+              <span>Resume (PDF) ↗</span>
+            </a>
+          </nav>
+        </div>
+
+        {/* Bottom: Theme Switcher & Email */}
+        <div className="border-t border-border pt-5">
+          {/* Theme switcher */}
+          <div className="mb-4 flex items-center justify-between">
+            <span className="text-[11px] font-mono text-muted-foreground">Theme</span>
+            {mounted ? (
+              <div
+                className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40"
+                role="group"
+                aria-label="Theme"
+              >
+                <button
+                  type="button"
+                  onClick={() => setTheme("system")}
+                  className={cn(
+                    "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
+                    theme === "system"
+                      ? "bg-background text-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                  title="System theme"
+                >
+                  <Laptop className="h-3 w-3" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme("light")}
+                  className={cn(
+                    "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
+                    theme === "light"
+                      ? "bg-background text-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                  title="Light theme"
+                >
+                  <Sun className="h-3 w-3" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme("dark")}
+                  className={cn(
+                    "flex h-6 w-6 items-center justify-center rounded-full transition-colors",
+                    theme === "dark"
+                      ? "bg-background text-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                  title="Dark theme"
+                >
+                  <Moon className="h-3 w-3" />
+                </button>
+              </div>
+            ) : (
+              <div className="h-6 w-18 rounded-full bg-muted/50" />
+            )}
+          </div>
+
+          <p className="text-[11px] leading-relaxed text-muted-foreground">
+            For roles, projects & collabs, reach me at
+          </p>
+          <a
+            href={`mailto:${profile.email}`}
+            className="mt-1 block font-mono text-xs font-medium text-foreground hover:text-muted-foreground truncate transition-colors"
+          >
+            {profile.email} ↗
+          </a>
+        </div>
+      </aside>
+
+      {/* ── Sticky Mobile Top Header (< lg) ── */}
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border bg-background/90 px-5 py-3.5 backdrop-blur-md lg:hidden">
+        <div>
+          <a
+            href="#home"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="font-mono text-sm font-bold tracking-tight text-foreground"
+          >
+            {profile.fullName}
+          </a>
+          <span className="block text-[10px] font-mono text-muted-foreground">
+            Full-Stack Developer
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground"
+          aria-label="Open navigation menu"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+      </header>
+
+      {/* ── Mobile Fullscreen Menu Drawer ── */}
+      {mobileOpen ? (
+        <div className="fixed inset-0 z-50 flex flex-col bg-background/98 p-6 lg:hidden backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-border pb-4">
+            <div>
+              <span className="font-mono text-sm font-bold text-foreground">
+                {profile.fullName}
+              </span>
+              <span className="block text-xs font-mono text-muted-foreground">
+                Navigation
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground"
+              aria-label="Close menu"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <nav className="mt-6 flex flex-1 flex-col gap-2 font-mono text-sm">
+            {NAV_LINKS.map((link) => {
+              const Icon = link.icon;
+              const isActive = activeId === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-3.5 py-2.5 transition-colors",
+                    isActive
+                      ? "bg-muted font-bold text-foreground"
+                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span>{link.label}</span>
+                </a>
+              );
+            })}
+
+            <div className="my-3 h-px bg-border" />
+
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Download Resume (PDF) ↗</span>
+            </a>
+          </nav>
+
+          <div className="border-t border-border pt-4">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-xs font-mono text-muted-foreground">Theme</span>
+              {mounted && (
+                <div className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40">
+                  <button
+                    type="button"
+                    onClick={() => setTheme("system")}
+                    className={cn(
+                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                      theme === "system" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                    )}
+                  >
+                    <Laptop className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTheme("light")}
+                    className={cn(
+                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                      theme === "light" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                    )}
+                  >
+                    <Sun className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTheme("dark")}
+                    className={cn(
+                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                      theme === "dark" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                    )}
+                  >
+                    <Moon className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              Direct Contact:
+            </p>
+            <a
+              href={`mailto:${profile.email}`}
+              className="mt-1 block font-mono text-xs font-semibold text-foreground truncate"
+            >
+              {profile.email} ↗
+            </a>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
