@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ExternalLink, Github, Code2, Sparkles, Rocket, GraduationCap } from "lucide-react";
 
-type ProjectCategory = "all" | "client" | "personal" | "gov" | "school";
+type ProjectCategory = "personal" | "client" | "gov" | "school";
 
 interface ProjectItem {
   id: string;
@@ -60,6 +60,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     title: "SJDM Legislative Research & Ordinance Archive",
     description:
       "Official municipal legislative records, city ordinance search engine, and council resolution archive platform live at lrpaies.sjdm-legislative.com.",
+    image: "/sjdm-legislative.png",
     liveUrl: "https://lrpaies.sjdm-legislative.com",
     githubUrl: "https://github.com/Watot12345/sjdm-legislative-research.git",
     tech: ["PHP", "MySQL", "Full-Text Search", "Municipal Archive"],
@@ -74,6 +75,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     title: "Oxford Suites Makati — Performance Development System",
     description:
       "Corporate staff performance evaluation, KPI tracking, and hospitality operations management system deployed for Oxford Suites Makati.",
+    image: "/oxford-suites.png",
     liveUrl: "https://performancedevelopment.oxfordsuitesmakati.io/",
     githubUrl: "https://github.com/Watot12345/PerformanceDevelopment.git",
     tech: ["JavaScript", "Web Architecture", "Hospitality Management", "Performance KPIs"],
@@ -88,6 +90,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     title: "BCP Student & Staff Attendance Portal",
     description:
       "Production school attendance monitoring portal deployed at attendancem.bcpsms1.com. Features QR check-in, real-time logging, and administrative reporting.",
+    image: "/bcp-attendance.png",
     liveUrl: "https://attendancem.bcpsms1.com",
     githubUrl: "https://github.com/Watot12345/Attendance-_Management_System.git",
     tech: ["PHP", "MySQL", "QR Verification", "Production Portal"],
@@ -146,6 +149,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     title: "SariSari App — Retail POS & Inventory",
     description:
       "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
+    image: "/sarisari.png",
     liveUrl: "https://watot12345.github.io/sarisariApp/",
     githubUrl: "https://github.com/Watot12345/sarisariApp.git",
     tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
@@ -250,15 +254,9 @@ const PROJECTS_DATA: ProjectItem[] = [
 ];
 
 export function BrylProjects() {
-  const [filter, setFilter] = useState<ProjectCategory>("all");
+  const [filter, setFilter] = useState<ProjectCategory>("personal");
 
-  const filtered = PROJECTS_DATA.filter((p) => {
-    if (filter === "client") return p.category === "client";
-    if (filter === "personal") return p.category === "personal";
-    if (filter === "gov") return p.category === "gov";
-    if (filter === "school") return p.category === "school";
-    return true;
-  });
+  const filtered = PROJECTS_DATA.filter((p) => p.category === filter);
 
   // Always ensure projects with liveUrl appear at the top
   const sorted = [...filtered].sort((a, b) => (b.liveUrl ? 1 : 0) - (a.liveUrl ? 1 : 0));
@@ -284,14 +282,14 @@ export function BrylProjects() {
       <div className="mb-7 flex flex-wrap gap-1.5 font-mono text-xs">
         <button
           type="button"
-          onClick={() => setFilter("all")}
+          onClick={() => setFilter("personal")}
           className={`rounded-md px-3 py-1 transition-colors ${
-            filter === "all"
+            filter === "personal"
               ? "bg-muted font-semibold text-foreground"
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          All ({PROJECTS_DATA.length})
+          Personal Projects ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
         </button>
         <button
           type="button"
@@ -303,17 +301,6 @@ export function BrylProjects() {
           }`}
         >
           Client Systems ({PROJECTS_DATA.filter((p) => p.category === "client").length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setFilter("personal")}
-          className={`rounded-md px-3 py-1 transition-colors ${
-            filter === "personal"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Personal Projects ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
         </button>
         <button
           type="button"
@@ -388,7 +375,7 @@ export function BrylProjects() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-full w-full object-cover grayscale contrast-105 transition-all duration-300 group-hover:grayscale-0 group-hover:scale-105"
+                    className="h-full w-full object-cover grayscale-0 contrast-100 dark:grayscale dark:contrast-105 transition-all duration-300 dark:group-hover:grayscale-0 group-hover:scale-105"
                   />
                 </div>
               ) : (
