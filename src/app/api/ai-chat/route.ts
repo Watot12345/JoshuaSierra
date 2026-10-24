@@ -63,10 +63,10 @@ You are chatting with a visitor (recruiter, hiring manager, engineering lead, or
 - Security & Custom Features: Real-time synchronization, QR verification, SMS notifications, biometric authentication, or role-based access control.
 - Deployment & Infrastructure: Cloud hosting (Render, Vercel, Docker, VPS), domain routing, and infrastructure management.
 Feel free to send your system requirements or documentation to [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) for a fair and customized estimate!"
-10. "ARE YOU HANDSOME?" EASTER EGG:
-    - If someone asks if I am handsome, good-looking, pogi, or asks about my looks (e.g. "are you handsome?", "pogi ka ba?", "gwapo ka ba?"):
-      Answer confidently with humor and the meme picture:
-      "Yes of course! 😎\n\n![Handsome Squidward](/memes/handsome.jpg)"
+10. "ARE YOU HANDSOME?" / "POGI" EASTER EGG:
+    - Whenever the word "pogi" (or "handsome", "gwapo", "good looking") is mentioned anywhere in the user's message:
+      Answer with confidence, humor, and ALWAYS include the meme picture:
+      "Yes of course, laging pogi! 😎\n\n![Handsome Squidward](/memes/handsome.jpg)"
 
 ### MY VERIFIED BACKGROUND & RESUME DATA:
 - My Name: Joshua Arncel Sierra (Joshua A. Sierra)
@@ -182,9 +182,11 @@ export async function POST(req: Request) {
     const apiKey = process.env.GROQ_API_KEY;
 
     if (!apiKey) {
-      return NextResponse.json({
-        reply: `Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I specialize in Next.js, React, TypeScript, PHP/Laravel, and real-time systems.\n\nI am actively available for Software Engineering Internships (OJT) and full-stack positions. You can contact me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or explore my [Projects](#projects) and [Tech Stack](#stack).`,
-      });
+      let fallbackReply = `Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I specialize in Next.js, React, TypeScript, PHP/Laravel, and real-time systems.\n\nI am actively available for Software Engineering Internships (OJT) and full-stack positions. You can contact me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or explore my [Projects](#projects) and [Tech Stack](#stack).`;
+      if (userMessage.toLowerCase().includes("pogi")) {
+        fallbackReply = `Yes of course, laging pogi! 😎\n\n![Handsome Squidward](/memes/handsome.jpg)`;
+      }
+      return NextResponse.json({ reply: fallbackReply });
     }
 
     const messages = [
@@ -210,21 +212,32 @@ export async function POST(req: Request) {
     if (!response.ok) {
       const errText = await response.text();
       console.error("Groq API error:", errText);
-      return NextResponse.json({
-        reply: `Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I specialize in Next.js, React, TypeScript, PHP/Laravel, and real-time systems.\n\nI am actively available for Software Engineering Internships (OJT) and full-stack positions. You can contact me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or explore my [Projects](#projects) and [Tech Stack](#stack).`,
-      });
+      let errorFallback = `Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I specialize in Next.js, React, TypeScript, PHP/Laravel, and real-time systems.\n\nI am actively available for Software Engineering Internships (OJT) and full-stack positions. You can contact me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or explore my [Projects](#projects) and [Tech Stack](#stack).`;
+      if (userMessage.toLowerCase().includes("pogi")) {
+        errorFallback = `Yes of course, laging pogi! 😎\n\n![Handsome Squidward](/memes/handsome.jpg)`;
+      }
+      return NextResponse.json({ reply: errorFallback });
     }
 
     const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim() || "Thank you for asking! Feel free to connect directly with me via email at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).";
+    let reply = data?.choices?.[0]?.message?.content?.trim() || "Thank you for asking! Feel free to connect directly with me via email at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).";
+
+    // Guaranteed easter egg: Whenever 'pogi' is mentioned, ensure the meme image is displayed!
+    if (userMessage.toLowerCase().includes("pogi")) {
+      if (!reply.includes("/memes/handsome.jpg")) {
+        reply += "\n\n![Handsome Squidward](/memes/handsome.jpg)";
+      }
+    }
 
     return NextResponse.json({ reply });
   } catch (error) {
     console.error("AI Chat handler error:", error);
+    let catchReply = "Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I am actively available for Software Engineering Internships (OJT) and full-stack roles. You can reach me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or check my [Projects](#projects) and [Tech Stack](#stack).";
+    if (userMessage.toLowerCase().includes("pogi")) {
+      catchReply = "Yes of course, laging pogi! 😎\n\n![Handsome Squidward](/memes/handsome.jpg)";
+    }
     return NextResponse.json(
-      {
-        reply: "Hi! I'm Joshua Sierra, a Full-Stack & AI Software Engineer based in Manila, Philippines. I am actively available for Software Engineering Internships (OJT) and full-stack roles. You can reach me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com) or check my [Projects](#projects) and [Tech Stack](#stack).",
-      },
+      { reply: catchReply },
       { status: 200 }
     );
   }
