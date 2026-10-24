@@ -47,7 +47,7 @@ export function BrylContact() {
   };
 
   return (
-    <section id="contact" className="py-12">
+    <section id="contact" className="py-12 pb-24 scroll-mt-12">
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">

@@ -47,12 +47,23 @@ export function SidebarNav() {
   // Update active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // Bottom-of-page detection: If scrolled near or at the bottom, Contact is always active
+      if (scrollY + windowHeight >= docHeight - 80) {
+        setActiveId("contact");
+        return;
+      }
+
+      // Proportional scroll position (~35% down viewport)
+      const scrollPos = scrollY + windowHeight * 0.35;
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const item = NAV_LINKS[i];
         const el = document.querySelector(item.href);
         if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY;
+          const top = el.getBoundingClientRect().top + scrollY;
           if (scrollPos >= top) {
             setActiveId(item.id);
             break;
@@ -61,15 +72,24 @@ export function SidebarNav() {
       }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
+    id?: string
   ) => {
     e.preventDefault();
+    if (id) {
+      setActiveId(id);
+    }
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -114,7 +134,7 @@ export function SidebarNav() {
                 <a
                   key={link.id}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link.href, link.id)}
                   className={cn(
                     "group flex items-center justify-between rounded-md px-2.5 py-2 transition-all duration-200",
                     isActive
@@ -366,7 +386,7 @@ export function SidebarNav() {
                 <a
                   key={link.id}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link.href, link.id)}
                   className={cn(
                     "group flex items-center justify-between rounded-lg px-3.5 py-2.5 transition-all duration-200",
                     isActive
