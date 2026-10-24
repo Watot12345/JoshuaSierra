@@ -67,7 +67,7 @@ export function BrylEducation() {
                   </h4>
                 </div>
                 <span className="font-mono text-xs text-muted-foreground shrink-0">
-                  2020 — 2023
+                  2020 — 2022
                 </span>
               </div>
               <p className="mt-2 text-xs sm:text-sm text-muted-foreground pl-6.5">

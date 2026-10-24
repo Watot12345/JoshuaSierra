@@ -21,6 +21,8 @@ import {
   Laptop,
   ArrowRight,
   Sparkles,
+  Users,
+  Award,
 } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
 import { profile, socialLinks } from "@/data/portfolio";
@@ -49,7 +51,7 @@ export function SidebarNav() {
 
   // Update active section on scroll or route
   useEffect(() => {
-    if (pathname === "/gear") {
+    if (pathname !== "/") {
       setActiveId("");
       return;
     }
@@ -206,6 +208,34 @@ export function SidebarNav() {
             >
               <Monitor className="h-3.5 w-3.5 shrink-0" />
               <span>Workspace &amp; Gear ↗</span>
+            </Link>
+
+            {/* Affiliations Page */}
+            <Link
+              href="/affiliations"
+              className={cn(
+                "flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/affiliations"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Users className="h-3.5 w-3.5 shrink-0" />
+              <span>Affiliations ↗</span>
+            </Link>
+
+            {/* Certifications Page */}
+            <Link
+              href="/certifications"
+              className={cn(
+                "flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/certifications"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Award className="h-3.5 w-3.5 shrink-0" />
+              <span>Certifications ↗</span>
             </Link>
 
             {/* Quick Resume Link */}
@@ -470,6 +500,34 @@ export function SidebarNav() {
             >
               <Monitor className="h-4 w-4 shrink-0" />
               <span>Workspace &amp; Gear ↗</span>
+            </Link>
+
+            <Link
+              href="/affiliations"
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3.5 py-2.5 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/affiliations"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Users className="h-4 w-4 shrink-0" />
+              <span>Affiliations ↗</span>
+            </Link>
+
+            <Link
+              href="/certifications"
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3.5 py-2.5 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/certifications"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Award className="h-4 w-4 shrink-0" />
+              <span>Certifications ↗</span>
             </Link>
 
             <a
