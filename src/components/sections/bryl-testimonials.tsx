@@ -9,7 +9,7 @@ export function BrylTestimonials() {
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          06 — recommendations
+          07 — recommendations
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
           client & team feedback

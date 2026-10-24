@@ -8,7 +8,7 @@ export function BrylEducation() {
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          04 — education & credentials
+          05 — education & credentials
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
           academic foundation

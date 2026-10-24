@@ -212,6 +212,12 @@ const jsonLdBreadcrumbs = {
     {
       "@type": "ListItem",
       position: 5,
+      name: "Workspace & Gear",
+      item: `${SITE_URL}/#gear`,
+    },
+    {
+      "@type": "ListItem",
+      position: 6,
       name: "Contact",
       item: `${SITE_URL}/#contact`,
     },

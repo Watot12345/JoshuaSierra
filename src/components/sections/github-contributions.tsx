@@ -255,7 +255,7 @@ export function GithubContributions() {
     <section id="github-activity" className="py-12 border-b border-border">
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          05 — github activity
+          06 — github activity
         </h2>
         <a
           href={`https://github.com/${username}`}
