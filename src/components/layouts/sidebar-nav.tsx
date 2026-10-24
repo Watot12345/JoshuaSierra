@@ -205,20 +205,17 @@ export function SidebarNav() {
 
         {/* Bottom: Theme Switcher, Sound & Email */}
         <div className="border-t border-border pt-4">
-          {/* Sound / UI Audio Toggle */}
-          <div className="mb-3">
-            <SoundToggle variant="sidebar" />
-          </div>
-
-          {/* Theme switcher */}
+          {/* Theme & Sound controls */}
           <div className="mb-4 flex items-center justify-between">
             <span className="text-[11px] font-mono text-muted-foreground">Theme</span>
-            {mounted ? (
-              <div
-                className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40"
-                role="group"
-                aria-label="Theme"
-              >
+            <div className="flex items-center gap-2">
+              <SoundToggle variant="icon-small" />
+              {mounted ? (
+                <div
+                  className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40"
+                  role="group"
+                  aria-label="Theme"
+                >
                 <button
                   type="button"
                   onClick={(e) => changeTheme("system", e)}
@@ -262,6 +259,7 @@ export function SidebarNav() {
             ) : (
               <div className="h-6 w-18 rounded-full bg-muted/50" />
             )}
+            </div>
           </div>
 
           <p className="text-[11px] leading-relaxed text-muted-foreground">
@@ -457,47 +455,45 @@ export function SidebarNav() {
           </nav>
 
           <div className="border-t border-border pt-4">
-            {/* Sound Toggle in Mobile Drawer */}
-            <div className="mb-3">
-              <SoundToggle variant="sidebar" />
-            </div>
-
             <div className="mb-4 flex items-center justify-between">
               <span className="text-xs font-mono text-muted-foreground">Theme</span>
-              {mounted && (
-                <div className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40">
-                  <button
-                    type="button"
-                    onClick={(e) => changeTheme("system", e)}
-                    className={cn(
-                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
-                      theme === "system" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
-                    )}
-                  >
-                    <Laptop className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => changeTheme("light", e)}
-                    className={cn(
-                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
-                      theme === "light" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
-                    )}
-                  >
-                    <Sun className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => changeTheme("dark", e)}
-                    className={cn(
-                      "flex h-7 w-7 items-center justify-center rounded-full text-xs",
-                      theme === "dark" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
-                    )}
-                  >
-                    <Moon className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              )}
+              <div className="flex items-center gap-2">
+                <SoundToggle variant="icon-small" />
+                {mounted && (
+                  <div className="inline-flex items-center rounded-full border border-border p-0.5 bg-muted/40">
+                    <button
+                      type="button"
+                      onClick={(e) => changeTheme("system", e)}
+                      className={cn(
+                        "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                        theme === "system" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                      )}
+                    >
+                      <Laptop className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => changeTheme("light", e)}
+                      className={cn(
+                        "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                        theme === "light" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                      )}
+                    >
+                      <Sun className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => changeTheme("dark", e)}
+                      className={cn(
+                        "flex h-7 w-7 items-center justify-center rounded-full text-xs",
+                        theme === "dark" ? "bg-background text-foreground shadow-xs" : "text-muted-foreground"
+                      )}
+                    >
+                      <Moon className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
 
             <p className="text-xs text-muted-foreground">
