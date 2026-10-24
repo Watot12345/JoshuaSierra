@@ -454,9 +454,9 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "tst-2",
-    name: "Jaime Trono",
-    role: "Technical Lead & Reference",
-    company: "Government & Enterprise Systems",
+    name: "Rafael Mendoza",
+    role: "Technical Lead & Consultant",
+    company: "Enterprise Systems",
     avatar:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=faces",
     rating: 5,
@@ -478,7 +478,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "tst-4",
-    name: "John Mark Giray",
+    name: "Adrian Dela Cruz",
     role: "Senior Full-Stack Colleague",
     company: "Independent Client Systems",
     avatar:
