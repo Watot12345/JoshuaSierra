@@ -123,6 +123,7 @@ If a visitor, recruiter, or interviewer asks any of the following questions (or 
 - What qualities help an engineer or intern excel in this position?"`;
 
 export async function POST(req: Request) {
+  let userMessage = "";
   try {
     // 1. Anti-Bot, Scraper, & Mining Tool Guardrail
     if (isSuspectedBot(req)) {
@@ -157,7 +158,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const userMessage = typeof body?.message === "string" ? body.message.trim() : "";
+    userMessage = typeof body?.message === "string" ? body.message.trim() : "";
 
     if (!userMessage) {
       return NextResponse.json({ error: "Message is required." }, { status: 400 });

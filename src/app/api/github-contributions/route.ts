@@ -58,17 +58,42 @@ async function fetchYearContributions(username: string, year: string) {
   }
 }
 
+async function fetchUserRepoCount(username: string): Promise<number> {
+  const url = `https://api.github.com/users/${username}`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept: "application/vnd.github.v3+json",
+      },
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(3500),
+    });
+
+    if (!res.ok) {
+      return 34;
+    }
+
+    const data = await res.json();
+    return typeof data?.public_repos === "number" ? data.public_repos : 34;
+  } catch {
+    return 34;
+  }
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username") || "Watot12345";
   const requestedYear = searchParams.get("year") || "2026";
 
   try {
-    // Fetch all active profile years in parallel
-    const [data2026, data2025, data2024] = await Promise.all([
+    // Fetch all active profile years and user profile stats in parallel
+    const [data2026, data2025, data2024, publicRepos] = await Promise.all([
       fetchYearContributions(username, "2026"),
       fetchYearContributions(username, "2025"),
       fetchYearContributions(username, "2024"),
+      fetchUserRepoCount(username),
     ]);
 
     const static2026 = 392;
@@ -95,6 +120,7 @@ export async function GET(request: Request) {
         totalCount: allTimeTotal,
         allTimeTotal,
         yearTotals,
+        publicRepos,
         days: combinedDays.length > 0 ? combinedDays : data2026.days,
       });
     }
@@ -115,10 +141,11 @@ export async function GET(request: Request) {
       totalCount: currentYearData.totalCount,
       allTimeTotal,
       yearTotals,
+      publicRepos,
       days: currentYearData.days,
     });
   } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({ error: "Server error", publicRepos: 34 }, { status: 500 });
   }
 }
 

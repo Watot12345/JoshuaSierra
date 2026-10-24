@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useThemeTransition } from "@/hooks/use-theme-transition";
 import {
   FolderKanban,
@@ -31,6 +32,7 @@ const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
   { id: "experience", label: "Experience", href: "#experience", icon: Briefcase },
   { id: "stack", label: "Stack", href: "#stack", icon: Layers },
+  { id: "gear", label: "Gear", href: "/gear", icon: Monitor },
   { id: "education", label: "Education", href: "#education", icon: GraduationCap },
   { id: "github", label: "GitHub Activity", href: "#github-activity", icon: GitBranch },
   { id: "testimonials", label: "Recommendations", href: "#testimonials", icon: MessageSquareQuote },
@@ -43,9 +45,16 @@ export function SidebarNav() {
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const { theme, resolvedTheme, changeTheme } = useThemeTransition();
   const mounted = useMounted();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  // Update active section on scroll
+  // Update active section on scroll or route
   useEffect(() => {
+    if (pathname === "/gear") {
+      setActiveId("gear");
+      return;
+    }
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
@@ -61,12 +70,14 @@ export function SidebarNav() {
       const scrollPos = scrollY + windowHeight * 0.35;
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const item = NAV_LINKS[i];
-        const el = document.querySelector(item.href);
-        if (el) {
-          const top = el.getBoundingClientRect().top + scrollY;
-          if (scrollPos >= top) {
-            setActiveId(item.id);
-            break;
+        if (item.href.startsWith("#")) {
+          const el = document.querySelector(item.href);
+          if (el) {
+            const top = el.getBoundingClientRect().top + scrollY;
+            if (scrollPos >= top) {
+              setActiveId(item.id);
+              break;
+            }
           }
         }
       }
@@ -79,7 +90,7 @@ export function SidebarNav() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [pathname]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -90,11 +101,24 @@ export function SidebarNav() {
     if (id) {
       setActiveId(id);
     }
+    setMobileOpen(false);
+
+    if (href === "/gear") {
+      if (pathname !== "/gear") {
+        router.push("/gear");
+      }
+      return;
+    }
+
+    if (pathname !== "/") {
+      router.push(href.startsWith("#") ? `/${href}` : href);
+      return;
+    }
+
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setMobileOpen(false);
   };
 
   return (
@@ -170,15 +194,6 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2 h-px bg-border" />
-
-            {/* Workspace & Gear Page */}
-            <Link
-              href="/gear"
-              className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
-            >
-              <Monitor className="h-3.5 w-3.5 shrink-0" />
-              <span>Workspace &amp; Gear ↗</span>
-            </Link>
 
             {/* Quick Resume Link */}
             <a
@@ -429,15 +444,6 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2.5 h-px bg-border" />
-
-            <Link
-              href="/gear"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            >
-              <Monitor className="h-4 w-4 shrink-0" />
-              <span>Workspace &amp; Gear ↗</span>
-            </Link>
 
             <a
               href="/resume.pdf"

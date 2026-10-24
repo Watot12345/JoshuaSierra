@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Laptop } from "lucide-react";
 import { AnimatedBackground } from "@/components/ui-custom/animated-background";
+import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { BrylGear } from "@/components/sections/bryl-gear";
-import { SoundToggle } from "@/components/ui-custom/sound-toggle";
-import { ThemeToggle } from "@/components/ui-custom/theme-toggle";
 import { socialLinks } from "@/data/portfolio";
 
 export const metadata: Metadata = {
@@ -22,24 +20,12 @@ export default function GearPage() {
     <>
       <AnimatedBackground />
 
-      <div className="min-h-screen py-8 sm:py-12">
-        <main className="mx-auto max-w-3xl px-5 sm:px-8">
-          {/* Top Navigation Bar */}
-          <header className="mb-8 flex items-center justify-between border-b border-border pb-4">
-            <Link
-              href="/"
-              className="group inline-flex items-center gap-2 rounded-lg border border-border bg-card/80 px-3 py-1.5 font-mono text-xs text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:border-foreground/30 hover:bg-muted hover:text-foreground"
-            >
-              <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
-              <span>Back to Portfolio</span>
-            </Link>
+      {/* Navigation (Fixed Left Sidebar on Desktop lg+, Sticky Header & Slide Drawer on Mobile) */}
+      <SidebarNav />
 
-            <div className="flex items-center gap-2">
-              <SoundToggle variant="icon-small" />
-              <ThemeToggle />
-            </div>
-          </header>
-
+      {/* Main Content Area: Offset by sidebar width on desktop */}
+      <div className="min-h-screen lg:pl-60 xl:pl-64">
+        <main className="mx-auto max-w-3xl px-5 sm:px-8 py-8 lg:py-14">
           {/* Page Hero Header */}
           <div className="mb-8">
             <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground uppercase tracking-wider mb-2">

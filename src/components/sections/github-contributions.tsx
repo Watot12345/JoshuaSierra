@@ -120,7 +120,7 @@ export function GithubContributions() {
   const [selectedYear, setSelectedYear] = useState<YearFilter>("2026");
   const [days, setDays] = useState<DayData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [publicRepos, setPublicRepos] = useState<number | null>(null);
+  const [publicRepos, setPublicRepos] = useState<number | null>(34);
   const [yearCommits, setYearCommits] = useState<number | null>(null);
   const [allTimeCommits, setAllTimeCommits] = useState<number | null>(null);
   const [liveYearTotals, setLiveYearTotals] = useState<Record<string, number>>({});
@@ -133,33 +133,7 @@ export function GithubContributions() {
   const years: YearFilter[] = ["2026", "2025", "2024", "All Time"];
   const currentDetail = YEAR_DETAILS[selectedYear];
 
-  // Fetch live repo count from GitHub API with graceful fallback to 34
-  useEffect(() => {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 3500);
-
-    fetch(`https://api.github.com/users/${username}`, { signal: controller.signal })
-      .then((r) => r.json())
-      .then((d) => {
-        clearTimeout(timer);
-        if (typeof d?.public_repos === "number") {
-          setPublicRepos(d.public_repos);
-        } else {
-          setPublicRepos(34);
-        }
-      })
-      .catch(() => {
-        clearTimeout(timer);
-        setPublicRepos(34);
-      });
-
-    return () => {
-      clearTimeout(timer);
-      controller.abort();
-    };
-  }, []);
-
-  // Fetch real contribution heatmap data per year with timeout and fallback
+  // Fetch real contribution heatmap data and repo stats with timeout and fallback
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
@@ -185,6 +159,7 @@ export function GithubContributions() {
           if (data.totalCount !== undefined) setYearCommits(data.totalCount);
           if (data.allTimeTotal !== undefined) setAllTimeCommits(data.allTimeTotal);
           if (data.yearTotals) setLiveYearTotals(data.yearTotals);
+          if (typeof data.publicRepos === "number") setPublicRepos(data.publicRepos);
           setLoading(false);
         }
       })
