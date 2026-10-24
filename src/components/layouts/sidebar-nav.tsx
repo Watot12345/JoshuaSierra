@@ -18,10 +18,12 @@ import {
   Moon,
   Laptop,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
 import { profile, socialLinks } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
+import { AiAssistantModal } from "@/components/ui-custom/ai-assistant-modal";
 
 const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
@@ -37,6 +39,7 @@ const NAV_LINKS = [
 export function SidebarNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeId, setActiveId] = useState("projects");
+  const [aiModalOpen, setAiModalOpen] = useState(false);
   const { theme, resolvedTheme, changeTheme } = useThemeTransition();
   const mounted = useMounted();
 
@@ -133,6 +136,23 @@ export function SidebarNav() {
                 </a>
               );
             })}
+
+            {/* Questions? Ask AI button */}
+            <div className="pt-1.5 pb-0.5">
+              <button
+                type="button"
+                onClick={() => setAiModalOpen(true)}
+                className="group relative flex w-full items-center justify-between rounded-lg border border-primary/30 bg-primary/5 px-2.5 py-2 text-foreground transition-all duration-200 hover:border-primary/50 hover:bg-primary/10 shadow-xs cursor-pointer"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <Sparkles className="h-3.5 w-3.5 text-primary shrink-0 animate-pulse" />
+                  <span className="font-mono text-xs font-semibold truncate">Questions? Ask AI</span>
+                </div>
+                <span className="rounded-md border border-primary/25 bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold text-primary shrink-0">
+                  Assistant
+                </span>
+              </button>
+            </div>
 
             <div className="my-2 h-px bg-border" />
 
@@ -269,6 +289,17 @@ export function SidebarNav() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Ask AI quick trigger on mobile */}
+          <button
+            type="button"
+            onClick={() => setAiModalOpen(true)}
+            className="flex h-9 items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-2.5 text-xs font-mono font-medium text-foreground hover:bg-primary/20 transition-colors"
+            title="Ask AI Assistant"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-primary animate-pulse" />
+            <span className="hidden xs:inline">Ask AI</span>
+          </button>
+
           {mounted && (
             <button
               type="button"
@@ -355,7 +386,27 @@ export function SidebarNav() {
               );
             })}
 
-            <div className="my-3 h-px bg-border" />
+            {/* Ask AI in Mobile Drawer */}
+            <div className="pt-1 pb-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileOpen(false);
+                  setAiModalOpen(true);
+                }}
+                className="flex w-full items-center justify-between rounded-xl border border-primary/30 bg-primary/10 px-3.5 py-2.5 text-foreground transition-colors hover:bg-primary/20"
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Sparkles className="h-4 w-4 text-primary shrink-0 animate-pulse" />
+                  <span className="font-mono text-xs font-bold">Questions? Ask AI</span>
+                </div>
+                <span className="rounded-md border border-primary/25 bg-primary/15 px-2 py-0.5 font-mono text-[10px] font-bold text-primary">
+                  Interactive Q&amp;A
+                </span>
+              </button>
+            </div>
+
+            <div className="my-2.5 h-px bg-border" />
 
             <a
               href="/resume.pdf"
@@ -455,6 +506,12 @@ export function SidebarNav() {
           </div>
         </div>
       ) : null}
+
+      {/* AI Assistant Interactive Modal */}
+      <AiAssistantModal
+        isOpen={aiModalOpen}
+        onClose={() => setAiModalOpen(false)}
+      />
     </>
   );
 }
