@@ -91,7 +91,7 @@ Feel free to send your system requirements or documentation to [joshuaarncel@gma
   - SJDM Legislative Research Platform (Municipal ordinances & city council resolution archive): https://lrpaies.sjdm-legislative.com
   - Soleverse (Modern footwear eCommerce platform built with React 19 & TanStack): https://sole-verse-chronos-main.vercel.app/
   - Roppets Edutainment Production (Client CRM & online booking system live at https://roppets.vercel.app with event scheduling and booking tracking)
-  - Barangay San Agustin Community Portal (12,000+ resident records, municipal services): https://barangay-san-agustin.onrender.com
+  - Barangay San Agustin Community Portal (Municipal services & resident portal): https://barangay-san-agustin.onrender.com
   - BCP SMS Attendance Management System (QR code check-ins): https://attendancem.bcpsms1.com
   - PennyFlow (mobile personal budgeting with SQLite): React Native & Expo
 - My Skills & Tech Stack: React, Next.js, TypeScript, Tailwind CSS, PHP, Laravel, Node.js, Express, Python, Supabase, PostgreSQL, MySQL, Redis, Docker, Linux.

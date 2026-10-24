@@ -101,7 +101,6 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
     liveUrl: "https://barangay-san-agustin.onrender.com",
     githubUrl: "https://github.com/Watot12345/BarangayWeb",
     tech: ["HTML5", "JavaScript", "Tailwind CSS", "Render"],
-    metrics: "12,000+ Resident Records",
   },
 
   // ── 6. Smart Expense Tracker ──
