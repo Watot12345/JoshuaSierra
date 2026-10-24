@@ -101,49 +101,49 @@
 .dark {
   --radius: 0.75rem;
 
-  /* Deep Cosmic Obsidian Dark Palette (#010013) */
-  --background: #010013;
-  --foreground: #f4f4f6;
-  --card: #09081a;
-  --card-foreground: #f4f4f6;
-  --popover: #09081a;
-  --popover-foreground: #f4f4f6;
+  /* Clean Formal Stealth Dark Palette */
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --card: #111113;
+  --card-foreground: #f4f4f5;
+  --popover: #111113;
+  --popover-foreground: #f4f4f5;
 
-  --primary: #FAF9F6;
-  --primary-foreground: #010013;
+  --primary: #f4f4f5;
+  --primary-foreground: #09090b;
 
-  --secondary: #131126;
-  --secondary-foreground: #f4f4f6;
-  --muted: #110f22;
+  --secondary: #1f1f23;
+  --secondary-foreground: #f4f4f5;
+  --muted: #1a1a1e;
   --muted-foreground: #a1a1aa;
-  --accent: #191632;
-  --accent-foreground: #f4f4f6;
+  --accent: #1f1f23;
+  --accent-foreground: #f4f4f5;
 
   --destructive: #ef4444;
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.14);
-  --ring: #818cf8;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #e4e4e7;
 
-  --chart-1: #60a5fa;
-  --chart-2: #34d399;
-  --chart-3: #fbbf24;
-  --chart-4: #a78bfa;
-  --chart-5: #f472b6;
+  --chart-1: #f4f4f5;
+  --chart-2: #a1a1aa;
+  --chart-3: #71717a;
+  --chart-4: #52525b;
+  --chart-5: #3f3f46;
 
-  --sidebar: #010013;
-  --sidebar-foreground: #f4f4f6;
-  --sidebar-primary: #FAF9F6;
-  --sidebar-primary-foreground: #010013;
-  --sidebar-accent: #131126;
-  --sidebar-accent-foreground: #f4f4f6;
-  --sidebar-border: rgba(255, 255, 255, 0.12);
-  --sidebar-ring: #818cf8;
+  --sidebar: #09090b;
+  --sidebar-foreground: #f4f4f5;
+  --sidebar-primary: #f4f4f5;
+  --sidebar-primary-foreground: #09090b;
+  --sidebar-accent: #1f1f23;
+  --sidebar-accent-foreground: #f4f4f5;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #e4e4e7;
 
-  --crimson: #FAF9F6;
-  --crimson-glow: rgba(99, 102, 241, 0.12);
-  --crimson-soft: rgba(255, 255, 255, 0.05);
-  --glass-bg: rgba(9, 8, 26, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.12);
+  --crimson: #f4f4f5;
+  --crimson-glow: rgba(255, 255, 255, 0.06);
+  --crimson-soft: rgba(255, 255, 255, 0.04);
+  --glass-bg: rgba(17, 17, 19, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {

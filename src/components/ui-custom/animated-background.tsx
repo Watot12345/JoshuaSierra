@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * Atmospheric background with rich saturated ambient glows.
- * - Light Mode: Radiates a warm, saturated sky-blue, emerald, and amber aurora over #FAF9F6.
- * - Dark Mode: Radiates an ultra-deep cosmic indigo, violet, and sky nebula over #010013.
+ * Atmospheric background:
+ * - Light Mode: Warm, saturated sky-blue, emerald, and amber ambient glows over #FAF9F6.
+ * - Dark Mode: Clean, subtle monochrome radial highlights over #09090b with zero purple tint.
  */
 export function AnimatedBackground() {
   return (
@@ -11,14 +11,14 @@ export function AnimatedBackground() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-background transition-colors duration-500"
     >
-      {/* Primary Top Ambient Glow */}
-      <div className="absolute left-1/2 -top-24 -translate-x-1/2 h-[42rem] w-[58rem] rounded-full bg-gradient-to-b from-sky-400/[0.12] via-indigo-500/[0.07] to-transparent blur-3xl pointer-events-none dark:from-indigo-600/[0.18] dark:via-purple-600/[0.12]" />
+      {/* Light Mode Top Ambient Glow / Dark Mode Clean Radial */}
+      <div className="absolute left-1/2 -top-24 -translate-x-1/2 h-[42rem] w-[58rem] rounded-full bg-gradient-to-b from-sky-400/[0.12] via-indigo-500/[0.07] to-transparent blur-3xl pointer-events-none dark:from-white/[0.04] dark:via-white/[0.01]" />
 
-      {/* Top-Right Emerald Accent Glow */}
-      <div className="absolute -top-16 -right-20 h-[32rem] w-[32rem] rounded-full bg-emerald-400/[0.10] blur-3xl pointer-events-none dark:bg-emerald-500/[0.08]" />
+      {/* Light Mode Emerald Accent (Subtle in Dark) */}
+      <div className="absolute -top-16 -right-20 h-[32rem] w-[32rem] rounded-full bg-emerald-400/[0.10] blur-3xl pointer-events-none dark:bg-emerald-500/[0.03]" />
 
-      {/* Subtle Bottom-Left Violet/Sky Ambient */}
-      <div className="absolute top-[35rem] -left-24 h-[28rem] w-[28rem] rounded-full bg-blue-500/[0.08] blur-3xl pointer-events-none dark:bg-purple-600/[0.09]" />
+      {/* Light Mode Soft Blue Glow (Subtle in Dark) */}
+      <div className="absolute top-[35rem] -left-24 h-[28rem] w-[28rem] rounded-full bg-blue-500/[0.08] blur-3xl pointer-events-none dark:bg-transparent" />
 
       {/* Clean subtle dot grid pattern */}
       <div className="absolute inset-0 bg-dots opacity-[0.45] dark:opacity-[0.25]" />

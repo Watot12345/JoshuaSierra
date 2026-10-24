@@ -67,7 +67,9 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   /**
-   * Crisp tactile hover "tick" using Web Audio API synthesis
+   * Crisp, clearly audible tactile mechanical "tick" for HOVER events.
+   * Engineered with optimal frequency (1400Hz -> 450Hz) and distinct volume (0.15)
+   * so it is instantly audible and satisfying on laptop speakers, headphones, and monitors.
    */
   const playTick = useCallback(
     (pitch: number = 1.0) => {
@@ -79,24 +81,24 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         const now = ctx.currentTime;
         const filter = ctx.createBiquadFilter();
         filter.type = "bandpass";
-        filter.frequency.setValueAtTime(2900 * pitch, now);
-        filter.Q.setValueAtTime(4.0, now);
+        filter.frequency.setValueAtTime(2200 * pitch, now);
+        filter.Q.setValueAtTime(3.0, now);
 
         const osc = ctx.createOscillator();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(1700 * pitch, now);
-        osc.frequency.exponentialRampToValueAtTime(380, now + 0.011);
+        osc.frequency.setValueAtTime(1400 * pitch, now);
+        osc.frequency.exponentialRampToValueAtTime(450, now + 0.024);
 
         const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.045, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.011);
+        gain.gain.setValueAtTime(0.14, now); // Clearly audible volume
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.024);
 
         osc.connect(filter);
         filter.connect(gain);
         gain.connect(ctx.destination);
 
         osc.start(now);
-        osc.stop(now + 0.012);
+        osc.stop(now + 0.026);
       } catch {
         // Audio error suppression
       }
@@ -105,7 +107,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   );
 
   /**
-   * Distinct click "tick" for button and link presses
+   * Distinct, firm mechanical "click" for button and link presses
    */
   const playClick = useCallback(() => {
     if (!soundEnabled) return;
@@ -118,17 +120,17 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       const gain = ctx.createGain();
 
       osc.type = "sine";
-      osc.frequency.setValueAtTime(1100, now);
-      osc.frequency.exponentialRampToValueAtTime(250, now + 0.016);
+      osc.frequency.setValueAtTime(1200, now);
+      osc.frequency.exponentialRampToValueAtTime(260, now + 0.02);
 
-      gain.gain.setValueAtTime(0.065, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.016);
+      gain.gain.setValueAtTime(0.16, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.018);
+      osc.stop(now + 0.022);
     } catch {
       // Audio error suppression
     }
@@ -152,18 +154,18 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       const osc = ctx.createOscillator();
       osc.type = "triangle";
       osc.frequency.setValueAtTime(1200, now);
-      osc.frequency.exponentialRampToValueAtTime(300, now + 0.008);
+      osc.frequency.exponentialRampToValueAtTime(320, now + 0.015);
 
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.025, now); // Gentle, non-intrusive volume
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.008);
+      gain.gain.setValueAtTime(0.06, now); // Gentle, tactile volume
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.015);
 
       osc.connect(filter);
       filter.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.009);
+      osc.stop(now + 0.017);
     } catch {
       // Audio error suppression
     }
@@ -187,13 +189,13 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
             const gain = ctx.createGain();
             osc.type = "sine";
             osc.frequency.setValueAtTime(1200, now);
-            osc.frequency.setValueAtTime(1600, now + 0.035);
-            gain.gain.setValueAtTime(0.05, now);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+            osc.frequency.setValueAtTime(1600, now + 0.04);
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
             osc.connect(gain);
             gain.connect(ctx.destination);
             osc.start(now);
-            osc.stop(now + 0.075);
+            osc.stop(now + 0.085);
           } catch {}
         }, 15);
       }
@@ -201,43 +203,46 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     });
   }, [initContext]);
 
-  // 1. Global Hover "Tick" Listener
+  // 1. Global Hover "Tick" Listener (High sensitivity, fires on each distinct interactive element)
   useEffect(() => {
     if (!soundEnabled) return;
 
     const interactiveSelector =
-      'button, a, [role="button"], input, select, textarea, .cursor-pointer, [data-sound="tick"], summary, article, nav a, [tabindex="0"]';
+      'button, a, [role="button"], input, select, textarea, .cursor-pointer, [data-sound="tick"], summary, [tabindex="0"]';
 
-    const handlePointerOver = (e: MouseEvent) => {
+    const handleMouseOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest?.(interactiveSelector);
-      if (!target || target === lastTargetRef.current) return;
+      if (!target) {
+        lastTargetRef.current = null;
+        return;
+      }
+      if (target === lastTargetRef.current) return;
       lastTargetRef.current = target;
 
       const now = Date.now();
-      if (now - lastHoverTimeRef.current > 30) {
+      if (now - lastHoverTimeRef.current > 20) {
         lastHoverTimeRef.current = now;
-        // Subtle organic pitch variation
-        const randomPitch = 0.95 + Math.random() * 0.12;
+        const randomPitch = 0.96 + Math.random() * 0.1;
         playTick(randomPitch);
       }
     };
 
-    const handlePointerOut = (e: MouseEvent) => {
+    const handleMouseOut = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest?.(interactiveSelector);
-      if (target && target === lastTargetRef.current) {
-        const related = e.relatedTarget as HTMLElement | null;
-        if (!related || !target.contains(related)) {
-          // Cleared target so re-hovering will immediately register another tick
+      if (!target) return;
+      const related = e.relatedTarget as HTMLElement | null;
+      if (!related || !target.contains(related)) {
+        if (lastTargetRef.current === target) {
           lastTargetRef.current = null;
         }
       }
     };
 
-    window.addEventListener("pointerover", handlePointerOver, { passive: true });
-    window.addEventListener("pointerout", handlePointerOut, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("mouseout", handleMouseOut, { passive: true });
     return () => {
-      window.removeEventListener("pointerover", handlePointerOver);
-      window.removeEventListener("pointerout", handlePointerOut);
+      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mouseout", handleMouseOut);
     };
   }, [soundEnabled, playTick]);
 
@@ -273,7 +278,6 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       accumulatedWheelRef.current += Math.abs(e.deltaY || e.deltaX || 0);
 
       const now = Date.now();
-      // Trigger a tick every ~50px of accumulated scroll wheel distance
       if (accumulatedWheelRef.current >= 45 && now - lastScrollTimeRef.current > 40) {
         lastScrollTimeRef.current = now;
         accumulatedWheelRef.current = 0;

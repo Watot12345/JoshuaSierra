@@ -1,26 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState } from "react";
 import {
   ExternalLink,
   Github,
   Code2,
-  Sparkles,
   Rocket,
   GraduationCap,
-  ChevronLeft,
-  ChevronRight,
   Play,
   Pause,
-  LayoutGrid,
-  SlidersHorizontal,
   ArrowLeft,
   ArrowRight,
 } from "lucide-react";
 import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
 import { cn } from "@/lib/utils";
-
-type ProjectCategory = "personal" | "client" | "gov" | "school" | "all";
 
 interface ProjectItem {
   id: string;
@@ -291,280 +284,69 @@ const PROJECTS_DATA: ProjectItem[] = [
 ];
 
 export function BrylProjects() {
-  const [filter, setFilter] = useState<ProjectCategory>("personal");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [viewMode, setViewMode] = useState<"carousel" | "list">("carousel");
+  const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right">("right"); // Default left-to-right as requested
 
-  const filtered =
-    filter === "all"
-      ? PROJECTS_DATA
-      : PROJECTS_DATA.filter((p) => p.category === filter);
-
-  // Always ensure projects with liveUrl appear first
-  const sorted = [...filtered].sort(
+  // Sort projects so live sites appear first
+  const sortedProjects = [...PROJECTS_DATA].sort(
     (a, b) => (b.liveUrl ? 1 : 0) - (a.liveUrl ? 1 : 0)
   );
 
-  const total = sorted.length;
-
-  const nextProject = useCallback(() => {
-    setCurrentIndex((prev) => (total > 0 ? (prev + 1) % total : 0));
-  }, [total]);
-
-  const prevProject = useCallback(() => {
-    setCurrentIndex((prev) => (total > 0 ? (prev - 1 + total) % total : 0));
-  }, [total]);
-
-  // Handle category switch
-  const handleFilterChange = (cat: ProjectCategory) => {
-    setFilter(cat);
-    setCurrentIndex(0);
-  };
-
-  // Auto-play interval
-  useEffect(() => {
-    if (!isAutoPlay || isHovered || viewMode !== "carousel" || total <= 1) return;
-    const timer = setInterval(() => {
-      nextProject();
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isAutoPlay, isHovered, viewMode, total, nextProject]);
-
-  // Keyboard arrow navigation
-  useEffect(() => {
-    if (viewMode !== "carousel") return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        prevProject();
-      } else if (e.key === "ArrowRight") {
-        nextProject();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [viewMode, nextProject, prevProject]);
-
-  // Touch Swipe support for mobile
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return;
-    const diff = touchStartX.current - touchEndX.current;
-    if (diff > 45) {
-      nextProject();
-    } else if (diff < -45) {
-      prevProject();
-    }
-    touchStartX.current = null;
-    touchEndX.current = null;
-  };
-
-  const safeIndex = total > 0 ? Math.min(currentIndex, total - 1) : 0;
-
-  const renderCardContent = (project: ProjectItem) => (
-    <article className="group relative rounded-2xl border border-border bg-card p-5 sm:p-6 transition-all duration-200 hover:border-foreground/30 shadow-xs h-full flex flex-col justify-between">
-      <div>
-        {/* Top Badges */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
-            {project.badge}
-          </span>
-
-          {project.role && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-              <Sparkles className="h-2.5 w-2.5" />
-              {project.role}
-            </span>
-          )}
-
-          {project.liveUrl && (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              </span>
-              Live Site
-            </span>
-          )}
-
-          <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            {project.tag}
-          </span>
-
-          {project.metrics && (
-            <span className="ml-auto font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-              {project.metrics}
-            </span>
-          )}
-        </div>
-
-        {/* Content & Media Layout */}
-        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start">
-          {/* Thumbnail / Architecture schematic */}
-          {project.image ? (
-            <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl border border-border bg-muted sm:w-48 sm:aspect-[4/3]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={project.image}
-                alt={project.title}
-                className="h-full w-full object-cover grayscale-0 contrast-100 sm:dark:grayscale sm:dark:contrast-105 transition-all duration-300 sm:dark:group-hover:grayscale-0 group-hover:scale-105"
-              />
-            </div>
-          ) : (
-            <div className="relative flex aspect-[16/10] w-full shrink-0 flex-col items-center justify-center rounded-xl border border-border bg-muted/30 p-4 font-mono text-xs sm:w-48 sm:aspect-[4/3]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card shadow-xs">
-                {project.category === "personal" ? (
-                  <Rocket className="h-5 w-5 text-foreground" />
-                ) : project.category === "school" ? (
-                  <GraduationCap className="h-5 w-5 text-foreground" />
-                ) : (
-                  <Code2 className="h-5 w-5 text-foreground" />
-                )}
-              </div>
-              <span className="mt-2 text-[11px] font-semibold text-foreground text-center">
-                {project.category === "personal"
-                  ? "Personal Project"
-                  : project.category === "school"
-                  ? "Academic Project"
-                  : "Client System"}
-              </span>
-              <span className="text-[10px] text-muted-foreground font-mono">
-                System Architecture
-              </span>
-            </div>
-          )}
-
-          {/* Text Description */}
-          <div className="flex-1 min-w-0">
-            <h3 className="font-mono text-base font-bold text-foreground">
-              {project.title}
-            </h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-              {project.description}
-            </p>
-
-            {/* Tech Icons with Tooltips */}
-            <div className="mt-3.5">
-              <TechIconBadgeList items={project.tech} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Direct Action Links */}
-      <div className="mt-4 flex items-center justify-between border-t border-border pt-3 font-mono text-xs">
-        <div className="flex items-center gap-3">
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-semibold text-foreground hover:underline"
-            >
-              <ExternalLink className="h-3.5 w-3.5" />
-              <span>Live Site ↗</span>
-            </a>
-          )}
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground hover:underline"
-            >
-              <Github className="h-3.5 w-3.5" />
-              <span>Source Code ↗</span>
-            </a>
-          )}
-        </div>
-
-        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
-          {project.category}
-        </span>
-      </div>
-    </article>
-  );
+  // Duplicate items for a seamless infinite loop across all resolutions
+  const loopItems = [...sortedProjects, ...sortedProjects];
 
   return (
-    <section id="projects" className="py-12 border-b border-border">
-      {/* Header & Controls */}
-      <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+    <section id="projects" className="py-12 border-b border-border overflow-hidden">
+      {/* Header */}
+      <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             01 — projects
           </h2>
+          <p className="font-mono text-[11px] text-muted-foreground mt-0.5">
+            Production systems, municipal civic platforms, and engineering experiments
+          </p>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs">
-          {/* Auto-Slide Toggle */}
-          {viewMode === "carousel" && (
-            <button
-              type="button"
-              onClick={() => setIsAutoPlay((prev) => !prev)}
-              className={cn(
-                "flex items-center gap-1 rounded-md border border-border px-2.5 py-1 transition-colors cursor-pointer text-[11px]",
-                isAutoPlay
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold"
-                  : "bg-card text-muted-foreground hover:text-foreground hover:bg-muted"
-              )}
-              title={isAutoPlay ? "Pause auto-slide" : "Start auto-slide"}
-            >
-              {isAutoPlay ? (
-                <>
-                  <Pause className="h-3 w-3" />
-                  <span className="hidden sm:inline">Auto-Slide: On</span>
-                </>
-              ) : (
-                <>
-                  <Play className="h-3 w-3" />
-                  <span className="hidden sm:inline">Auto-Slide: Off</span>
-                </>
-              )}
-            </button>
-          )}
+        {/* Interactive Controls */}
+        <div className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+          <button
+            type="button"
+            onClick={() => setDirection((prev) => (prev === "right" ? "left" : "right"))}
+            className="flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-foreground hover:bg-muted transition-colors cursor-pointer"
+            title={`Direction: flowing ${direction === "right" ? "left to right" : "right to left"}`}
+          >
+            {direction === "right" ? (
+              <>
+                <ArrowRight className="h-3 w-3 text-primary" />
+                <span className="hidden sm:inline">Flow: L → R</span>
+              </>
+            ) : (
+              <>
+                <ArrowLeft className="h-3 w-3 text-primary" />
+                <span className="hidden sm:inline">Flow: R → L</span>
+              </>
+            )}
+          </button>
 
-          {/* View Mode Switcher: Carousel Slider vs Full List */}
-          <div className="flex items-center rounded-md border border-border bg-card p-0.5">
-            <button
-              type="button"
-              onClick={() => setViewMode("carousel")}
-              className={cn(
-                "flex items-center gap-1 rounded px-2 py-0.5 transition-colors cursor-pointer text-[11px]",
-                viewMode === "carousel"
-                  ? "bg-muted font-semibold text-foreground shadow-xs"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-              title="Interactive Carousel Slider"
-            >
-              <SlidersHorizontal className="h-3 w-3" />
-              <span className="hidden sm:inline">Slider</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("list")}
-              className={cn(
-                "flex items-center gap-1 rounded px-2 py-0.5 transition-colors cursor-pointer text-[11px]",
-                viewMode === "list"
-                  ? "bg-muted font-semibold text-foreground shadow-xs"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-              title="Show All Projects in List"
-            >
-              <LayoutGrid className="h-3 w-3" />
-              <span className="hidden sm:inline">List</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsPaused((prev) => !prev)}
+            className="flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-foreground hover:bg-muted transition-colors cursor-pointer"
+            title={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
+          >
+            {isPaused ? (
+              <>
+                <Play className="h-3 w-3 text-emerald-500 fill-emerald-500" />
+                <span className="hidden sm:inline">Resume</span>
+              </>
+            ) : (
+              <>
+                <Pause className="h-3 w-3" />
+                <span className="hidden sm:inline">Pause</span>
+              </>
+            )}
+          </button>
 
           <a
             href="https://github.com/Watot12345"
@@ -577,177 +359,144 @@ export function BrylProjects() {
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="mb-7 flex flex-wrap gap-1.5 font-mono text-xs">
-        <button
-          type="button"
-          onClick={() => handleFilterChange("personal")}
-          className={`rounded-md px-3 py-1 transition-colors cursor-pointer ${
-            filter === "personal"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Personal Projects ({PROJECTS_DATA.filter((p) => p.category === "personal").length})
-        </button>
-        <button
-          type="button"
-          onClick={() => handleFilterChange("client")}
-          className={`rounded-md px-3 py-1 transition-colors cursor-pointer ${
-            filter === "client"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Client Systems ({PROJECTS_DATA.filter((p) => p.category === "client").length})
-        </button>
-        <button
-          type="button"
-          onClick={() => handleFilterChange("gov")}
-          className={`rounded-md px-3 py-1 transition-colors cursor-pointer ${
-            filter === "gov"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Government Platforms ({PROJECTS_DATA.filter((p) => p.category === "gov").length})
-        </button>
-        <button
-          type="button"
-          onClick={() => handleFilterChange("school")}
-          className={`rounded-md px-3 py-1 transition-colors cursor-pointer ${
-            filter === "school"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          School Projects ({PROJECTS_DATA.filter((p) => p.category === "school").length})
-        </button>
-        <button
-          type="button"
-          onClick={() => handleFilterChange("all")}
-          className={`rounded-md px-3 py-1 transition-colors cursor-pointer ${
-            filter === "all"
-              ? "bg-muted font-semibold text-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          All ({PROJECTS_DATA.length})
-        </button>
-      </div>
+      {/* Infinite Marquee Track Container with pause-on-hover */}
+      <div className="group relative w-full overflow-hidden py-2">
+        {/* Left & Right Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-background via-background/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-background via-background/80 to-transparent z-10" />
 
-      {/* Projects Display: Interactive Carousel Slider vs List */}
-      {viewMode === "carousel" ? (
+        {/* Animated Infinite Track */}
         <div
-          className="relative"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          className={cn(
+            "flex w-max gap-5 select-none",
+            direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
+            "group-hover:[animation-play-state:paused]",
+            isPaused && "[animation-play-state:paused]"
+          )}
+          style={{ animationDuration: "80s" }}
         >
-          {/* Side Floating Clickable Arrow Buttons */}
-          <button
-            type="button"
-            onClick={prevProject}
-            className="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-border bg-background/95 text-foreground shadow-lg backdrop-blur-md transition-all hover:bg-muted hover:scale-110 active:scale-95 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-primary"
-            aria-label="Previous project (←)"
-            title="Previous project (←)"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={nextProject}
-            className="absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-border bg-background/95 text-foreground shadow-lg backdrop-blur-md transition-all hover:bg-muted hover:scale-110 active:scale-95 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-primary"
-            aria-label="Next project (→)"
-            title="Next project (→)"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-
-          {/* Overflow-Hidden Sliding Viewport */}
-          <div className="overflow-hidden rounded-2xl">
-            <div
-              className="flex transition-transform duration-500 ease-out will-change-transform"
-              style={{ transform: `translateX(-${safeIndex * 100}%)` }}
+          {loopItems.map((project, idx) => (
+            <article
+              key={`${project.id}-${idx}`}
+              className="w-[300px] sm:w-[370px] shrink-0 rounded-2xl border border-border bg-card/90 backdrop-blur-xs p-5 shadow-xs transition-all duration-200 hover:border-foreground/40 hover:bg-card hover:shadow-md flex flex-col justify-between"
             >
-              {sorted.map((project, idx) => (
-                <div key={`${project.id}-${idx}`} className="w-full shrink-0">
-                  {renderCardContent(project)}
-                </div>
-              ))}
-            </div>
-          </div>
+              <div>
+                {/* Top Badges */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider text-primary-foreground">
+                    {project.badge}
+                  </span>
 
-          {/* Carousel Footer Navigation Bar */}
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-1 font-mono text-xs">
-            {/* Dots Indicator */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {sorted.map((p, dotIdx) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => setCurrentIndex(dotIdx)}
-                  className={cn(
-                    "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                    safeIndex === dotIdx
-                      ? "w-6 bg-primary"
-                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                  {project.liveUrl && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      </span>
+                      Live Site
+                    </span>
                   )}
-                  aria-label={`Jump to project ${dotIdx + 1}: ${p.title}`}
-                  title={`${dotIdx + 1}. ${p.title}`}
-                />
-              ))}
-            </div>
 
-            {/* Quick Prev / Next Buttons & Counter */}
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={prevProject}
-                className="flex items-center gap-1 rounded-md border border-border bg-card px-2.5 py-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer text-[11px]"
-                title="Previous Project (←)"
-              >
-                <ArrowLeft className="h-3 w-3" />
-                <span>Prev</span>
-              </button>
+                  <span className="rounded-full border border-border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                    {project.tag}
+                  </span>
 
-              <span className="text-[11px] font-semibold text-foreground px-1">
-                {String(safeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-              </span>
+                  {project.metrics && (
+                    <span className="ml-auto font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                      {project.metrics}
+                    </span>
+                  )}
+                </div>
 
-              <button
-                type="button"
-                onClick={nextProject}
-                className="flex items-center gap-1 rounded-md border border-border bg-card px-2.5 py-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer text-[11px]"
-                title="Next Project (→)"
-              >
-                <span>Next</span>
-                <ArrowRight className="h-3 w-3" />
-              </button>
-            </div>
-          </div>
+                {/* Media Thumbnail */}
+                <div className="mt-3 overflow-hidden rounded-xl border border-border bg-muted aspect-[16/9]">
+                  {project.image ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center p-3 font-mono text-xs">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card shadow-xs">
+                        {project.category === "personal" ? (
+                          <Rocket className="h-4 w-4 text-foreground" />
+                        ) : project.category === "school" ? (
+                          <GraduationCap className="h-4 w-4 text-foreground" />
+                        ) : (
+                          <Code2 className="h-4 w-4 text-foreground" />
+                        )}
+                      </div>
+                      <span className="mt-1.5 text-[10px] font-semibold text-foreground text-center line-clamp-1">
+                        {project.title}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-          {/* Keyboard & Gesture Hint */}
-          <div className="mt-2 flex items-center justify-between px-1 font-mono text-[10px] text-muted-foreground">
-            <span>Click Left / Right arrows, swipe, or use keyboard keys ← →</span>
-            {isAutoPlay && (
-              <span className="text-emerald-500 font-semibold animate-pulse">
-                ● Auto-cycling every 5s
-              </span>
-            )}
-          </div>
-        </div>
-      ) : (
-        /* Expanded List View */
-        <div className="flex flex-col gap-6">
-          {sorted.map((project) => (
-            <div key={project.id}>{renderCardContent(project)}</div>
+                {/* Text Description */}
+                <div className="mt-3">
+                  <h3 className="font-mono text-sm font-bold text-foreground">
+                    {project.title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+                    {project.description}
+                  </p>
+                </div>
+
+                {/* Tech Badges */}
+                <div className="mt-3">
+                  <TechIconBadgeList items={project.tech} />
+                </div>
+              </div>
+
+              {/* Direct Action Links */}
+              <div className="mt-4 flex items-center justify-between border-t border-border pt-3 font-mono text-xs">
+                <div className="flex items-center gap-3">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      <span>Live Site ↗</span>
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground hover:underline"
+                    >
+                      <Github className="h-3 w-3" />
+                      <span>Code ↗</span>
+                    </a>
+                  )}
+                </div>
+
+                <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider">
+                  {project.category}
+                </span>
+              </div>
+            </article>
           ))}
         </div>
-      )}
+      </div>
+
+      {/* Subtitle helper */}
+      <div className="mt-3 flex items-center justify-between px-1">
+        <p className="font-mono text-[10px] text-muted-foreground">
+          Hover over any project card to pause and inspect.
+        </p>
+        <span className="font-mono text-[10px] text-muted-foreground">
+          {PROJECTS_DATA.length} Production &amp; Open-Source Projects
+        </span>
+      </div>
     </section>
   );
 }
