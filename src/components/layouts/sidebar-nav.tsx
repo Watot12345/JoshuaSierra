@@ -137,7 +137,7 @@ export function SidebarNav() {
               {profile.fullName}
             </h1>
             <p className="mt-1 font-mono text-xs text-muted-foreground">
-              Software Engineer
+              {profile.role}
             </p>
           </a>
 
@@ -333,7 +333,7 @@ export function SidebarNav() {
             {profile.fullName}
           </a>
           <span className="block text-[10px] font-mono text-muted-foreground">
-            Software Engineer
+            {profile.role}
           </span>
         </div>
 
