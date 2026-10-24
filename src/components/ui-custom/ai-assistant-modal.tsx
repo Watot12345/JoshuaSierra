@@ -21,18 +21,166 @@ interface Message {
 
 const QUICK_QUESTIONS = [
   "Are you available for an internship (OJT)?",
-  "Tell me about the Emiringkay WebRTC project.",
-  "What is your tech stack and backend skills?",
-  "What workstation rig and OS do you use?",
-  "How can I contact or hire you?",
+  "What are your top production & AI systems?",
+  "What is your tech stack and workstation setup?",
 ];
 
 const INITIAL_MESSAGE: Message = {
   id: "welcome-msg",
   role: "assistant",
   content:
-    "Hello! I'm Joshua's AI Portfolio Assistant. Ask me anything about Joshua's projects (like **Emiringkay** and **Civentral**), his tech stack, academic background at **Bestlink College**, or his availability for **internships (OJT)** and full-stack software roles!",
+    "Hello! Feel free to ask me anything about Joshua's systems (like [Emiringkay](https://emiringkay-web.onrender.com) and [Civentral](https://civentral.tech)), his technical stack, or his availability for internships (OJT) and software roles.",
 };
+
+function parseInline(text: string, onClose: () => void, isUser: boolean) {
+  // Matches markdown links [label](url) and bold **text**
+  const regex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
+  const parts = text.split(regex);
+
+  return parts.map((part, index) => {
+    // Check if markdown link [label](url)
+    const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+    if (linkMatch) {
+      const [, label, url] = linkMatch;
+      const isInternal = url.startsWith("#");
+      const isExternal = url.startsWith("http://") || url.startsWith("https://");
+
+      if (isInternal) {
+        return (
+          <a
+            key={index}
+            href={url}
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+              setTimeout(() => {
+                const el = document.querySelector(url);
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }, 120);
+            }}
+            className={cn(
+              "font-medium underline underline-offset-2 transition-colors cursor-pointer",
+              isUser
+                ? "text-primary-foreground hover:opacity-80"
+                : "text-primary hover:text-primary/80 decoration-primary/40"
+            )}
+          >
+            {label}
+          </a>
+        );
+      }
+
+      return (
+        <a
+          key={index}
+          href={url}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className={cn(
+            "font-medium underline underline-offset-2 transition-colors inline-flex items-baseline gap-0.5",
+            isUser
+              ? "text-primary-foreground hover:opacity-80"
+              : "text-primary hover:text-primary/80 decoration-primary/40"
+          )}
+        >
+          <span>{label}</span>
+          {isExternal && <span className="text-[10px] select-none">↗</span>}
+        </a>
+      );
+    }
+
+    // Check if bold **text**
+    const boldMatch = part.match(/^\*\*(.*?)\*\*$/);
+    if (boldMatch) {
+      return (
+        <strong
+          key={index}
+          className={cn("font-semibold", isUser ? "text-primary-foreground" : "text-foreground")}
+        >
+          {boldMatch[1]}
+        </strong>
+      );
+    }
+
+    // Standard text
+    return <span key={index}>{part}</span>;
+  });
+}
+
+function FormattedContent({
+  content,
+  isUser,
+  onClose,
+}: {
+  content: string;
+  isUser: boolean;
+  onClose: () => void;
+}) {
+  // Strip multi-asterisk anomalies
+  const sanitized = content
+    .replace(/\*{4,}/g, "")
+    .replace(/\*{3}/g, "**");
+
+  const lines = sanitized.split("\n");
+
+  return (
+    <div className="space-y-1.5 text-xs sm:text-sm leading-relaxed">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) {
+          return <div key={idx} className="h-1" />;
+        }
+
+        // Bullet list item
+        if (/^[-*•]\s+/.test(trimmed)) {
+          const itemText = trimmed.replace(/^[-*•]\s+/, "");
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-1 my-0.5">
+              <span
+                className={cn(
+                  "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full",
+                  isUser ? "bg-primary-foreground/70" : "bg-primary"
+                )}
+              />
+              <div className="flex-1">
+                {parseInline(itemText, onClose, isUser)}
+              </div>
+            </div>
+          );
+        }
+
+        // Numbered list item
+        const numMatch = trimmed.match(/^(\d+\.)\s+(.*)/);
+        if (numMatch) {
+          return (
+            <div key={idx} className="flex items-start gap-1.5 pl-1 my-0.5">
+              <span
+                className={cn(
+                  "shrink-0 font-mono text-xs font-semibold",
+                  isUser ? "text-primary-foreground/80" : "text-primary"
+                )}
+              >
+                {numMatch[1]}
+              </span>
+              <div className="flex-1">
+                {parseInline(numMatch[2], onClose, isUser)}
+              </div>
+            </div>
+          );
+        }
+
+        // Standard paragraph
+        return (
+          <p key={idx}>
+            {parseInline(line, onClose, isUser)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
 
 interface AiAssistantModalProps {
   isOpen: boolean;
@@ -117,7 +265,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           id: `assistant-${Date.now()}`,
           role: "assistant",
           content:
-            "I'm currently unable to reach the AI engine, but Joshua is actively available for **Software Engineering Internships (OJT)** and developer positions! Feel free to email him directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).",
+            "I'm temporarily unable to reach the server. Joshua is actively available for Software Engineering Internships (OJT) and full-stack positions. Feel free to email him directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).",
         },
       ]);
     } finally {
@@ -158,16 +306,11 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               <Sparkles className="h-4 w-4" />
             </div>
             <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="font-mono text-xs sm:text-sm font-bold text-foreground truncate">
-                  Joshua Sierra AI Assistant
-                </h3>
-                <span className="shrink-0 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.2 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                  Online
-                </span>
-              </div>
+              <h3 className="font-mono text-xs sm:text-sm font-bold text-foreground truncate">
+                Questions? ask anyway...
+              </h3>
               <p className="font-mono text-[10px] text-muted-foreground truncate">
-                Interactive Q&amp;A · Grounded in Joshua&apos;s Portfolio
+                Direct portfolio Q&amp;A · OJT &amp; projects
               </p>
             </div>
           </div>
@@ -237,13 +380,13 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
 
                 <div
                   className={cn(
-                    "max-w-[82%] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm leading-relaxed shadow-xs whitespace-pre-wrap",
+                    "max-w-[85%] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm shadow-xs",
                     isUser
                       ? "bg-primary text-primary-foreground rounded-tr-xs"
                       : "border border-border bg-card text-foreground rounded-tl-xs"
                   )}
                 >
-                  {m.content}
+                  <FormattedContent content={m.content} isUser={isUser} onClose={onClose} />
                 </div>
               </div>
             );
