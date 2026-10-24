@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Quote, Star, Pause, Play, ArrowLeft, ArrowRight } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 import { testimonials } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 export function BrylTestimonials() {
-  const [isPaused, setIsPaused] = useState(false);
-  const [direction, setDirection] = useState<"left" | "right">("right"); // Default left-to-right as requested
-
   // Quadruple items to ensure a seamless infinite loop on any screen width
   const loopItems = [
     ...testimonials,
@@ -30,46 +26,9 @@ export function BrylTestimonials() {
           </p>
         </div>
 
-        {/* Interactive Controls */}
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
-          <button
-            type="button"
-            onClick={() => setDirection((prev) => (prev === "right" ? "left" : "right"))}
-            className="flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-foreground hover:bg-muted transition-colors cursor-pointer"
-            title={`Direction: flowing ${direction === "right" ? "left to right" : "right to left"}`}
-          >
-            {direction === "right" ? (
-              <>
-                <ArrowRight className="h-3 w-3 text-primary" />
-                <span className="hidden sm:inline">Flow: L → R</span>
-              </>
-            ) : (
-              <>
-                <ArrowLeft className="h-3 w-3 text-primary" />
-                <span className="hidden sm:inline">Flow: R → L</span>
-              </>
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsPaused((prev) => !prev)}
-            className="flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 text-foreground hover:bg-muted transition-colors cursor-pointer"
-            title={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
-          >
-            {isPaused ? (
-              <>
-                <Play className="h-3 w-3 text-emerald-500 fill-emerald-500" />
-                <span className="hidden sm:inline">Resume</span>
-              </>
-            ) : (
-              <>
-                <Pause className="h-3 w-3" />
-                <span className="hidden sm:inline">Pause</span>
-              </>
-            )}
-          </button>
-        </div>
+        <span className="font-mono text-[11px] text-muted-foreground">
+          {testimonials.length} Verified Endorsements
+        </span>
       </div>
 
       {/* Infinite Marquee Track Container */}
@@ -81,10 +40,8 @@ export function BrylTestimonials() {
         {/* Animated Infinite Track */}
         <div
           className={cn(
-            "flex w-max gap-4 select-none",
-            direction === "right" ? "animate-marquee-reverse" : "animate-marquee",
-            "group-hover:[animation-play-state:paused]",
-            isPaused && "[animation-play-state:paused]"
+            "flex w-max gap-4 select-none animate-marquee-reverse",
+            "group-hover:[animation-play-state:paused]"
           )}
           style={{ animationDuration: "42s" }}
         >
