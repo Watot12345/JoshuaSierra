@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import Link from "next/link";
 import {
   ExternalLink,
   Github,
@@ -194,14 +195,12 @@ export function BrylProjects() {
 
           <span className="text-border">·</span>
 
-          <a
-            href="https://github.com/Watot12345"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground hover:underline transition-colors"
           >
-            <span>all repositories (@Watot12345) ↗</span>
-          </a>
+            <span>all projects (17) ↗</span>
+          </Link>
         </div>
       </div>
 
