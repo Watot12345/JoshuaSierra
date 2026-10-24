@@ -32,7 +32,6 @@ const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
   { id: "experience", label: "Experience", href: "#experience", icon: Briefcase },
   { id: "stack", label: "Stack", href: "#stack", icon: Layers },
-  { id: "gear", label: "Gear", href: "/gear", icon: Monitor },
   { id: "education", label: "Education", href: "#education", icon: GraduationCap },
   { id: "github", label: "GitHub Activity", href: "#github-activity", icon: GitBranch },
   { id: "testimonials", label: "Recommendations", href: "#testimonials", icon: MessageSquareQuote },
@@ -51,7 +50,7 @@ export function SidebarNav() {
   // Update active section on scroll or route
   useEffect(() => {
     if (pathname === "/gear") {
-      setActiveId("gear");
+      setActiveId("");
       return;
     }
 
@@ -194,6 +193,20 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2 h-px bg-border" />
+
+            {/* Workspace & Gear Page */}
+            <Link
+              href="/gear"
+              className={cn(
+                "flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/gear"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Monitor className="h-3.5 w-3.5 shrink-0" />
+              <span>Workspace &amp; Gear ↗</span>
+            </Link>
 
             {/* Quick Resume Link */}
             <a
@@ -444,6 +457,20 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2.5 h-px bg-border" />
+
+            <Link
+              href="/gear"
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3.5 py-2.5 transition-colors hover:bg-muted/50 hover:text-foreground",
+                pathname === "/gear"
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Monitor className="h-4 w-4 shrink-0" />
+              <span>Workspace &amp; Gear ↗</span>
+            </Link>
 
             <a
               href="/resume.pdf"
