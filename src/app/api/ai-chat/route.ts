@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server";
+import {
+  getClientIp,
+  isSuspectedBot,
+  checkRateLimit,
+  inspectPayload,
+} from "@/lib/security-guardrails";
 
 interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -99,6 +105,38 @@ If a visitor, recruiter, or interviewer asks any of the following questions (or 
 
 export async function POST(req: Request) {
   try {
+    // 1. Anti-Bot, Scraper, & Mining Tool Guardrail
+    if (isSuspectedBot(req)) {
+      return NextResponse.json(
+        { error: "Access denied. Automated scrapers and bot mining are prohibited." },
+        { status: 403 }
+      );
+    }
+
+    // 2. Anti-Brute Force & Anti-Mining Sliding Window Rate Limiter
+    const clientIp = getClientIp(req);
+    const rateCheck = checkRateLimit(clientIp, {
+      windowMs: 60 * 1000,
+      maxRequests: 8,
+      dailyMax: 60,
+      keyPrefix: "ai-chat",
+    });
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        {
+          reply: `I've received several requests in a short period. To prevent automated bot mining, please wait ${rateCheck.retryAfterSeconds} seconds before sending another message, or email me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).`,
+          error: "Rate limit exceeded",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(rateCheck.retryAfterSeconds),
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     const userMessage = typeof body?.message === "string" ? body.message.trim() : "";
 
@@ -106,8 +144,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Message is required." }, { status: 400 });
     }
 
-    if (userMessage.length > 800) {
-      return NextResponse.json({ error: "Message is too long (max 800 chars)." }, { status: 400 });
+    // 3. Prompt Injection, Token Exhaustion, & Malicious Payload Guardrail
+    const payloadCheck = inspectPayload(userMessage);
+    if (!payloadCheck.safe) {
+      return NextResponse.json({
+        reply: "I keep my portfolio conversations focused strictly on my software engineering background, systems, and hiring availability. Feel free to ask about my work or tech stack!",
+      });
+    }
+
+    if (userMessage.length > 500) {
+      return NextResponse.json({ error: "Message is too long (max 500 chars)." }, { status: 400 });
     }
 
     const rawHistory: ChatMessage[] = Array.isArray(body?.history) ? body.history : [];

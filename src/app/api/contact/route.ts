@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import type { ContactFormData, ContactFormResponse } from "@/types/portfolio";
+import {
+  getClientIp,
+  isSuspectedBot,
+  checkRateLimit,
+} from "@/lib/security-guardrails";
 
 // Path to store inquiries locally in JSON & CSV (Excel compatible) format
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -86,6 +91,38 @@ export async function POST(
   request: Request
 ): Promise<NextResponse<ContactFormResponse>> {
   try {
+    // 1. Anti-Bot & Scraper Guardrail
+    if (isSuspectedBot(request)) {
+      return NextResponse.json(
+        { success: false, message: "Access denied. Automated submissions are blocked." },
+        { status: 403 }
+      );
+    }
+
+    // 2. Anti-Spam / Anti-Flood Rate Limiter (Max 4 submissions per 10 minutes per IP)
+    const clientIp = getClientIp(request);
+    const rateCheck = checkRateLimit(clientIp, {
+      windowMs: 10 * 60 * 1000,
+      maxRequests: 4,
+      dailyMax: 20,
+      keyPrefix: "contact-form",
+    });
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Too many submissions from your network. Please wait ${rateCheck.retryAfterSeconds} seconds before sending another message, or email me directly at joshuaarncel@gmail.com.`,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(rateCheck.retryAfterSeconds),
+          },
+        }
+      );
+    }
+
     const body = (await request.json()) as Partial<ContactFormData> & { hp_field?: string };
 
     // Honeypot spam check
