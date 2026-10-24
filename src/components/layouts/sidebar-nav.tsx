@@ -146,7 +146,7 @@ export function SidebarNav() {
               >
                 <Sparkles className="h-3.5 w-3.5 text-primary shrink-0 animate-pulse" />
                 <span className="font-mono text-xs font-medium truncate text-foreground/90 group-hover:text-foreground">
-                  Questions? ask anyway...
+                  Questions? Ask anyway...
                 </span>
               </button>
             </div>
@@ -291,10 +291,10 @@ export function SidebarNav() {
             type="button"
             onClick={() => setAiModalOpen(true)}
             className="flex h-9 items-center gap-1.5 rounded-lg border border-primary/25 bg-primary/10 px-2.5 text-xs font-mono font-medium text-foreground hover:bg-primary/20 transition-colors"
-            title="Questions? ask anyway..."
+            title="Questions? Ask anyway..."
           >
             <Sparkles className="h-3.5 w-3.5 text-primary animate-pulse" />
-            <span className="hidden sm:inline">ask anyway...</span>
+            <span className="hidden sm:inline">Ask anyway...</span>
           </button>
 
           {mounted && (
@@ -394,7 +394,7 @@ export function SidebarNav() {
                 className="flex w-full items-center gap-2.5 rounded-xl border border-primary/25 bg-primary/10 px-3.5 py-2.5 text-foreground transition-colors hover:bg-primary/20"
               >
                 <Sparkles className="h-4 w-4 text-primary shrink-0 animate-pulse" />
-                <span className="font-mono text-xs font-medium">Questions? ask anyway...</span>
+                <span className="font-mono text-xs font-medium">Questions? Ask anyway...</span>
               </button>
             </div>
 
