@@ -319,8 +319,13 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5 bg-muted/40">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-xs font-bold text-primary">
-              JS
+            <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-card overflow-hidden shadow-xs">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/favicon.svg"
+                alt="Joshua Sierra Logo"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="min-w-0">
               <h3 className="font-mono text-xs sm:text-sm font-bold text-foreground truncate">
@@ -386,13 +391,22 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               >
                 <div
                   className={cn(
-                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs shadow-xs font-mono",
+                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs shadow-xs overflow-hidden",
                     isUser
                       ? "border-primary/30 bg-primary text-primary-foreground"
-                      : "border-primary/20 bg-primary/10 text-primary font-bold text-[10px]"
+                      : "border-border bg-card"
                   )}
                 >
-                  {isUser ? <User className="h-3.5 w-3.5" /> : "JS"}
+                  {isUser ? (
+                    <User className="h-3.5 w-3.5" />
+                  ) : (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src="/favicon.svg"
+                      alt="Joshua Sierra"
+                      className="h-full w-full object-contain"
+                    />
+                  )}
                 </div>
 
                 <div
@@ -411,8 +425,13 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
 
           {isLoading && (
             <div className="flex items-start gap-2.5">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-[10px] font-bold text-primary shadow-xs">
-                JS
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-border bg-card overflow-hidden shadow-xs">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/favicon.svg"
+                  alt="Joshua Sierra"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-xs text-muted-foreground shadow-xs">
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
