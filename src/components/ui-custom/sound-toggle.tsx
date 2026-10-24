@@ -4,6 +4,7 @@ import { useSound } from "@/context/sound-context";
 import { Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 
 interface SoundToggleProps {
   variant?: "icon" | "icon-small";
@@ -50,9 +51,7 @@ export function SoundToggle({ variant = "icon", className }: SoundToggleProps) {
         {soundEnabled ? (
           <>
             <Volume2 className="h-3.5 w-3.5 text-emerald-500" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-1.5 w-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            </span>
+            <ActiveDot size="xs" className="absolute -top-0.5 -right-0.5" />
           </>
         ) : (
           <VolumeX className="h-3.5 w-3.5" />
@@ -81,9 +80,7 @@ export function SoundToggle({ variant = "icon", className }: SoundToggleProps) {
       {soundEnabled ? (
         <>
           <Volume2 className="h-4 w-4 text-emerald-500" />
-          <span className="absolute -top-0.5 -right-0.5 flex h-1.5 w-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          </span>
+          <ActiveDot size="xs" className="absolute -top-0.5 -right-0.5" />
         </>
       ) : (
         <VolumeX className="h-4 w-4 text-muted-foreground" />

@@ -9,6 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 import { cn } from "@/lib/utils";
 
 interface ProjectItem {
@@ -33,11 +34,11 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "gov",
     badge: "Capstone Platform",
     role: "Capstone Lead Developer",
-    tag: "South Caloocan City · Live",
-    title: "Civentral Health & Sanitation Portal",
+    tag: "Caloocan City · Live",
+    title: "Civentral Health & Sanitation Management Portal",
     shortLabel: "01 · Civentral",
     description:
-      "Official capstone web portal deployed for South Caloocan City. Digitized manual paper filings with real-time status updates and citizen record management for 1,000+ residents.",
+      "Official capstone web portal deployed for Caloocan City. Digitized manual paper filings with real-time status updates and citizen record management for 1,000+ residents.",
     image: "/civentral-web.png",
     liveUrl: "https://healthsanitation.civentral.tech/",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
@@ -271,8 +272,8 @@ export function BrylProjects() {
               </span>
 
               {project.liveUrl && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <ActiveDot size="xs" />
                   Live Site
                 </span>
               )}

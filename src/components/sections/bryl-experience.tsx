@@ -53,7 +53,7 @@ const EXPERIENCES: ExperienceRow[] = [
     location: "Philippines",
     shortLabel: "2024 · Freelance",
     bullets: [
-      "Civentral Web & Mobile App (Caloocan City Government · 2026 – Present): Architected database schema and server logic for healthsanitation.civentral.tech — a live government health and sanitation platform actively serving 1,000+ citizens in South Caloocan City.",
+      "Civentral Web & Mobile App (Caloocan City Government · 2026 – Present): Architected database schema and server logic for healthsanitation.civentral.tech — a live government health and sanitation platform actively serving 1,000+ citizens in Caloocan City.",
       "SariSari Store POS System (Personal / Founder · 2026 – Present): Designed and developed an offline-first Android POS app that helps small neighborhood stores manage sales, stock levels, and customer credit without needing a stable internet connection.",
       "SaaS Platform & Mobile Apps (Personal / Client Projects · 2024– Present): SaaS app with multi-tenant architecture and subscription management, and cross-platform mobile apps via React Native (Expo) and Flutter with REST API integrations.",
     ],

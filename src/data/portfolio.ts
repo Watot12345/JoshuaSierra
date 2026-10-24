@@ -366,7 +366,7 @@ export const awards: Award[] = [
 export const projects: Project[] = [
   {
     id: "prj-1",
-    title: "Civentral Web",
+    title: "Civentral Health & Sanitation Management Portal",
     slug: "civentral-web",
     category: "Web App",
     shortDescription:

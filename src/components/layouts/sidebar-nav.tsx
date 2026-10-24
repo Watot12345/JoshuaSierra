@@ -29,6 +29,7 @@ import { profile } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { AiAssistantModal } from "@/components/ui-custom/ai-assistant-modal";
 import { SoundToggle } from "@/components/ui-custom/sound-toggle";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 
 const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
@@ -137,13 +138,13 @@ export function SidebarNav() {
               {profile.fullName}
             </h1>
             <p className="mt-1 font-mono text-xs text-muted-foreground">
-              {profile.role}
+              Full-Stack Developer
             </p>
           </a>
 
           {/* Availability pill */}
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+            <ActiveDot size="xs" />
             <span>Available for Work &amp; Internship</span>
           </div>
 
@@ -333,7 +334,7 @@ export function SidebarNav() {
             {profile.fullName}
           </a>
           <span className="block text-[10px] font-mono text-muted-foreground">
-            {profile.role}
+            Full-Stack Developer
           </span>
         </div>
 
@@ -389,7 +390,7 @@ export function SidebarNav() {
                 {profile.fullName}
               </span>
               <div className="mt-1.5 flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 w-fit">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+                <ActiveDot size="xs" />
                 <span>Available for Work &amp; Internship</span>
               </div>
             </div>

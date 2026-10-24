@@ -82,11 +82,11 @@ Feel free to send your system requirements or documentation to [joshuaarncel@gma
 - My Education: BS in Information Technology (BSIT) at Bestlink College of the Philippines (2024 — 2027), 4th Year, 1st Semester (Specialization in Information Management). Prior: Paradise Farms National High School (TVL - ICT, 2020-2022).
 - My Work Experience:
   1. Roppets (Project-Based Developer, Aug 2026 – Present): Built client operations portal (https://roppets.vercel.app) featuring integrated CRM, real-time event booking, booking tracking, and PHP REST APIs.
-  2. Civentral / Caloocan City Health Portal (Capstone Project Lead, June 2026 – Present): healthsanitation.civentral.tech serving South Caloocan citizens and staff with real-time Supabase sync.
+  2. Civentral / Caloocan City Health Portal (Capstone Project Lead, June 2026 – Present): healthsanitation.civentral.tech serving Caloocan City citizens and staff with real-time Supabase sync.
   3. Freelance & Independent Projects (2024 – Present): SariSari App, SJDM Legislative research system, SoleVerse eCommerce, Roppets CRM portal, cross-platform mobile apps (Expo/Flutter).
   4. References: Jorge Lucero (Capstone Project Adviser), Ronald Roldan Jr. (Capstone Technical Adviser), Danilo Liwanag (Founder & Director, Roppets Puppet Production), Raffy Lapiz (Capstone Co-Developer).
 - My Top Systems Built:
-  - Civentral (South Caloocan City health & sanitation capstone platform for 1,000+ residents): https://healthsanitation.civentral.tech/
+  - Civentral Health & Sanitation Management Portal (Caloocan City health & sanitation capstone platform for 1,000+ residents): https://healthsanitation.civentral.tech/
   - SariSari App (Offline-first retail POS & inventory app for neighborhood stores): https://watot12345.github.io/sarisariApp/
   - SJDM Legislative Research Platform (Municipal ordinances & city council resolution archive): https://lrpaies.sjdm-legislative.com
   - Soleverse (Modern footwear eCommerce platform built with React 19 & TanStack): https://sole-verse-chronos-main.vercel.app/
@@ -112,7 +112,7 @@ If a visitor, recruiter, or interviewer asks any of the following questions (or 
 6. "What are your greatest strengths and weaknesses?":
    "My greatest strength is my resourcefulness and execution speed: I adapt quickly to new stacks, solve complex architectural bottlenecks, and ship independently. My weakness is that I tend to get deeply invested in optimizing edge cases and code structure, so I actively practice balancing perfectionism with fast, iterative delivery."
 7. "What is your greatest achievement?":
-   "Designing and launching [Civentral](https://healthsanitation.civentral.tech/) for South Caloocan City. We built a live health and sanitation platform with Supabase real-time sync that serves over 1,000 citizens and significantly reduced manual paperwork processing for government health staff."
+   "Designing and launching [Civentral Health & Sanitation Management Portal](https://healthsanitation.civentral.tech/) for Caloocan City. We built a live health and sanitation platform with Supabase real-time sync that serves over 1,000 citizens and significantly reduced manual paperwork processing for government health staff."
 8. "Where do you see yourself in five years?":
    "In five years, I see myself as a Senior Full-Stack Engineer or Technical Lead, architecting scalable distributed systems, driving engineering standards, and mentoring junior developers."
 9. "What salary range are you looking for?":

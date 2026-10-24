@@ -4,6 +4,7 @@ import { Building2, Users, GraduationCap, Globe, CheckCircle2, Image as ImageIco
 import { AnimatedBackground } from "@/components/ui-custom/animated-background";
 import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 import { socialLinks } from "@/data/portfolio";
 
 export const metadata: Metadata = {
@@ -39,7 +40,7 @@ const AFFILIATIONS: AffiliationItem[] = [
     description:
       "Civic technology and community platform initiative developing modern digital public infrastructure and health sanitation systems for local government units and residents.",
     bullets: [
-      "Architected backend microservices and database schema for healthsanitation.civentral.tech, actively serving 1,000+ citizens in South Caloocan City.",
+      "Architected backend microservices and database schema for healthsanitation.civentral.tech, actively serving 1,000+ citizens in Caloocan City.",
       "Lead engineering sprints covering web portals (PHP, JavaScript, Tailwind) and mobile app delivery (React Native, Expo).",
       "Collaborate directly with city stakeholders to replace manual paperwork with automated digital tracking.",
     ],
@@ -122,7 +123,8 @@ export default function AffiliationsPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 mt-2 sm:mt-0">
-                    <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <span className="inline-flex items-center gap-1.5 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+                      <ActiveDot size="xs" />
                       {item.badge}
                     </span>
                     <span className="font-mono text-xs text-muted-foreground">

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { ALL_PROJECTS, type ProjectCatalogItem } from "@/data/projects-data";
 import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 import { cn } from "@/lib/utils";
 
 type CategoryFilter = "all" | "gov" | "personal" | "client" | "school";
@@ -200,8 +201,8 @@ export function ProjectsCatalog() {
                   </span>
 
                   {project.liveUrl && (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
+                      <ActiveDot size="xs" />
                       Live
                     </span>
                   )}

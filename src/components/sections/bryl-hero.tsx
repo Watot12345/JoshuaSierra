@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { profile } from "@/data/portfolio";
+import { ActiveDot } from "@/components/ui-custom/active-dot";
 
 export function BrylHero() {
   return (
@@ -17,7 +18,7 @@ export function BrylHero() {
           </p>
 
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            Currently developing project features at <strong className="text-foreground font-semibold">Roppets</strong>, serving as Lead Developer for <strong className="text-foreground font-semibold">Civentral</strong> — a live government capstone platform deployed for South Caloocan City, and building startup tools like <strong className="text-foreground font-semibold">SariSari App</strong>. Actively seeking an <strong className="text-foreground font-semibold">Internship (OJT)</strong> and junior developer roles.
+            Currently developing project features at <strong className="text-foreground font-semibold">Roppets</strong>, serving as Lead Developer for <strong className="text-foreground font-semibold">Civentral</strong> — a live government capstone platform deployed for Caloocan City, and building startup tools like <strong className="text-foreground font-semibold">SariSari App</strong>. Actively seeking an <strong className="text-foreground font-semibold">Internship (OJT)</strong> and junior developer roles.
           </p>
 
           {/* Social links */}
@@ -64,8 +65,8 @@ export function BrylHero() {
               className="h-full w-full object-cover object-top grayscale-0 contrast-100 brightness-100 sm:dark:grayscale sm:dark:contrast-[1.08] sm:dark:brightness-[0.98] transition-all duration-500 ease-out sm:dark:group-hover:grayscale-0 sm:dark:group-hover:contrast-100 sm:dark:group-hover:brightness-100 group-hover:scale-105"
             />
           </div>
-          <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background shadow-xs">
-            <span className="h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-background" />
+          <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background shadow-xs ring-1 ring-border">
+            <ActiveDot size="md" />
           </span>
         </div>
       </div>

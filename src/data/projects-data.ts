@@ -21,10 +21,10 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
     category: "gov",
     badge: "Capstone Platform",
     role: "Capstone Lead Developer",
-    tag: "South Caloocan City · Live",
-    title: "Civentral Health & Sanitation Portal",
+    tag: "Caloocan City · Live",
+    title: "Civentral Health & Sanitation Management Portal",
     description:
-      "Official capstone web portal deployed for South Caloocan City. Digitized manual paper filings with real-time status updates and citizen record management for 1,000+ residents.",
+      "Official capstone web portal deployed for Caloocan City. Digitized manual paper filings with real-time status updates and citizen record management for 1,000+ residents.",
     image: "/civentral-web.png",
     liveUrl: "https://healthsanitation.civentral.tech/",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
