@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText } from "lucide-react";
+import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
 
 interface ExperienceRow {
   year: string;
@@ -116,16 +117,9 @@ export function BrylExperience() {
               ))}
             </ul>
 
-            {/* Tech pills */}
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {exp.stack.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-md border border-border bg-muted/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
-                >
-                  {t}
-                </span>
-              ))}
+            {/* Tech Icons with Tooltips */}
+            <div className="mt-4">
+              <TechIconBadgeList items={exp.stack} />
             </div>
           </div>
         ))}

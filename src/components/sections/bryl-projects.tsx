@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Github, Code2, Sparkles, Rocket, GraduationCap } from "lucide-react";
+import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
 
 type ProjectCategory = "personal" | "client" | "gov" | "school";
 
@@ -172,15 +173,17 @@ const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "expense-tracker",
     category: "personal",
-    badge: "Fintech Utility",
+    badge: "AI Fintech App",
     role: "Creator & Developer",
     tag: "TypeScript & React",
-    title: "Expense Tracker Utility",
+    title: "PennyFlow — Smart Expense Tracker & AI Coach",
     description:
-      "Personal budgeting and expenditure logger with monthly analytics visualization, category tagging, and local persistence for financial tracking.",
+      "Privacy-first financial tracker and AI coach featuring daily safe-to-spend limits, laser receipt OCR, subscription auditing, and offline-ready persistence live at watot12345.github.io/Expense-Tracker.",
+    image: "/expense-tracker.png",
+    liveUrl: "https://watot12345.github.io/Expense-Tracker/index.html",
     githubUrl: "https://github.com/Watot12345/Expense-Tracker.git",
-    tech: ["TypeScript", "React", "Data Visualization", "Tailwind CSS"],
-    metrics: "Financial Analytics",
+    tech: ["TypeScript", "React", "Tailwind CSS", "Data Visualization"],
+    metrics: "Live on GitHub Pages",
   },
 
   // ── CLIENT SYSTEMS (Continued) ──
@@ -231,13 +234,15 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "school",
     badge: "Academic Project",
     role: "Main Developer",
-    tag: "Fleet Operations",
+    tag: "Fleet & Logistics Operations",
     title: "Logistics & Freight Tracking System",
     description:
-      "End-to-end cargo shipment, driver assignment, vehicle dispatch, and warehouse freight tracker with automated delivery status updates.",
+      "Hotel & restaurant logistics management platform handling real-time cargo shipment tracking, smart warehousing inventory, fleet dispatch, and driver assignment deployed live at logistics-system-1cu0.onrender.com.",
+    image: "/logistics-system.png",
+    liveUrl: "https://logistics-system-1cu0.onrender.com",
     githubUrl: "https://github.com/Watot12345/Logistics-System.git",
-    tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database"],
-    metrics: "Fleet & Cargo Dispatch",
+    tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database", "Render"],
+    metrics: "Live on Render",
   },
   {
     id: "barkadahub-app",
@@ -412,16 +417,9 @@ export function BrylProjects() {
                   {project.description}
                 </p>
 
-                {/* Tech Pills */}
-                <div className="mt-3.5 flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-border bg-muted/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                {/* Tech Icons with Tooltips */}
+                <div className="mt-3.5">
+                  <TechIconBadgeList items={project.tech} />
                 </div>
 
                 {/* Direct Action Links */}
