@@ -33,11 +33,28 @@ const INITIAL_MESSAGE: Message = {
 };
 
 function parseInline(text: string, onClose: () => void, isUser: boolean) {
-  // Matches markdown links [label](url) and bold **text**
-  const regex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
+  // Matches markdown images ![alt](src), markdown links [label](url), and bold **text**
+  const regex = /(!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
   const parts = text.split(regex);
 
   return parts.map((part, index) => {
+    // Check if markdown image ![alt](src)
+    const imgMatch = part.match(/^!\[(.*?)\]\((.*?)\)$/);
+    if (imgMatch) {
+      const [, alt, src] = imgMatch;
+      return (
+        <span key={index} className="block my-2 overflow-hidden rounded-xl border border-border shadow-sm">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt || "Image"}
+            className="w-full max-w-[220px] h-auto object-cover rounded-xl"
+            loading="lazy"
+          />
+        </span>
+      );
+    }
+
     // Check if markdown link [label](url)
     const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
     if (linkMatch) {
