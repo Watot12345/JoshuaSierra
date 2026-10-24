@@ -14,49 +14,143 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://joshuasierra.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://joshuasierra.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
-    canonical: "/",
+    canonical: SITE_URL,
   },
-  title: "Joshua Sierra — Software Engineer",
+  title: {
+    default: "Joshua Sierra — Software Engineer",
+    template: "%s | Joshua Sierra",
+  },
   description:
-    "Portfolio of Joshua Sierra, a Software Engineer based in Manila, Philippines. Built a live government health platform (civentral.tech) serving 1,000+ citizens. Open for freelance & full-time opportunities.",
+    "Portfolio of Joshua Sierra, a Software Engineer based in Manila, Philippines. Specializing in full-stack web platforms and cross-platform mobile apps. Co-Founder of Civentral.",
   keywords: [
     "Joshua Sierra",
-    "Software Engineer",
-    "Full-Stack Developer",
+    "Joshua Arncel Sierra",
+    "Joshua Sierra Software Engineer",
+    "Joshua Sierra Developer",
+    "Joshua Sierra Portfolio",
+    "Joshua Sierra Manila",
+    "Watot12345",
+    "Software Engineer Philippines",
+    "Full-Stack Developer Manila",
+    "Next.js Developer Philippines",
     "React Developer",
-    "Next.js",
     "TypeScript",
-    "React Native",
     "PHP Developer",
-    "Manila Philippines",
-    "Portfolio",
     "Civentral",
-    "Government Web App",
+    "SariSari App",
+    "PennyFlow",
   ],
-  authors: [{ name: "Joshua Sierra" }],
+  authors: [{ name: "Joshua Sierra", url: SITE_URL }],
+  creator: "Joshua Sierra",
+  publisher: "Joshua Sierra",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
     apple: "/favicon.svg",
   },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Joshua Sierra — Software Engineer",
     description:
-      "Built a live government health platform serving 1,000+ citizens while still in college. Open to freelance & partnerships.",
-    url: "https://joshuasierra.vercel.app",
-    siteName: "Joshua Sierra Portfolio",
+      "Software Engineer based in Manila, Philippines. Shipping production web & mobile platforms serving real users.",
+    url: SITE_URL,
+    siteName: "Joshua Sierra — Portfolio",
+    images: [
+      {
+        url: "/profile.png",
+        width: 800,
+        height: 800,
+        alt: "Joshua Sierra — Software Engineer",
+      },
+    ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Joshua Sierra — Software Engineer",
-    description: "Built a live government health platform serving 1,000+ citizens while still in college.",
+    description:
+      "Software Engineer based in Manila, Philippines. Shipping production web & mobile platforms.",
+    images: ["/profile.png"],
+    creator: "@joshuasierra143",
   },
   verification: {
     google: "xY0WGmsapSKYUump8-pCkrymzfVzMEcYG3ZZyy_CpLw",
+  },
+};
+
+const jsonLdPerson = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Joshua Sierra",
+  alternateName: ["Joshua Arncel Sierra", "Watot12345", "Joshua Sierra Developer"],
+  jobTitle: "Software Engineer",
+  description:
+    "Software Engineer based in Manila, Philippines, specializing in full-stack web platforms and cross-platform mobile apps.",
+  url: SITE_URL,
+  image: `${SITE_URL}/profile.png`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Manila",
+    addressCountry: "Philippines",
+  },
+  email: "joshuaarncel@gmail.com",
+  sameAs: [
+    "https://github.com/Watot12345",
+    "https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275",
+    "https://www.facebook.com/profile.php?id=61590879324960",
+    "https://www.instagram.com/jus_wa143",
+    "https://www.tiktok.com/@joshuasierra143",
+  ],
+  knowsAbout: [
+    "Software Engineering",
+    "Full-Stack Development",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "JavaScript",
+    "PHP",
+    "Laravel",
+    "PostgreSQL",
+    "Supabase",
+    "Tailwind CSS",
+    "React Native",
+    "Flutter",
+    "Mobile App Development",
+  ],
+};
+
+const jsonLdWebsite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Joshua Sierra Portfolio",
+  alternateName: "Joshua Sierra Software Engineer",
+  url: SITE_URL,
+  author: {
+    "@type": "Person",
+    name: "Joshua Sierra",
   },
 };
 
@@ -67,6 +161,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-200`}
       >
