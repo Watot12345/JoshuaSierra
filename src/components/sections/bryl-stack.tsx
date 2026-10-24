@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import type { IconType } from "react-icons";
 import {
   SiReact,
@@ -419,56 +420,113 @@ const STACK_CATEGORIES: StackCategory[] = [
   },
 ];
 
+// Split categories into two balanced rows for marquee streams
+const ROW_1_CATEGORIES = ["Frontend", "Backend & APIs", "Mobile", "Database & Storage"];
+const ROW_2_CATEGORIES = ["DevOps & Cloud", "Infrastructure & Hosting", "AI & Tools"];
+
+const ROW_1_ITEMS = STACK_CATEGORIES
+  .filter((c) => ROW_1_CATEGORIES.includes(c.name))
+  .flatMap((c) => c.items);
+
+const ROW_2_ITEMS = STACK_CATEGORIES
+  .filter((c) => ROW_2_CATEGORIES.includes(c.name))
+  .flatMap((c) => c.items);
+
 export function BrylStack() {
+  const loopRow1 = [...ROW_1_ITEMS, ...ROW_1_ITEMS];
+  const loopRow2 = [...ROW_2_ITEMS, ...ROW_2_ITEMS];
+
   return (
-    <section id="stack" className="py-12 border-b border-border">
+    <section id="stack" className="py-12 border-b border-border overflow-hidden">
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          03 — stack
+          03 — tech stack
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
-          hover icons for names
+          hover to pause
         </span>
       </div>
 
-      <div className="flex flex-col gap-6">
-        {STACK_CATEGORIES.map((category) => (
+      {/* Marquee Container with pause-on-hover & edge fade masks */}
+      <div className="relative w-full overflow-hidden flex flex-col gap-3 py-1">
+        {/* Left & Right Gradient Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-background via-background/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-background via-background/80 to-transparent z-10" />
+
+        {/* Row 1: Forward Marquee */}
+        <div className="group flex overflow-hidden">
           <div
-            key={category.name}
-            className="flex flex-col sm:flex-row sm:items-start gap-2.5 sm:gap-6"
+            className={cn(
+              "flex w-max gap-2.5 sm:gap-3 select-none animate-marquee",
+              "group-hover:[animation-play-state:paused]"
+            )}
+            style={{ animationDuration: "50s" }}
           >
-            <span className="font-mono text-xs font-semibold text-foreground w-36 shrink-0 pt-2">
-              {category.name}
-            </span>
-
-            {/* Grid of Icon Badges */}
-            <div className="flex flex-wrap gap-2">
-              {category.items.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.name}
-                    className={`group relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-xs cursor-pointer ${item.hoverBorder}`}
-                    title={item.name}
-                    aria-label={item.name}
-                    data-sound="tick"
-                  >
-                    <Icon className={`h-5 w-5 transition-all duration-200 group-hover:scale-115 shrink-0 ${item.colorClass}`} />
-
-                    {/* Smooth hover tooltip pill */}
-                    <span
-                      role="tooltip"
-                      className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap rounded-md border border-border bg-popover px-2 py-0.5 text-[11px] font-mono font-medium text-popover-foreground shadow-md z-30"
-                    >
-                      {item.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+            {loopRow1.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={`r1-${item.name}-${idx}`}
+                  className={cn(
+                    "group/item relative flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl border border-border bg-card/90 backdrop-blur-xs transition-all duration-200 hover:bg-muted/80 shadow-xs cursor-pointer shrink-0 select-none",
+                    item.hoverBorder
+                  )}
+                  title={item.name}
+                  aria-label={item.name}
+                  data-sound="tick"
+                >
+                  <Icon
+                    className={cn(
+                      "h-4 w-4 sm:h-4.5 sm:w-4.5 transition-all duration-200 group-hover/item:scale-115 shrink-0",
+                      item.colorClass
+                    )}
+                  />
+                  <span className="font-mono text-xs font-medium text-foreground whitespace-nowrap">
+                    {item.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-        ))}
+        </div>
+
+        {/* Row 2: Reverse Marquee */}
+        <div className="group flex overflow-hidden">
+          <div
+            className={cn(
+              "flex w-max gap-2.5 sm:gap-3 select-none animate-marquee-reverse",
+              "group-hover:[animation-play-state:paused]"
+            )}
+            style={{ animationDuration: "50s" }}
+          >
+            {loopRow2.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={`r2-${item.name}-${idx}`}
+                  className={cn(
+                    "group/item relative flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl border border-border bg-card/90 backdrop-blur-xs transition-all duration-200 hover:bg-muted/80 shadow-xs cursor-pointer shrink-0 select-none",
+                    item.hoverBorder
+                  )}
+                  title={item.name}
+                  aria-label={item.name}
+                  data-sound="tick"
+                >
+                  <Icon
+                    className={cn(
+                      "h-4 w-4 sm:h-4.5 sm:w-4.5 transition-all duration-200 group-hover/item:scale-115 shrink-0",
+                      item.colorClass
+                    )}
+                  />
+                  <span className="font-mono text-xs font-medium text-foreground whitespace-nowrap">
+                    {item.name}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );

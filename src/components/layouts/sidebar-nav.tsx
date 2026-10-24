@@ -33,7 +33,7 @@ import { SoundToggle } from "@/components/ui-custom/sound-toggle";
 const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
   { id: "experience", label: "Experience", href: "#experience", icon: Briefcase },
-  { id: "stack", label: "Stack", href: "#stack", icon: Layers },
+  { id: "stack", label: "Tech Stack", href: "#stack", icon: Layers },
   { id: "education", label: "Education", href: "#education", icon: GraduationCap },
   { id: "github", label: "GitHub Activity", href: "#github-activity", icon: GitBranch },
   { id: "testimonials", label: "Recommendations", href: "#testimonials", icon: MessageSquareQuote },
@@ -240,7 +240,7 @@ export function SidebarNav() {
 
             {/* Quick Resume Link */}
             <a
-              href="/resume.pdf"
+              href="/resume.pdf?v=2"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
@@ -531,7 +531,7 @@ export function SidebarNav() {
             </Link>
 
             <a
-              href="/resume.pdf"
+              href="/resume.pdf?v=2"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-muted-foreground hover:bg-muted/50 hover:text-foreground"

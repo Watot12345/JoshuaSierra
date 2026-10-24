@@ -26,7 +26,7 @@ interface ProjectItem {
 }
 
 const PROJECTS_DATA: ProjectItem[] = [
-  // ── LIVE SITES FIRST (Always pinned at top) ──
+  // ── TIER 1: LATEST PRODUCTION PROJECTS WITH ACTIVE LIVE SITES (Images + Live URLs) ──
   {
     id: "civentral-web",
     category: "gov",
@@ -43,18 +43,79 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "1,000+ Active Citizens Served",
   },
   {
-    id: "civentral-app",
-    category: "gov",
-    badge: "Cross-Platform Mobile App",
-    role: "Co-Founder & Mobile Lead",
-    tag: "Expo / Android & iOS",
-    title: "Civentral Mobile App",
+    id: "soleverse",
+    category: "personal",
+    badge: "Sneaker eCommerce Store",
+    role: "Full-Stack Developer",
+    tag: "React 19 & TanStack",
+    title: "SoleVerse — Premium Footwear & Sneaker Experience",
     description:
-      "Companion mobile application for Caloocan citizens. Allows residents to submit service requests, receive live status notifications, and access city healthcare information on their phones.",
-    image: "/civentral-app.png",
-    githubUrl: "https://github.com/Raffy-3350/CitizenApp-HealthSanitation.git",
-    tech: ["React Native", "Expo", "Supabase", "Tailwind CSS", "REST API"],
-    metrics: "Real-time Push & Sync",
+      "Modern footwear commerce platform engineered for performance, animated transitions, product filtering, responsive cart checkout, and interactive sneaker showcases deployed live at sole-verse-chronos-main.vercel.app.",
+    image: "/soleverse.png",
+    liveUrl: "https://sole-verse-chronos-main.vercel.app/",
+    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main.git",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vercel"],
+    metrics: "Live on Vercel",
+  },
+  {
+    id: "barangay-web",
+    category: "gov",
+    badge: "Public Sector Portal",
+    role: "Full-Stack Developer",
+    tag: "Barangay San Agustin",
+    title: "Barangay San Agustin — Community & Resident Portal",
+    description:
+      "Integrated community platform for resident profiling, disaster relief operations, healthcare records, job matching, and scholarship assistance deployed live at barangay-san-agustin.onrender.com.",
+    image: "/barangay-san-agustin.png",
+    liveUrl: "https://barangay-san-agustin.onrender.com",
+    githubUrl: "https://github.com/Watot12345/BarangayWeb",
+    tech: ["HTML5", "JavaScript", "Tailwind CSS", "Render"],
+    metrics: "12,000+ Resident Records",
+  },
+  {
+    id: "sarisari-app",
+    category: "personal",
+    badge: "Startup Mobile App",
+    role: "Founder & Lead Developer",
+    tag: "Flutter / Dart",
+    title: "SariSari App — Retail POS & Inventory",
+    description:
+      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
+    image: "/sarisari.png",
+    liveUrl: "https://watot12345.github.io/sarisariApp/",
+    githubUrl: "https://github.com/Watot12345/sarisariApp.git",
+    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
+    metrics: "Live on GitHub Pages",
+  },
+  {
+    id: "expense-tracker",
+    category: "personal",
+    badge: "AI Fintech App",
+    role: "Creator & Developer",
+    tag: "TypeScript & React",
+    title: "PennyFlow — Smart Expense Tracker & AI Coach",
+    description:
+      "Privacy-first financial tracker and AI coach featuring daily safe-to-spend limits, laser receipt OCR, subscription auditing, and offline-ready persistence live at watot12345.github.io/Expense-Tracker.",
+    image: "/expense-tracker.png",
+    liveUrl: "https://watot12345.github.io/Expense-Tracker/index.html",
+    githubUrl: "https://github.com/Watot12345/Expense-Tracker.git",
+    tech: ["TypeScript", "React", "Tailwind CSS", "Data Visualization"],
+    metrics: "Live on GitHub Pages",
+  },
+  {
+    id: "bcp-attendance",
+    category: "client",
+    badge: "Institutional Attendance",
+    role: "Co-Developer",
+    tag: "Bestlink College (BCP)",
+    title: "BCP Student & Staff Attendance Portal",
+    description:
+      "Production school attendance monitoring portal deployed at attendancem.bcpsms1.com. Features QR check-in, real-time logging, and administrative reporting.",
+    image: "/bcp-attendance.png",
+    liveUrl: "https://attendancem.bcpsms1.com",
+    githubUrl: "https://github.com/Watot12345/Attendance-_Management_System.git",
+    tech: ["PHP", "MySQL", "QR Verification", "Production Portal"],
+    metrics: "Production Live Portal",
   },
   {
     id: "sjdm-legislative",
@@ -87,37 +148,51 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Production Live Portal",
   },
   {
-    id: "bcp-attendance",
-    category: "client",
-    badge: "Institutional Attendance",
-    role: "Co-Developer",
-    tag: "Bestlink College (BCP)",
-    title: "BCP Student & Staff Attendance Portal",
+    id: "logistics-system",
+    category: "school",
+    badge: "Academic Project",
+    role: "Main Developer",
+    tag: "Fleet & Logistics Operations",
+    title: "Logistics & Freight Tracking System",
     description:
-      "Production school attendance monitoring portal deployed at attendancem.bcpsms1.com. Features QR check-in, real-time logging, and administrative reporting.",
-    image: "/bcp-attendance.png",
-    liveUrl: "https://attendancem.bcpsms1.com",
-    githubUrl: "https://github.com/Watot12345/Attendance-_Management_System.git",
-    tech: ["PHP", "MySQL", "QR Verification", "Production Portal"],
-    metrics: "Production Live Portal",
-  },
-  {
-    id: "barangay-web",
-    category: "gov",
-    badge: "Public Sector Portal",
-    role: "Full-Stack Developer",
-    tag: "Barangay San Agustin",
-    title: "Barangay San Agustin — Community & Resident Portal",
-    description:
-      "Integrated community platform for resident profiling, disaster relief operations, healthcare records, job matching, and scholarship assistance deployed live at barangay-san-agustin.onrender.com.",
-    image: "/barangay-san-agustin.png",
-    liveUrl: "https://barangay-san-agustin.onrender.com",
-    githubUrl: "https://github.com/Watot12345/BarangayWeb",
-    tech: ["HTML5", "JavaScript", "Tailwind CSS", "Render"],
-    metrics: "12,000+ Resident Records",
+      "Hotel & restaurant logistics management platform handling real-time cargo shipment tracking, smart warehousing inventory, fleet dispatch, and driver assignment deployed live at logistics-system-1cu0.onrender.com.",
+    image: "/logistics-system.png",
+    liveUrl: "https://logistics-system-1cu0.onrender.com",
+    githubUrl: "https://github.com/Watot12345/Logistics-System.git",
+    tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database", "Render"],
+    metrics: "Live on Render",
   },
 
-  // ── PERSONAL & STARTUPS ──
+  // ── TIER 2: APPLICATIONS WITH VISUAL IMAGES & PREVIEWS ──
+  {
+    id: "civentral-app",
+    category: "gov",
+    badge: "Cross-Platform Mobile App",
+    role: "Co-Founder & Mobile Lead",
+    tag: "Expo / Android & iOS",
+    title: "Civentral Mobile App",
+    description:
+      "Companion mobile application for Caloocan citizens. Allows residents to submit service requests, receive live status notifications, and access city healthcare information on their phones.",
+    image: "/civentral-app.png",
+    githubUrl: "https://github.com/Raffy-3350/CitizenApp-HealthSanitation.git",
+    tech: ["React Native", "Expo", "Supabase", "Tailwind CSS", "REST API"],
+    metrics: "Real-time Push & Sync",
+  },
+
+  // ── TIER 3: PROJECTS WITHOUT IMAGES / DECOMMISSIONED HOSTS ──
+  {
+    id: "roppet-app",
+    category: "client",
+    badge: "Client Production System",
+    role: "Main Developer",
+    tag: "Theater & Events",
+    title: "Roppets Puppet Production Management",
+    description:
+      "Internal production management, event scheduling, bookings, and inventory platform developed for Roppets Puppet Theater.",
+    githubUrl: "https://github.com/Watot12345/roppet.git",
+    tech: ["PHP", "MySQL", "Event Booking", "Management System"],
+    metrics: "Internal Operations System",
+  },
   {
     id: "hjobscraper",
     category: "personal",
@@ -132,21 +207,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Automated Data Pipeline",
   },
   {
-    id: "sarisari-app",
-    category: "personal",
-    badge: "Startup Mobile App",
-    role: "Founder & Lead Developer",
-    tag: "Flutter / Dart",
-    title: "SariSari App — Retail POS & Inventory",
-    description:
-      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
-    image: "/sarisari.png",
-    liveUrl: "https://watot12345.github.io/sarisariApp/",
-    githubUrl: "https://github.com/Watot12345/sarisariApp.git",
-    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
-    metrics: "Live on GitHub Pages",
-  },
-  {
     id: "tenera-app",
     category: "personal",
     badge: "Personal Venture",
@@ -159,54 +219,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
     metrics: "Personal Venture",
   },
-  {
-    id: "expense-tracker",
-    category: "personal",
-    badge: "AI Fintech App",
-    role: "Creator & Developer",
-    tag: "TypeScript & React",
-    title: "PennyFlow — Smart Expense Tracker & AI Coach",
-    description:
-      "Privacy-first financial tracker and AI coach featuring daily safe-to-spend limits, laser receipt OCR, subscription auditing, and offline-ready persistence live at watot12345.github.io/Expense-Tracker.",
-    image: "/expense-tracker.png",
-    liveUrl: "https://watot12345.github.io/Expense-Tracker/index.html",
-    githubUrl: "https://github.com/Watot12345/Expense-Tracker.git",
-    tech: ["TypeScript", "React", "Tailwind CSS", "Data Visualization"],
-    metrics: "Live on GitHub Pages",
-  },
-  {
-    id: "soleverse",
-    category: "personal",
-    badge: "Sneaker eCommerce Store",
-    role: "Full-Stack Developer",
-    tag: "React 19 & TanStack",
-    title: "SoleVerse — Premium Footwear & Sneaker Experience",
-    description:
-      "Modern footwear commerce platform engineered for performance, animated transitions, product filtering, responsive cart checkout, and interactive sneaker showcases deployed live at sole-verse-chronos-main.vercel.app.",
-    image: "/soleverse.png",
-    liveUrl: "https://sole-verse-chronos-main.vercel.app/",
-    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main.git",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Vercel"],
-    metrics: "Live on Vercel",
-  },
-
-  // ── CLIENT SYSTEMS (Continued) ──
-  {
-    id: "roppet-app",
-    category: "client",
-    badge: "Client Production System",
-    role: "Main Developer",
-    tag: "Theater & Events",
-    title: "Roppets Puppet Production Management",
-    description:
-      "Internal production management, event scheduling, bookings, and inventory platform deployed live at roppets.onlinewebshop.net.",
-    liveUrl: "http://roppets.onlinewebshop.net",
-    githubUrl: "https://github.com/Watot12345/roppet.git",
-    tech: ["PHP", "MySQL", "Event Booking", "Management System"],
-    metrics: "Production Live Portal",
-  },
-
-  // ── SCHOOL / ACADEMIC PROJECTS ──
   {
     id: "attendance-payroll",
     category: "school",
@@ -234,21 +246,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Stock & Reorder Alerts",
   },
   {
-    id: "logistics-system",
-    category: "school",
-    badge: "Academic Project",
-    role: "Main Developer",
-    tag: "Fleet & Logistics Operations",
-    title: "Logistics & Freight Tracking System",
-    description:
-      "Hotel & restaurant logistics management platform handling real-time cargo shipment tracking, smart warehousing inventory, fleet dispatch, and driver assignment deployed live at logistics-system-1cu0.onrender.com.",
-    image: "/logistics-system.png",
-    liveUrl: "https://logistics-system-1cu0.onrender.com",
-    githubUrl: "https://github.com/Watot12345/Logistics-System.git",
-    tech: ["PHP", "MySQL", "Dispatch Logic", "Relational Database", "Render"],
-    metrics: "Live on Render",
-  },
-  {
     id: "barkadahub-app",
     category: "school",
     badge: "Academic Project",
@@ -264,10 +261,8 @@ const PROJECTS_DATA: ProjectItem[] = [
 ];
 
 export function BrylProjects() {
-  // Sort projects so live sites appear first
-  const sortedProjects = [...PROJECTS_DATA].sort(
-    (a, b) => (b.liveUrl ? 1 : 0) - (a.liveUrl ? 1 : 0)
-  );
+  // Use prioritized order: Tier 1 (Live + Image) -> Tier 2 (App + Image) -> Tier 3 (Text/No Image)
+  const sortedProjects = [...PROJECTS_DATA];
 
   // Duplicate items for a seamless infinite loop across all resolutions
   const loopItems = [...sortedProjects, ...sortedProjects];
