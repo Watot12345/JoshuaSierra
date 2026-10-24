@@ -92,6 +92,22 @@ const PROJECTS_DATA: ProjectItem[] = [
     tech: ["React", "TypeScript", "Tailwind CSS", "Vercel"],
     metrics: "Live on Vercel",
   },
+  {
+    id: "roppet-app",
+    category: "client",
+    badge: "Client CRM & Booking",
+    role: "Full-Stack Web Developer",
+    tag: "Client Production Portal · Live",
+    title: "Roppets Edutainment Production — CRM & Booking Portal",
+    shortLabel: "05 · Roppets CRM",
+    description:
+      "Client operations platform engineered for Roppets Puppet Theater featuring integrated CRM, real-time event booking, automated booking tracking, and production workflow management deployed live at roppets.vercel.app.",
+    image: "/roppets.png",
+    liveUrl: "https://roppets.vercel.app",
+    githubUrl: "https://github.com/Watot12345/roppet.git",
+    tech: ["PHP", "JavaScript", "Tailwind CSS", "CRM & Booking", "Vercel"],
+    metrics: "Production Client CRM",
+  },
 ];
 
 export function BrylProjects() {

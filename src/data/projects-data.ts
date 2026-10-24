@@ -192,15 +192,18 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
   {
     id: "roppet-app",
     category: "client",
-    badge: "Client Production System",
-    role: "Main Developer",
-    tag: "Theater & Events",
-    title: "Roppets Puppet Production Management",
+    badge: "Client CRM & Booking",
+    role: "Full-Stack Web Developer",
+    tag: "Client Production Portal · Live",
+    title: "Roppets Edutainment Production — CRM & Booking Portal",
     description:
-      "Internal production management, event scheduling, bookings, and inventory platform developed for Roppets Puppet Theater.",
+      "Client operations platform engineered for Roppets Puppet Theater featuring integrated CRM, real-time event booking, automated booking tracking, and production workflow management deployed live at roppets.vercel.app.",
+    image: "/roppets.png",
+    liveUrl: "https://roppets.vercel.app",
     githubUrl: "https://github.com/Watot12345/roppet.git",
-    tech: ["PHP", "MySQL", "Event Booking", "Management System"],
-    metrics: "Internal Operations System",
+    tech: ["PHP", "JavaScript", "Tailwind CSS", "CRM & Booking", "Vercel"],
+    metrics: "Production Client CRM",
+    featured: true,
   },
 
   // ── 12. Automated Job Crawler ──

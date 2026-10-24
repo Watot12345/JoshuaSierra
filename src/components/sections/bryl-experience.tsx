@@ -25,11 +25,11 @@ const EXPERIENCES: ExperienceRow[] = [
     location: "Mandaluyong / Remote",
     shortLabel: "2026 · Roppets",
     bullets: [
-      "Developed and shipped full-stack web features used by real end users in production environments.",
-      "Built and maintained backend REST APIs using PHP and JavaScript.",
-      "Refactored data-fetching patterns across the codebase, reducing component load times significantly.",
+      "Engineered and deployed the production portal at roppets.vercel.app with online event booking and client order tracking.",
+      "Built internal CRM dashboards for booking dispatch, production workflows, and puppet show schedule coordination.",
+      "Developed backend REST APIs and client-facing interfaces with PHP, JavaScript, and Tailwind CSS.",
     ],
-    stack: ["JavaScript", "HTML", "Tailwind CSS", "PHP", "REST APIs"],
+    stack: ["PHP", "JavaScript", "Tailwind CSS", "CRM & Booking", "Vercel"],
   },
   {
     year: "2026",

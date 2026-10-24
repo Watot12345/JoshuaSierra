@@ -279,21 +279,21 @@ export const services: Service[] = [
 export const experience: ExperienceItem[] = [
   {
     id: "exp-1",
-    role: "Software Engineer",
+    role: "Full Stack Developer",
     company: "Roppets",
-    companyUrl: "https://roppets.com",
-    location: "Mandaluyong, Philippines / Remote",
+    companyUrl: "https://roppets.vercel.app",
+    location: "Quezon City, Philippines / Remote",
     startDate: "Aug 2026",
     endDate: "Present",
     current: true,
     description:
-      "Full-stack engineer building scalable web platforms and APIs for the Roppets product team.",
+      "Full-stack developer building the client operations portal, CRM, and online event booking systems for Roppets Puppet Theater.",
     achievements: [
-      "Developed and shipped full-stack React + Next.js web features used by real end users.",
-      "Built and maintained backend REST APIs with Node.js and TypeScript.",
-      "Reduced component load time by refactoring data-fetching patterns across the codebase.",
+      "Engineered the full-stack portal at roppets.vercel.app featuring online event booking and client order tracking.",
+      "Built internal CRM dashboards for booking dispatch, production workflows, and puppet show schedule coordination.",
+      "Optimized query performance and asset delivery for high-traffic children's entertainment and event bookings.",
     ],
-    technologies: ["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS"],
+    technologies: ["PHP", "JavaScript", "Tailwind CSS", "MySQL", "Vercel"],
   },
   {
     id: "exp-2",
