@@ -24,6 +24,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { profile, socialLinks } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { AiAssistantModal } from "@/components/ui-custom/ai-assistant-modal";
+import { SoundToggle } from "@/components/ui-custom/sound-toggle";
 
 const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
@@ -202,8 +203,13 @@ export function SidebarNav() {
           </nav>
         </div>
 
-        {/* Bottom: Theme Switcher & Email */}
-        <div className="border-t border-border pt-5">
+        {/* Bottom: Theme Switcher, Sound & Email */}
+        <div className="border-t border-border pt-4">
+          {/* Sound / UI Audio Toggle */}
+          <div className="mb-3">
+            <SoundToggle variant="sidebar" />
+          </div>
+
           {/* Theme switcher */}
           <div className="mb-4 flex items-center justify-between">
             <span className="text-[11px] font-mono text-muted-foreground">Theme</span>
@@ -296,6 +302,9 @@ export function SidebarNav() {
             <Sparkles className="h-3.5 w-3.5 text-primary animate-pulse" />
             <span className="hidden sm:inline">Ask anyway...</span>
           </button>
+
+          {/* Sound Toggle on Mobile */}
+          <SoundToggle variant="icon" />
 
           {mounted && (
             <button
@@ -448,6 +457,11 @@ export function SidebarNav() {
           </nav>
 
           <div className="border-t border-border pt-4">
+            {/* Sound Toggle in Mobile Drawer */}
+            <div className="mb-3">
+              <SoundToggle variant="sidebar" />
+            </div>
+
             <div className="mb-4 flex items-center justify-between">
               <span className="text-xs font-mono text-muted-foreground">Theme</span>
               {mounted && (
