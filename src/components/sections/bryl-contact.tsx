@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { profile, socialLinks } from "@/data/portfolio";
 import type { ContactFormResponse } from "@/types/portfolio";
@@ -51,7 +52,7 @@ export function BrylContact() {
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          08 — get in touch
+          07 — get in touch
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
           direct message
@@ -229,7 +230,16 @@ export function BrylContact() {
 
       {/* Footer */}
       <footer className="mt-14 border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
-        <span>&copy; {new Date().getFullYear()} Joshua Sierra</span>
+        <div className="flex items-center gap-2">
+          <span>&copy; {new Date().getFullYear()} Joshua Sierra</span>
+          <span>·</span>
+          <Link
+            href="/gear"
+            className="hover:text-foreground transition-colors underline underline-offset-4"
+          >
+            Workspace &amp; Gear
+          </Link>
+        </div>
 
         {/* Social Icons Strip in Footer */}
         <div className="flex items-center gap-2">

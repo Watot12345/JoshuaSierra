@@ -49,10 +49,9 @@ export function SoundToggle({ variant = "icon", className }: SoundToggleProps) {
       >
         {soundEnabled ? (
           <>
-            <Volume2 className="h-3.5 w-3.5 text-emerald-500 animate-pulse" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            <Volume2 className="h-3.5 w-3.5 text-emerald-500" />
+            <span className="absolute -top-0.5 -right-0.5 flex h-1.5 w-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             </span>
           </>
         ) : (
@@ -81,10 +80,9 @@ export function SoundToggle({ variant = "icon", className }: SoundToggleProps) {
     >
       {soundEnabled ? (
         <>
-          <Volume2 className="h-4 w-4 animate-pulse text-emerald-500" />
-          <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          <Volume2 className="h-4 w-4 text-emerald-500" />
+          <span className="absolute -top-0.5 -right-0.5 flex h-1.5 w-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
           </span>
         </>
       ) : (

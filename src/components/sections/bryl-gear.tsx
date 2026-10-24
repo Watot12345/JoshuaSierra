@@ -121,10 +121,10 @@ export function BrylGear() {
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          04 — workspace & gear
+          workspace &amp; gear
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
-          daily hardware & setup
+          daily hardware &amp; setup
         </span>
       </div>
 
@@ -140,15 +140,12 @@ export function BrylGear() {
       </div>
 
       <div className="space-y-8">
-        {/* Workstation Rig / Compute (Spec-only cards as requested) */}
+        {/* Workstation Rig / Compute */}
         <div>
-          <div className="mb-3 flex items-center justify-between">
+          <div className="mb-3">
             <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-foreground">
               Workstation &amp; Rig Specs
             </h3>
-            <span className="font-mono text-[11px] text-muted-foreground">
-              Core Rig (No images needed)
-            </span>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -194,15 +191,15 @@ export function BrylGear() {
           </div>
         </div>
 
-        {/* Peripherals & Mobile Testing (With images from internet) */}
+        {/* Divider */}
+        <div className="h-px w-full bg-border" />
+
+        {/* Peripherals & Mobile Testing */}
         <div>
-          <div className="mb-3 flex items-center justify-between">
+          <div className="mb-3">
             <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-foreground">
               Peripherals &amp; Devices
             </h3>
-            <span className="font-mono text-[11px] text-muted-foreground">
-              Hardware &amp; Audio
-            </span>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

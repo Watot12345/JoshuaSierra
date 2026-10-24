@@ -51,50 +51,49 @@
 :root {
   --radius: 0.75rem;
 
-  /* Saturated Warm Alabaster Light Palette (#FAF9F6) */
-  --background: #FAF9F6;
-  --foreground: #0c0a09;
+  /* Clean Formal Light Palette */
+  --background: #ffffff;
+  --foreground: #09090b;
   --card: #ffffff;
-  --card-foreground: #0c0a09;
+  --card-foreground: #09090b;
   --popover: #ffffff;
-  --popover-foreground: #0c0a09;
+  --popover-foreground: #09090b;
 
-  --primary: #09090b;
-  --primary-foreground: #FAF9F6;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
 
-  --secondary: #f4f2ec;
-  --secondary-foreground: #0c0a09;
-  --muted: #f1efe8;
-  --muted-foreground: #57534e;
-  --accent: #ebe8e0;
-  --accent-foreground: #0c0a09;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
 
   --destructive: #ef4444;
-  --border: #e6e3dc;
-  --input: #e6e3dc;
-  --ring: #2563eb;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #18181b;
 
-  /* Rich Saturated Accent Charts */
-  --chart-1: #2563eb;
-  --chart-2: #10b981;
-  --chart-3: #f59e0b;
-  --chart-4: #8b5cf6;
-  --chart-5: #ec4899;
+  --chart-1: #18181b;
+  --chart-2: #3f3f46;
+  --chart-3: #71717a;
+  --chart-4: #a1a1aa;
+  --chart-5: #d4d4d8;
 
-  --sidebar: #FAF9F6;
-  --sidebar-foreground: #0c0a09;
-  --sidebar-primary: #09090b;
-  --sidebar-primary-foreground: #FAF9F6;
-  --sidebar-accent: #f1efe8;
-  --sidebar-accent-foreground: #0c0a09;
-  --sidebar-border: #e6e3dc;
-  --sidebar-ring: #2563eb;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #09090b;
+  --sidebar-primary: #18181b;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #18181b;
 
   /* Custom tokens mapped to theme */
-  --crimson: #09090b;
-  --crimson-glow: rgba(37, 99, 235, 0.08);
+  --crimson: #18181b;
+  --crimson-glow: rgba(0, 0, 0, 0.05);
   --crimson-soft: rgba(0, 0, 0, 0.04);
-  --glass-bg: rgba(250, 249, 246, 0.88);
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(0, 0, 0, 0.08);
 }
 

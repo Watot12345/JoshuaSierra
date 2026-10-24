@@ -5,7 +5,6 @@ import { BrylHero } from "@/components/sections/bryl-hero";
 import { BrylProjects } from "@/components/sections/bryl-projects";
 import { BrylExperience } from "@/components/sections/bryl-experience";
 import { BrylStack } from "@/components/sections/bryl-stack";
-import { BrylGear } from "@/components/sections/bryl-gear";
 import { BrylEducation } from "@/components/sections/bryl-education";
 import { GithubContributions } from "@/components/sections/github-contributions";
 import { BrylTestimonials } from "@/components/sections/bryl-testimonials";
@@ -31,7 +30,6 @@ export default function Home() {
           <BrylProjects />
           <BrylExperience />
           <BrylStack />
-          <BrylGear />
           <BrylEducation />
           <GithubContributions />
           <BrylTestimonials />

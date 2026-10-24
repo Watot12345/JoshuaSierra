@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useThemeTransition } from "@/hooks/use-theme-transition";
 import {
   FolderKanban,
@@ -30,7 +31,6 @@ const NAV_LINKS = [
   { id: "projects", label: "Projects", href: "#projects", icon: FolderKanban },
   { id: "experience", label: "Experience", href: "#experience", icon: Briefcase },
   { id: "stack", label: "Stack", href: "#stack", icon: Layers },
-  { id: "gear", label: "Gear", href: "#gear", icon: Monitor },
   { id: "education", label: "Education", href: "#education", icon: GraduationCap },
   { id: "github", label: "GitHub Activity", href: "#github-activity", icon: GitBranch },
   { id: "testimonials", label: "Recommendations", href: "#testimonials", icon: MessageSquareQuote },
@@ -118,10 +118,7 @@ export function SidebarNav() {
 
           {/* Availability pill */}
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
+            <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
             <span>Available for Work &amp; Internship</span>
           </div>
 
@@ -173,6 +170,15 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2 h-px bg-border" />
+
+            {/* Workspace & Gear Page */}
+            <Link
+              href="/gear"
+              className="flex items-center gap-2.5 rounded-md px-2.5 py-2 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+            >
+              <Monitor className="h-3.5 w-3.5 shrink-0" />
+              <span>Workspace &amp; Gear ↗</span>
+            </Link>
 
             {/* Quick Resume Link */}
             <a
@@ -361,10 +367,7 @@ export function SidebarNav() {
                 {profile.fullName}
               </span>
               <div className="mt-1.5 flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 w-fit">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </span>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
                 <span>Available for Work &amp; Internship</span>
               </div>
             </div>
@@ -426,6 +429,15 @@ export function SidebarNav() {
             </div>
 
             <div className="my-2.5 h-px bg-border" />
+
+            <Link
+              href="/gear"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            >
+              <Monitor className="h-4 w-4 shrink-0" />
+              <span>Workspace &amp; Gear ↗</span>
+            </Link>
 
             <a
               href="/resume.pdf"

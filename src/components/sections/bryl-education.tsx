@@ -16,7 +16,7 @@ export function BrylEducation() {
       {/* Header */}
       <div className="mb-6 flex items-baseline justify-between">
         <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          05 — education, credentials &amp; affiliations
+          04 — education, credentials &amp; affiliations
         </h2>
         <span className="font-mono text-xs text-muted-foreground">
           background &amp; community

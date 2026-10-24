@@ -19,7 +19,7 @@ export function BrylTestimonials() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            07 — recommendations
+            06 — recommendations
           </h2>
           <p className="font-mono text-[11px] text-muted-foreground mt-0.5">
             Client &amp; engineering feedback
@@ -27,7 +27,7 @@ export function BrylTestimonials() {
         </div>
 
         <span className="font-mono text-[11px] text-muted-foreground">
-          {testimonials.length} Verified Endorsements
+          {testimonials.length} Endorsements
         </span>
       </div>
 
@@ -102,7 +102,7 @@ export function BrylTestimonials() {
           Hover over any card to pause and read.
         </p>
         <span className="font-mono text-[10px] text-muted-foreground">
-          {testimonials.length} Verified Endorsements
+          {testimonials.length} Endorsements
         </span>
       </div>
     </section>

@@ -132,21 +132,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "Automated Data Pipeline",
   },
   {
-    id: "soleverse",
-    category: "personal",
-    badge: "E-Commerce Experience",
-    role: "Creator & Developer",
-    tag: "Next.js & Tailwind CSS",
-    title: "SoleVerse — Footwear E-Commerce Platform",
-    description:
-      "Modern futuristic sneaker showcase and e-commerce web platform featuring interactive catalog navigation, dark aesthetic design, and responsive shopping workflows.",
-    image: "/soleverse.png",
-    liveUrl: "https://sole-verse-chronos-main-6vqzi6j5d-joshua-sierras-projects.vercel.app",
-    githubUrl: "https://github.com/Watot12345/sole-verse-chronos-main.git",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-    metrics: "Live on Vercel",
-  },
-  {
     id: "sarisari-app",
     category: "personal",
     badge: "Startup Mobile App",
@@ -339,10 +324,7 @@ export function BrylProjects() {
 
                   {project.liveUrl && (
                     <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      </span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
                       Live Site
                     </span>
                   )}

@@ -14,6 +14,7 @@ async function fetchYearContributions(username: string, year: string) {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
       next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(3500),
     });
 
     if (!res.ok) {
@@ -70,13 +71,18 @@ export async function GET(request: Request) {
       fetchYearContributions(username, "2024"),
     ]);
 
-    const allTimeTotal =
-      data2026.totalCount + data2025.totalCount + data2024.totalCount;
+    const static2026 = 392;
+    const static2025 = 249;
+    const static2024 = 1;
+    const resolved2026 = data2026.totalCount || static2026;
+    const resolved2025 = data2025.totalCount || static2025;
+    const resolved2024 = data2024.totalCount || static2024;
+    const allTimeTotal = resolved2026 + resolved2025 + resolved2024;
 
     const yearTotals: Record<string, number> = {
-      "2026": data2026.totalCount,
-      "2025": data2025.totalCount,
-      "2024": data2024.totalCount,
+      "2026": resolved2026,
+      "2025": resolved2025,
+      "2024": resolved2024,
       "All Time": allTimeTotal,
     };
 

@@ -94,11 +94,20 @@ export function Testimonials() {
 
                 {/* Author */}
                 <div className="mt-6 flex items-center gap-3.5 border-t border-border pt-5">
-                  <img
-                    src={active.avatar}
-                    alt={active.name}
-                    className="h-12 w-12 rounded-full border border-border object-cover"
-                  />
+                  {active.avatar ? (
+                    <img
+                      src={active.avatar}
+                      alt={active.name}
+                      className="h-12 w-12 rounded-full border border-border object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-mono text-sm font-bold text-foreground border border-border">
+                      {active.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </div>
+                  )}
                   <div>
                     <p className="font-bold text-foreground text-sm sm:text-base">{active.name}</p>
                     <p className="text-xs text-muted-foreground">
