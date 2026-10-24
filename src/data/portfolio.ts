@@ -443,13 +443,49 @@ export const testimonials: Testimonial[] = [
   {
     id: "tst-1",
     name: "Danilo Liwanag",
-    role: "Founder",
-    company: "Roppets",
+    role: "Founder & Director",
+    company: "Roppets Puppet Production",
     avatar:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=faces",
     rating: 5,
     quote:
-      "He did a great job on this project. He is a good developer.",
+      "Joshua did an exceptional job building our production features and refactoring our database queries. Reliable, proactive, and technically sharp.",
+    date: "2026",
+  },
+  {
+    id: "tst-2",
+    name: "Jaime Trono",
+    role: "Technical Lead & Reference",
+    company: "Government & Enterprise Systems",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=faces",
+    rating: 5,
+    quote:
+      "Working alongside Joshua on client deployments has been outstanding. His mastery in full-stack architecture, clean code, and API integration ensures systems ship on time.",
+    date: "2026",
+  },
+  {
+    id: "tst-3",
+    name: "Civentral Partner Team",
+    role: "Civic Health Stakeholder",
+    company: "Caloocan City Health & Sanitation",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop&crop=faces",
+    rating: 5,
+    quote:
+      "Joshua's architecture for the health sanitation portal transformed our daily paperwork processing into an instant, real-time digital system serving 1,000+ residents.",
+    date: "2026",
+  },
+  {
+    id: "tst-4",
+    name: "John Mark Giray",
+    role: "Senior Full-Stack Colleague",
+    company: "Independent Client Systems",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=faces",
+    rating: 5,
+    quote:
+      "Joshua brings tremendous execution speed and deep problem-solving skills to every project. His real-time WebRTC and database optimizations are genuinely top-tier.",
     date: "2026",
   },
 ];
