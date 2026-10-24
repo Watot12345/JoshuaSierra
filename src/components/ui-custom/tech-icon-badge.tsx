@@ -40,6 +40,9 @@ import {
   SiPostman,
   SiClaude,
   SiGooglegemini,
+  SiGithubcopilot,
+  SiMiro,
+  SiObsidian,
   SiWebrtc,
   SiSocketdotio,
 } from "react-icons/si";
@@ -283,6 +286,16 @@ const TECH_META_MAP: Record<string, TechMeta> = {
     colorClass: "text-[#FF6C37] dark:text-muted-foreground dark:group-hover:text-[#FF6C37]",
     hoverBorder: "hover:border-[#FF6C37]/40",
   },
+  Miro: {
+    icon: SiMiro,
+    colorClass: "text-[#050038] dark:text-muted-foreground dark:group-hover:text-[#FFD02F]",
+    hoverBorder: "hover:border-[#FFD02F]/40",
+  },
+  Obsidian: {
+    icon: SiObsidian,
+    colorClass: "text-[#7C3AED] dark:text-muted-foreground dark:group-hover:text-[#A78BFA]",
+    hoverBorder: "hover:border-[#7C3AED]/40",
+  },
   WebRTC: {
     icon: SiWebrtc,
     colorClass: "text-[#333333] dark:text-muted-foreground dark:group-hover:text-white",
@@ -324,6 +337,16 @@ const TECH_META_MAP: Record<string, TechMeta> = {
     icon: RiOpenaiFill,
     colorClass: "text-[#10A37F] dark:text-muted-foreground dark:group-hover:text-[#10A37F]",
     hoverBorder: "hover:border-[#10A37F]/40",
+  },
+  Copilot: {
+    icon: SiGithubcopilot,
+    colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
+    hoverBorder: "hover:border-foreground/40",
+  },
+  "GitHub Copilot": {
+    icon: SiGithubcopilot,
+    colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
+    hoverBorder: "hover:border-foreground/40",
   },
   Cline: {
     icon: SiCline,

@@ -39,6 +39,9 @@ import {
   SiPostman,
   SiClaude,
   SiGooglegemini,
+  SiGithubcopilot,
+  SiMiro,
+  SiObsidian,
 } from "react-icons/si";
 import { FaAws, FaCss3Alt, FaServer, FaAward } from "react-icons/fa";
 import { TbApi, TbInfinity } from "react-icons/tb";
@@ -371,6 +374,12 @@ const STACK_CATEGORIES: StackCategory[] = [
         hoverBorder: "hover:border-[#10A37F]/40",
       },
       {
+        name: "Copilot",
+        icon: SiGithubcopilot,
+        colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
+        hoverBorder: "hover:border-foreground/40",
+      },
+      {
         name: "Cline",
         icon: SiCline,
         colorClass: "text-[#0284c7] dark:text-muted-foreground dark:group-hover:text-[#38BDF8]",
@@ -393,6 +402,18 @@ const STACK_CATEGORIES: StackCategory[] = [
         icon: SiFigma,
         colorClass: "text-[#F24E1E] dark:text-muted-foreground dark:group-hover:text-[#F24E1E]",
         hoverBorder: "hover:border-[#F24E1E]/40",
+      },
+      {
+        name: "Miro",
+        icon: SiMiro,
+        colorClass: "text-[#050038] dark:text-muted-foreground dark:group-hover:text-[#FFD02F]",
+        hoverBorder: "hover:border-[#FFD02F]/40",
+      },
+      {
+        name: "Obsidian",
+        icon: SiObsidian,
+        colorClass: "text-[#7C3AED] dark:text-muted-foreground dark:group-hover:text-[#A78BFA]",
+        hoverBorder: "hover:border-[#7C3AED]/40",
       },
     ],
   },
