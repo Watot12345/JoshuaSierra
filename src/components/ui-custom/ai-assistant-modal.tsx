@@ -29,7 +29,7 @@ const INITIAL_MESSAGE: Message = {
   id: "welcome-msg",
   role: "assistant",
   content:
-    "Hey! I'm Joshua. Feel free to ask me anything about my projects (like [Soleverse](https://sole-verse-chronos-main.vercel.app/) and [Civentral](https://healthsanitation.civentral.tech/)), my tech stack, or my availability for internships (OJT) and software roles.",
+    "Hey! I'm Joshua. Feel free to ask me anything about my projects (like [Civentral](https://healthsanitation.civentral.tech/), [SariSari App](https://watot12345.github.io/sarisariApp/), and [Soleverse](https://sole-verse-chronos-main.vercel.app/)), my tech stack, or my availability for an internship (OJT) and full-stack developer roles.",
 };
 
 function parseInline(text: string, onClose: () => void, isUser: boolean) {

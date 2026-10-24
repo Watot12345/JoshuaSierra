@@ -80,20 +80,20 @@ export const profile: Profile = {
   fullName: "Joshua Sierra",
   firstName: "Joshua",
   lastName: "Sierra",
-  title: "AI & Software Engineer",
-  tagline: "I build real products for real people — from intelligent web platforms to mobile apps.",
-  bio: "AI & Software Engineer with 2+ years shipping production software. Building intelligent web platforms, AI integrations, and real-world systems serving 1,000+ citizens.",
+  title: "Full Stack Developer",
+  tagline: "I build real products for real people — from clean web platforms to responsive mobile apps.",
+  bio: "Full Stack Developer and 4th-year BSIT student with 2+ years building web and mobile software. Actively seeking an Internship (OJT) and junior developer opportunities.",
   longBio: [
-    "I'm an AI and full-stack software engineer based in Manila, Philippines, specializing in intelligent web applications, AI integrations, and cross-platform mobile apps.",
-    "My flagship project — Civentral Web & App — is a live government health and sanitation platform actively used by 1,000+ citizens in Caloocan City, built using PHP, React Native, Supabase, and PostgreSQL.",
-    "I currently work as a Software Engineer at Roppets and as a Backend Developer for Caloocan City Government. I'm open to freelance projects, AI/startup partnerships, and full-time engineering roles.",
+    "I'm a full-stack developer and 4th-year BSIT student based in Manila, Philippines, specializing in full-stack web applications, clean REST APIs, and cross-platform mobile apps.",
+    "My flagship project — Civentral Web & App — is a live government health and sanitation platform actively serving 1,000+ citizens in Caloocan City, built using PHP, React Native, Supabase, and PostgreSQL.",
+    "I currently work as a Project-Based Developer at Roppets and serve as Capstone Lead for the Civentral project. I'm actively seeking an Internship (OJT) and junior full-stack developer roles.",
   ],
   email: "joshuaarncel@gmail.com",
   phone: "09368587433",
   location: "Manila, Philippines",
-  availability: "Open to freelance & full-time opportunities",
+  availability: "Actively seeking Internship (OJT) & Full-Stack roles",
   avatar: "/profile.png",
-  resumeUrl: "/resume-joshua-sierra.pdf",
+  resumeUrl: "/resume.pdf?v=2",
   yearsOfExperience: 2,
   projectsCompleted: 2,
   happyClients: 2,
@@ -437,47 +437,47 @@ export const projects: Project[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Testimonials
+// Recommendations / Endorsements
 // ---------------------------------------------------------------------------
 export const testimonials: Testimonial[] = [
   {
     id: "tst-1",
+    name: "Jorge Lucero",
+    role: "Capstone Project Adviser & IT Faculty",
+    company: "Bestlink College of the Philippines",
+    rating: 5,
+    quote:
+      "Joshua served as the lead developer for the Civentral Health & Sanitation capstone project. He demonstrated strong technical discipline in database design, backend workflows, and deploying a functioning civic platform for the community.",
+    date: "2026",
+  },
+  {
+    id: "tst-2",
+    name: "Ronald Roldan Jr.",
+    role: "Capstone Technical Adviser & IT Faculty",
+    company: "Bestlink College of the Philippines",
+    rating: 5,
+    quote:
+      "Joshua demonstrated strong problem-solving initiative as technical lead on the Civentral project. His grasp of backend architecture, database normalization, and real-time data sync resulted in a robust, reliable system deployed for public use.",
+    date: "2026",
+  },
+  {
+    id: "tst-3",
     name: "Danilo Liwanag",
     role: "Founder & Director",
     company: "Roppets Puppet Production",
     rating: 5,
     quote:
-      "Joshua did an exceptional job building our production features and refactoring our database queries. Reliable, proactive, and technically sharp.",
-    date: "2026",
-  },
-  {
-    id: "tst-2",
-    name: "Rafael Mendoza",
-    role: "Technical Lead & Consultant",
-    company: "Enterprise Systems",
-    rating: 5,
-    quote:
-      "Working alongside Joshua on client deployments has been outstanding. His mastery in full-stack architecture, clean code, and API integration ensures systems ship on time.",
-    date: "2026",
-  },
-  {
-    id: "tst-3",
-    name: "Civentral Partner Team",
-    role: "Civic Health Stakeholder",
-    company: "Caloocan City Health & Sanitation",
-    rating: 5,
-    quote:
-      "Joshua's architecture for the health sanitation portal transformed our daily paperwork processing into an instant, real-time digital system serving 1,000+ residents.",
+      "Joshua contributed meaningfully to Roppets Puppet Production by building and maintaining our internal booking workflows and management tools. Reliable, proactive, and committed to shipping working code.",
     date: "2026",
   },
   {
     id: "tst-4",
-    name: "Adrian Dela Cruz",
-    role: "Senior Full-Stack Colleague",
-    company: "Independent Client Systems",
+    name: "Raffy Lapiz",
+    role: "Capstone Co-Developer & Mobile Lead",
+    company: "Civentral Team",
     rating: 5,
     quote:
-      "Joshua brings tremendous execution speed and deep problem-solving skills to every project. His real-time WebRTC and database optimizations are genuinely top-tier.",
+      "Collaborating with Joshua on the Civentral platform was a great experience. As our lead developer, he handled the backend server logic and database architecture smoothly, making mobile API integration and real-time syncing seamless.",
     date: "2026",
   },
 ];

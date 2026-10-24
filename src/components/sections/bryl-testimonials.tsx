@@ -22,7 +22,7 @@ export function BrylTestimonials() {
             06 — recommendations
           </h2>
           <p className="font-mono text-[11px] text-muted-foreground mt-0.5">
-            Client &amp; engineering feedback
+            Academic &amp; project endorsements
           </p>
         </div>
 

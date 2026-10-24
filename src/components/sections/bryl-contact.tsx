@@ -89,41 +89,6 @@ export function BrylContact() {
                 <span>Manila, Philippines</span>
               </div>
             </div>
-
-            {/* Social Profiles */}
-            <div className="mt-5 pt-4 border-t border-border">
-              <span className="block font-mono text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
-                Social Profiles
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {socialLinks.map((s) => {
-                  const Icon = s.icon;
-                  const socialColor =
-                    s.id === "linkedin"
-                      ? "text-[#0A66C2] dark:text-muted-foreground dark:hover:text-[#0A66C2]"
-                      : s.id === "facebook"
-                      ? "text-[#1877F2] dark:text-muted-foreground dark:hover:text-[#1877F2]"
-                      : s.id === "instagram"
-                      ? "text-[#E4405F] dark:text-muted-foreground dark:hover:text-[#E4405F]"
-                      : "text-foreground dark:text-muted-foreground dark:hover:text-foreground";
-                  return (
-                    <a
-                      key={s.id}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 font-mono text-[11px] transition-all duration-200 hover:border-foreground/40",
-                        socialColor
-                      )}
-                    >
-                      <Icon className="h-3 w-3" />
-                      <span>{s.label}</span>
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
           {/* Form */}

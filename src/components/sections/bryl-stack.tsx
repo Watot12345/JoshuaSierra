@@ -44,7 +44,7 @@ import {
   SiMiro,
   SiObsidian,
 } from "react-icons/si";
-import { FaAws, FaCss3Alt, FaServer, FaAward } from "react-icons/fa";
+import { FaCss3Alt, FaServer, FaAward } from "react-icons/fa";
 import { TbApi, TbInfinity } from "react-icons/tb";
 import { RiOpenaiFill } from "react-icons/ri";
 import { VscVscode } from "react-icons/vsc";
@@ -285,12 +285,6 @@ const STACK_CATEGORIES: StackCategory[] = [
         icon: SiLinux,
         colorClass: "text-[#d97706] dark:text-muted-foreground dark:group-hover:text-[#FCC624]",
         hoverBorder: "hover:border-[#d97706]/40 dark:hover:border-[#FCC624]/40",
-      },
-      {
-        name: "AWS",
-        icon: FaAws,
-        colorClass: "text-[#FF9900] dark:text-muted-foreground dark:group-hover:text-[#FF9900]",
-        hoverBorder: "hover:border-[#FF9900]/40",
       },
     ],
   },

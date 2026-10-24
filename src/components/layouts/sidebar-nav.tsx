@@ -25,7 +25,7 @@ import {
   Award,
 } from "lucide-react";
 import { useMounted } from "@/hooks/use-mounted";
-import { profile, socialLinks } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { AiAssistantModal } from "@/components/ui-custom/ai-assistant-modal";
 import { SoundToggle } from "@/components/ui-custom/sound-toggle";
@@ -248,42 +248,6 @@ export function SidebarNav() {
               <FileText className="h-3.5 w-3.5 shrink-0" />
               <span>Resume (PDF) ↗</span>
             </a>
-
-            {/* Social profiles row */}
-            <div className="mt-3 pt-3 border-t border-border">
-              <span className="block text-[10px] font-mono uppercase tracking-wider text-muted-foreground mb-2">
-                Socials
-              </span>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {socialLinks.map((s) => {
-                  const Icon = s.icon;
-                  const socialColor =
-                    s.id === "linkedin"
-                      ? "text-[#0A66C2] dark:text-muted-foreground dark:hover:text-[#0A66C2]"
-                      : s.id === "facebook"
-                      ? "text-[#1877F2] dark:text-muted-foreground dark:hover:text-[#1877F2]"
-                      : s.id === "instagram"
-                      ? "text-[#E4405F] dark:text-muted-foreground dark:hover:text-[#E4405F]"
-                      : "text-foreground dark:text-muted-foreground dark:hover:text-foreground";
-                  return (
-                    <a
-                      key={s.id}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card transition-all duration-200 hover:border-foreground/40 hover:bg-muted",
-                        socialColor
-                      )}
-                      title={`${s.label} (${s.username})`}
-                      aria-label={s.label}
-                    >
-                      <Icon className="h-3.5 w-3.5" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
           </nav>
         </div>
 
@@ -539,42 +503,6 @@ export function SidebarNav() {
               <FileText className="h-4 w-4" />
               <span>Download Resume (PDF) ↗</span>
             </a>
-
-            {/* Mobile Socials */}
-            <div className="mt-2 pt-3 border-t border-border">
-              <span className="block text-[11px] font-mono uppercase tracking-wider text-muted-foreground mb-2">
-                Socials
-              </span>
-              <div className="flex items-center gap-2 flex-wrap">
-                {socialLinks.map((s) => {
-                  const Icon = s.icon;
-                  const socialColor =
-                    s.id === "linkedin"
-                      ? "text-[#0A66C2] dark:text-muted-foreground dark:hover:text-[#0A66C2]"
-                      : s.id === "facebook"
-                      ? "text-[#1877F2] dark:text-muted-foreground dark:hover:text-[#1877F2]"
-                      : s.id === "instagram"
-                      ? "text-[#E4405F] dark:text-muted-foreground dark:hover:text-[#E4405F]"
-                      : "text-foreground dark:text-muted-foreground dark:hover:text-foreground";
-                  return (
-                    <a
-                      key={s.id}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card transition-colors hover:bg-muted",
-                        socialColor
-                      )}
-                      title={s.label}
-                      aria-label={s.label}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
           </nav>
 
           <div className="border-t border-border pt-4">

@@ -13,11 +13,11 @@ export function BrylHero() {
           </h1>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            I&apos;m Joshua Arncel Sierra, an AI &amp; full-stack software engineer based in Manila, Philippines. I build intelligent web platforms, modern mobile apps, and reliable architectures that serve real people.
+            I&apos;m Joshua Arncel Sierra, a Full Stack Developer and 4th-year BSIT student based in Manila, Philippines. I build responsive web platforms, clean backend APIs, and modern mobile apps.
           </p>
 
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            Currently shipping production code at <strong className="text-foreground font-semibold">Roppets</strong>, co-founding <strong className="text-foreground font-semibold">Civentral</strong> — a live government platform actively serving 1,000+ citizens in South Caloocan City, and founding personal startup apps like <strong className="text-foreground font-semibold">SariSari App</strong>.
+            Currently developing project features at <strong className="text-foreground font-semibold">Roppets</strong>, serving as Lead Developer for <strong className="text-foreground font-semibold">Civentral</strong> — a live government capstone platform deployed for South Caloocan City, and building startup tools like <strong className="text-foreground font-semibold">SariSari App</strong>. Actively seeking an <strong className="text-foreground font-semibold">Internship (OJT)</strong> and junior developer roles.
           </p>
 
           {/* Social links */}
@@ -74,10 +74,10 @@ export function BrylHero() {
       <div className="my-7 grid grid-cols-3 divide-x divide-border border-y border-border py-4 text-left">
         <div className="pr-3">
           <span className="block font-mono text-xs font-bold text-foreground">
-            Caloocan City Gov
+            Civentral Portal
           </span>
           <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            Civentral Lead
+            Capstone Lead
           </span>
         </div>
 
@@ -86,7 +86,7 @@ export function BrylHero() {
             Roppets
           </span>
           <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            Software Engineer
+            Project-Based Dev
           </span>
         </div>
 
@@ -95,7 +95,7 @@ export function BrylHero() {
             Bestlink College
           </span>
           <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            BS IT · Seeking Internship
+            BSIT · Seeking OJT
           </span>
         </div>
       </div>

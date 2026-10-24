@@ -26,16 +26,16 @@ interface ProjectItem {
 }
 
 const PROJECTS_DATA: ProjectItem[] = [
-  // ── TIER 1: LATEST PRODUCTION PROJECTS WITH ACTIVE LIVE SITES (Images + Live URLs) ──
+  // ── FEATURED HIGHLIGHTS & LIVE PRODUCTION PLATFORMS ──
   {
     id: "civentral-web",
     category: "gov",
-    badge: "Live Government Platform",
-    role: "Co-Founder & Lead Dev",
-    tag: "South Caloocan City",
-    title: "Civentral Web",
+    badge: "Capstone Platform",
+    role: "Capstone Lead Developer",
+    tag: "South Caloocan City · Live",
+    title: "Civentral Health & Sanitation Portal",
     description:
-      "Production digital health and sanitation services portal deployed for Caloocan City. Replaced manual paper filing with real-time status updates and digital citizen record management for 1,000+ residents.",
+      "Official capstone web portal deployed for South Caloocan City. Digitized manual paper filings with real-time status updates and citizen record management for 1,000+ residents.",
     image: "/civentral-web.png",
     liveUrl: "https://healthsanitation.civentral.tech/",
     githubUrl: "https://github.com/Watot12345/Civentral_HealthSanitation--Web.git",
@@ -43,11 +43,41 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "1,000+ Active Citizens Served",
   },
   {
+    id: "sarisari-app",
+    category: "personal",
+    badge: "Startup Retail POS",
+    role: "Founder & Developer",
+    tag: "Flutter / Dart · Offline-First",
+    title: "SariSari App — Retail POS & Inventory",
+    description:
+      "A mobile-first inventory and point-of-sale platform tailored for neighborhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
+    image: "/sarisari.png",
+    liveUrl: "https://watot12345.github.io/sarisariApp/",
+    githubUrl: "https://github.com/Watot12345/sarisariApp.git",
+    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
+    metrics: "Live on GitHub Pages",
+  },
+  {
+    id: "sjdm-legislative",
+    category: "client",
+    badge: "Municipal Archive System",
+    role: "Lead Full-Stack Developer",
+    tag: "City of San Jose Del Monte · Live",
+    title: "SJDM Legislative Research & Ordinance Archive",
+    description:
+      "Official municipal legislative records, city ordinance search engine, and council resolution archive platform live at lrpaies.sjdm-legislative.com.",
+    image: "/sjdm-legislative.png",
+    liveUrl: "https://lrpaies.sjdm-legislative.com",
+    githubUrl: "https://github.com/Watot12345/sjdm-legislative-research.git",
+    tech: ["PHP", "MySQL", "Full-Text Search", "Municipal Archive"],
+    metrics: "Production Live Portal",
+  },
+  {
     id: "soleverse",
     category: "personal",
     badge: "Sneaker eCommerce Store",
     role: "Full-Stack Developer",
-    tag: "React 19 & TanStack",
+    tag: "React 19 & TanStack · Live",
     title: "SoleVerse — Premium Footwear & Sneaker Experience",
     description:
       "Modern footwear commerce platform engineered for performance, animated transitions, product filtering, responsive cart checkout, and interactive sneaker showcases deployed live at sole-verse-chronos-main.vercel.app.",
@@ -73,29 +103,14 @@ const PROJECTS_DATA: ProjectItem[] = [
     metrics: "12,000+ Resident Records",
   },
   {
-    id: "sarisari-app",
-    category: "personal",
-    badge: "Startup Mobile App",
-    role: "Founder & Lead Developer",
-    tag: "Flutter / Dart",
-    title: "SariSari App — Retail POS & Inventory",
-    description:
-      "A mobile-first inventory and point-of-sale platform tailored for neighbourhood retail stores (sari-sari stores) in the Philippines with offline-first transaction support.",
-    image: "/sarisari.png",
-    liveUrl: "https://watot12345.github.io/sarisariApp/",
-    githubUrl: "https://github.com/Watot12345/sarisariApp.git",
-    tech: ["Flutter", "Dart", "Mobile UI", "SQLite", "Offline-First"],
-    metrics: "Live on GitHub Pages",
-  },
-  {
     id: "expense-tracker",
     category: "personal",
-    badge: "AI Fintech App",
+    badge: "Fintech Web App",
     role: "Creator & Developer",
     tag: "TypeScript & React",
-    title: "PennyFlow — Smart Expense Tracker & AI Coach",
+    title: "PennyFlow — Smart Expense Tracker",
     description:
-      "Privacy-first financial tracker and AI coach featuring daily safe-to-spend limits, laser receipt OCR, subscription auditing, and offline-ready persistence live at watot12345.github.io/Expense-Tracker.",
+      "Privacy-first financial tracker featuring daily safe-to-spend limits, laser receipt OCR, subscription auditing, and offline-ready persistence live at watot12345.github.io/Expense-Tracker.",
     image: "/expense-tracker.png",
     liveUrl: "https://watot12345.github.io/Expense-Tracker/index.html",
     githubUrl: "https://github.com/Watot12345/Expense-Tracker.git",
@@ -115,21 +130,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     liveUrl: "https://attendancem.bcpsms1.com",
     githubUrl: "https://github.com/Watot12345/Attendance-_Management_System.git",
     tech: ["PHP", "MySQL", "QR Verification", "Production Portal"],
-    metrics: "Production Live Portal",
-  },
-  {
-    id: "sjdm-legislative",
-    category: "client",
-    badge: "Municipal Archive System",
-    role: "Main Developer",
-    tag: "City of San Jose Del Monte",
-    title: "SJDM Legislative Research & Ordinance Archive",
-    description:
-      "Official municipal legislative records, city ordinance search engine, and council resolution archive platform live at lrpaies.sjdm-legislative.com.",
-    image: "/sjdm-legislative.png",
-    liveUrl: "https://lrpaies.sjdm-legislative.com",
-    githubUrl: "https://github.com/Watot12345/sjdm-legislative-research.git",
-    tech: ["PHP", "MySQL", "Full-Text Search", "Municipal Archive"],
     metrics: "Production Live Portal",
   },
   {
