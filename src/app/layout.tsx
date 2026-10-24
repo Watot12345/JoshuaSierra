@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Joshua Arncel Sierra",
   },
   description:
-    "Portfolio of Joshua Arncel Sierra, a Software Engineer based in Manila, Philippines. Specializing in full-stack web platforms and cross-platform mobile apps. Co-Founder of Civentral.",
+    "Official portfolio of Joshua Arncel Sierra, an AI & Full-Stack Software Engineer based in Manila, Philippines. Co-Founder of Civentral and developer of production web and mobile platforms.",
   keywords: [
     "Joshua Arncel Sierra",
     "Joshua Sierra",
