@@ -13,7 +13,7 @@ export function BrylHero() {
           </h1>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            I&apos;m a full-stack engineer based in Manila, Philippines. I build modern web platforms and mobile apps, and right now I focus on reliable architectures that serve real people.
+            I&apos;m an AI & full-stack software engineer based in Manila, Philippines. I build intelligent web platforms, modern mobile apps, and reliable architectures that serve real people.
           </p>
 
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
