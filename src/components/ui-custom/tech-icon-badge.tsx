@@ -35,6 +35,8 @@ import {
   SiRender,
   SiFigma,
   SiPostman,
+  SiWebrtc,
+  SiSocketdotio,
 } from "react-icons/si";
 import { FaCss3Alt } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
@@ -57,6 +59,7 @@ import {
   UserCheck,
   Package,
   Code2,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 
@@ -260,6 +263,21 @@ const TECH_META_MAP: Record<string, TechMeta> = {
     icon: SiPostman,
     colorClass: "text-[#FF6C37] dark:text-muted-foreground dark:group-hover:text-[#FF6C37]",
     hoverBorder: "hover:border-[#FF6C37]/40",
+  },
+  WebRTC: {
+    icon: SiWebrtc,
+    colorClass: "text-[#333333] dark:text-muted-foreground dark:group-hover:text-white",
+    hoverBorder: "hover:border-foreground/40",
+  },
+  WebSockets: {
+    icon: SiSocketdotio,
+    colorClass: "text-black dark:text-muted-foreground dark:group-hover:text-white",
+    hoverBorder: "hover:border-foreground/40",
+  },
+  "Real-Time Video": {
+    icon: Video,
+    colorClass: "text-[#10B981] dark:text-muted-foreground dark:group-hover:text-[#34D399]",
+    hoverBorder: "hover:border-[#10B981]/40",
   },
 
   // Architecture & Domain Tags

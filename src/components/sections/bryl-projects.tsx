@@ -185,6 +185,21 @@ const PROJECTS_DATA: ProjectItem[] = [
     tech: ["TypeScript", "React", "Tailwind CSS", "Data Visualization"],
     metrics: "Live on GitHub Pages",
   },
+  {
+    id: "emiringkay",
+    category: "personal",
+    badge: "Real-Time Video Chat",
+    role: "Full-Stack Developer",
+    tag: "WebRTC & WebSockets",
+    title: "Emiringkay — Real-Time Video & Anonymous Chat Plaza",
+    description:
+      "Modern real-time social video chat and anonymous connection platform. Features mood-based vibe matching (Chill, Vent, Play, Spark, Debate), zero-latency WebRTC video calling, mask mode, and instant skipping deployed live at emiringkay-web.onrender.com.",
+    image: "/emiringkay.png",
+    liveUrl: "https://emiringkay-web.onrender.com",
+    githubUrl: "https://github.com/Watot12345/esmiringkay.git",
+    tech: ["WebRTC", "WebSockets", "Laravel", "PHP", "Tailwind CSS", "Render"],
+    metrics: "Live on Render",
+  },
 
   // ── CLIENT SYSTEMS (Continued) ──
   {

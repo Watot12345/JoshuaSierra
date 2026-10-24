@@ -181,6 +181,51 @@ const jsonLdWebsite = {
   },
 };
 
+const jsonLdBreadcrumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Projects",
+      item: `${SITE_URL}/#projects`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Experience",
+      item: `${SITE_URL}/#experience`,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: "Tech Stack",
+      item: `${SITE_URL}/#stack`,
+    },
+    {
+      "@type": "ListItem",
+      position: 5,
+      name: "Contact",
+      item: `${SITE_URL}/#contact`,
+    },
+  ],
+};
+
+const jsonLdProfilePage = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  dateCreated: "2024-01-01T00:00:00+08:00",
+  dateModified: "2026-10-24T12:00:00+08:00",
+  mainEntity: jsonLdPerson,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -196,6 +241,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProfilePage) }}
         />
       </head>
       <body
