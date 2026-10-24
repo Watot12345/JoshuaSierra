@@ -56,7 +56,7 @@ export function BrylHero() {
         </div>
 
         {/* Profile Avatar — grayscale by default, reveals color on hover */}
-        <div className="group relative shrink-0 self-center sm:self-start">
+        <div data-sound="tick" className="group relative shrink-0 self-center sm:self-start cursor-pointer">
           <div className="relative h-32 w-32 overflow-hidden rounded-2xl border-2 border-border/80 bg-muted/40 shadow-sm transition-all duration-300 group-hover:border-foreground/50 sm:h-40 sm:w-40 md:h-44 md:w-44">
             <img
               src={profile.avatar}

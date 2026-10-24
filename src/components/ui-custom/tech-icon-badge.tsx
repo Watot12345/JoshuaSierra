@@ -541,9 +541,10 @@ export function TechIconBadge({ name }: { name: string }) {
 
   return (
     <div
-      className={`group relative flex h-7 w-7 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-lg border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-2xs cursor-default ${meta.hoverBorder}`}
+      className={`group relative flex h-7 w-7 sm:h-7.5 sm:w-7.5 items-center justify-center rounded-lg border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-2xs cursor-pointer ${meta.hoverBorder}`}
       title={name}
       aria-label={name}
+      data-sound="tick"
     >
       <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-all duration-200 group-hover:scale-115 shrink-0 ${meta.colorClass}`} />
 

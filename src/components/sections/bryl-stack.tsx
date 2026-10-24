@@ -449,9 +449,10 @@ export function BrylStack() {
                 return (
                   <div
                     key={item.name}
-                    className={`group relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-xs cursor-default ${item.hoverBorder}`}
+                    className={`group relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-border bg-card transition-all duration-200 hover:bg-muted/70 shadow-xs cursor-pointer ${item.hoverBorder}`}
                     title={item.name}
                     aria-label={item.name}
+                    data-sound="tick"
                   >
                     <Icon className={`h-5 w-5 transition-all duration-200 group-hover:scale-115 shrink-0 ${item.colorClass}`} />
 

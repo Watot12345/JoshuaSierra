@@ -327,6 +327,7 @@ export function BrylProjects() {
           {loopItems.map((project, idx) => (
             <article
               key={`${project.id}-${idx}`}
+              data-sound="tick"
               className="w-[300px] sm:w-[370px] shrink-0 rounded-2xl border border-border bg-card/90 backdrop-blur-xs p-5 shadow-xs transition-all duration-200 hover:border-foreground/40 hover:bg-card hover:shadow-md flex flex-col justify-between"
             >
               <div>
@@ -358,7 +359,7 @@ export function BrylProjects() {
                 </div>
 
                 {/* Media Thumbnail */}
-                <div className="mt-3 overflow-hidden rounded-xl border border-border bg-muted aspect-[16/9]">
+                <div data-sound="tick" className="mt-3 overflow-hidden rounded-xl border border-border bg-muted aspect-[16/9] cursor-pointer">
                   {project.image ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img

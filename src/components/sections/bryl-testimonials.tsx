@@ -48,7 +48,8 @@ export function BrylTestimonials() {
           {loopItems.map((t, idx) => (
             <div
               key={`${t.id}-${idx}`}
-              className="w-[290px] sm:w-[350px] shrink-0 rounded-2xl border border-border bg-card/80 backdrop-blur-xs p-5 shadow-xs transition-all duration-200 hover:border-foreground/30 hover:bg-card hover:shadow-md flex flex-col justify-between"
+              data-sound="tick"
+              className="w-[290px] sm:w-[350px] shrink-0 rounded-2xl border border-border bg-card/80 backdrop-blur-xs p-5 shadow-xs transition-all duration-200 hover:border-foreground/30 hover:bg-card hover:shadow-md flex flex-col justify-between cursor-pointer"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">

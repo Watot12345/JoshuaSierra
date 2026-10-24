@@ -207,20 +207,80 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!soundEnabled) return;
 
-    const interactiveSelector =
-      'button, a, [role="button"], input, select, textarea, .cursor-pointer, [data-sound="tick"], summary, [tabindex="0"]';
+    const interactiveSelector = [
+      'button',
+      'a',
+      '[role="button"]',
+      '[role="link"]',
+      '[role="tab"]',
+      '[role="menuitem"]',
+      '[role="option"]',
+      '[role="switch"]',
+      '[role="checkbox"]',
+      '[role="radio"]',
+      'input',
+      'select',
+      'textarea',
+      'label',
+      'summary',
+      'details',
+      '[tabindex]:not([tabindex="-1"])',
+      '.cursor-pointer',
+      '[data-sound="tick"]',
+      // Content cards and interactive sections
+      'article',
+      '[data-card]',
+      '.card-hover',
+      '[class*="rounded-xl"][class*="border"]',
+      '[class*="rounded-2xl"][class*="border"]',
+      // Tech icons and interactive badges/tooltips
+      '[title]',
+      '[aria-label]',
+      '[data-slot="badge"]',
+      // SVG shapes that have pointer cursors (e.g. GitHub heatmap rects)
+      'rect',
+      'circle',
+      'svg [style*="cursor: pointer"]',
+      'svg [style*="cursor:pointer"]',
+      '[style*="cursor: pointer"]',
+      '[style*="cursor:pointer"]',
+    ].join(', ');
 
     const handleMouseOver = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest?.(interactiveSelector);
+      const rawEl = e.target as HTMLElement | SVGElement | null;
+      if (!rawEl) return;
+
+      // Find closest interactive element or content card
+      let target: Element | null = rawEl.closest?.(interactiveSelector) ?? null;
+
+      // Fallback: check if element or its parent explicitly has cursor: pointer
+      if (!target && rawEl instanceof Element) {
+        try {
+          const style = window.getComputedStyle(rawEl);
+          if (style.cursor === "pointer") {
+            target = rawEl;
+          }
+        } catch {}
+      }
+
       if (!target) {
         lastTargetRef.current = null;
         return;
       }
+
       if (target === lastTargetRef.current) return;
+
+      // Avoid re-ticking the enclosing card when moving off an inner child/badge back onto the card
+      if (lastTargetRef.current && target.contains(lastTargetRef.current)) {
+        lastTargetRef.current = target;
+        return;
+      }
+
       lastTargetRef.current = target;
 
       const now = Date.now();
-      if (now - lastHoverTimeRef.current > 20) {
+      // Debounce slightly to keep rapid scrubbing sounding rhythmic and crisp
+      if (now - lastHoverTimeRef.current > 18) {
         lastHoverTimeRef.current = now;
         const randomPitch = 0.96 + Math.random() * 0.1;
         playTick(randomPitch);
@@ -228,10 +288,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     };
 
     const handleMouseOut = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest?.(interactiveSelector);
-      if (!target) return;
-      const related = e.relatedTarget as HTMLElement | null;
-      if (!related || !target.contains(related)) {
+      const rawEl = e.target as Element | null;
+      if (!rawEl) return;
+      const target = rawEl.closest?.(interactiveSelector) ?? rawEl;
+      const related = e.relatedTarget as Element | null;
+      if (!related || (target && !target.contains(related))) {
         if (lastTargetRef.current === target) {
           lastTargetRef.current = null;
         }
@@ -250,10 +311,37 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!soundEnabled) return;
 
+    const clickSelector = [
+      'button',
+      'a',
+      '[role="button"]',
+      '[role="link"]',
+      '[role="tab"]',
+      'input',
+      'select',
+      'textarea',
+      '.cursor-pointer',
+      '[data-sound="tick"]',
+      'summary',
+      'rect',
+      '[tabindex]:not([tabindex="-1"])',
+      '[style*="cursor: pointer"]',
+      '[style*="cursor:pointer"]',
+    ].join(', ');
+
     const handlePointerDown = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest?.(
-        'button, a, [role="button"], input, select, textarea, .cursor-pointer, [data-sound="tick"], summary, [tabindex="0"]'
-      );
+      const rawEl = e.target as HTMLElement | SVGElement | null;
+      if (!rawEl) return;
+
+      let target: Element | null = rawEl.closest?.(clickSelector) ?? null;
+      if (!target && rawEl instanceof Element) {
+        try {
+          if (window.getComputedStyle(rawEl).cursor === "pointer") {
+            target = rawEl;
+          }
+        } catch {}
+      }
+
       if (target) {
         playClick();
       }

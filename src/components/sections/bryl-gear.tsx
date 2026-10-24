@@ -157,7 +157,8 @@ export function BrylGear() {
               return (
                 <div
                   key={item.name}
-                  className="group rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-foreground/20 hover:bg-muted/40 shadow-xs"
+                  data-sound="tick"
+                  className="group rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-foreground/20 hover:bg-muted/40 shadow-xs cursor-pointer"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -210,7 +211,8 @@ export function BrylGear() {
               return (
                 <div
                   key={item.name}
-                  className="group rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-foreground/20 hover:bg-muted/40 shadow-xs flex flex-col justify-between"
+                  data-sound="tick"
+                  className="group rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-foreground/20 hover:bg-muted/40 shadow-xs flex flex-col justify-between cursor-pointer"
                 >
                   <div>
                     {/* Visual Media Thumbnail */}

@@ -37,7 +37,7 @@ export function BrylEducation() {
 
           <div className="flex flex-col gap-3.5">
             {/* College */}
-            <div className="rounded-xl border border-border bg-card p-5 shadow-xs transition-all duration-200 hover:border-foreground/20">
+            <div data-sound="tick" className="rounded-xl border border-border bg-card p-5 shadow-xs transition-all duration-200 hover:border-foreground/20 cursor-pointer">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div className="flex items-center gap-2.5">
                   <GraduationCap className="h-4 w-4 text-foreground shrink-0" />
@@ -58,7 +58,7 @@ export function BrylEducation() {
             </div>
 
             {/* High School */}
-            <div className="rounded-xl border border-border bg-card p-5 shadow-xs transition-all duration-200 hover:border-foreground/20">
+            <div data-sound="tick" className="rounded-xl border border-border bg-card p-5 shadow-xs transition-all duration-200 hover:border-foreground/20 cursor-pointer">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div className="flex items-center gap-2.5">
                   <GraduationCap className="h-4 w-4 text-foreground shrink-0" />
@@ -90,7 +90,7 @@ export function BrylEducation() {
 
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             {/* Active Seminar / Research Forum */}
-            <div className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between">
+            <div data-sound="tick" className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between cursor-pointer">
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
@@ -119,7 +119,7 @@ export function BrylEducation() {
             </div>
 
             {/* Placeholder: Industry Certifications */}
-            <div className="group rounded-xl border border-dashed border-border bg-card/60 p-4 shadow-xs transition-all duration-200 hover:border-foreground/30 flex flex-col justify-between">
+            <div data-sound="tick" className="group rounded-xl border border-dashed border-border bg-card/60 p-4 shadow-xs transition-all duration-200 hover:border-foreground/30 flex flex-col justify-between cursor-pointer">
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
@@ -162,7 +162,7 @@ export function BrylEducation() {
 
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             {/* Civentral */}
-            <div className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between">
+            <div data-sound="tick" className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between cursor-pointer">
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
@@ -194,7 +194,7 @@ export function BrylEducation() {
             </div>
 
             {/* Bestlink IT Society */}
-            <div className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between">
+            <div data-sound="tick" className="rounded-xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:border-foreground/20 flex flex-col justify-between cursor-pointer">
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">

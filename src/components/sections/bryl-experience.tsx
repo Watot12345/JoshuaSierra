@@ -90,7 +90,8 @@ export function BrylExperience() {
         {EXPERIENCES.map((exp, idx) => (
           <div
             key={idx}
-            className="rounded-xl border border-border bg-card p-5 sm:p-6 shadow-xs"
+            data-sound="tick"
+            className="rounded-xl border border-border bg-card p-5 sm:p-6 shadow-xs transition-all duration-200 hover:border-foreground/30"
           >
             {/* Top row */}
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-border pb-3">

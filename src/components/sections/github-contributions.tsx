@@ -332,7 +332,8 @@ export function GithubContributions() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:border-foreground/30"
+              data-sound="tick"
+              className="rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:border-foreground/30 cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted/60 shrink-0">
@@ -469,6 +470,8 @@ export function GithubContributions() {
                             fill={color}
                             stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
                             strokeWidth="1"
+                            data-sound="tick"
+                            className="cursor-pointer"
                             onMouseEnter={() => setHoveredDay(day)}
                             onMouseLeave={() => setHoveredDay(null)}
                             style={{ cursor: "pointer" }}
