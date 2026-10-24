@@ -29,7 +29,7 @@ const INITIAL_MESSAGE: Message = {
   id: "welcome-msg",
   role: "assistant",
   content:
-    "Hello! Feel free to ask me anything about Joshua's systems (like [Emiringkay](https://emiringkay-web.onrender.com) and [Civentral](https://civentral.tech)), his technical stack, or his availability for internships (OJT) and software roles.",
+    "Hey! I'm Joshua. Feel free to ask me anything about my projects (like [Emiringkay](https://emiringkay-web.onrender.com) and [Civentral](https://civentral.tech)), my tech stack, or my availability for internships (OJT) and software roles.",
 };
 
 function parseInline(text: string, onClose: () => void, isUser: boolean) {
@@ -265,7 +265,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           id: `assistant-${Date.now()}`,
           role: "assistant",
           content:
-            "I'm temporarily unable to reach the server. Joshua is actively available for Software Engineering Internships (OJT) and full-stack positions. Feel free to email him directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).",
+            "I'm temporarily unable to reach the server. I am actively available for Software Engineering Internships (OJT) and full-stack positions. Feel free to email me directly at [joshuaarncel@gmail.com](mailto:joshuaarncel@gmail.com).",
         },
       ]);
     } finally {
@@ -302,15 +302,15 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5 bg-muted/40">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-              <Sparkles className="h-4 w-4" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-xs font-bold text-primary">
+              JS
             </div>
             <div className="min-w-0">
               <h3 className="font-mono text-xs sm:text-sm font-bold text-foreground truncate">
-                Questions? ask anyway...
+                Joshua Sierra
               </h3>
               <p className="font-mono text-[10px] text-muted-foreground truncate">
-                Direct portfolio Q&amp;A · OJT &amp; projects
+                Interactive Portfolio Q&amp;A · Ask me anything
               </p>
             </div>
           </div>
@@ -369,13 +369,13 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               >
                 <div
                   className={cn(
-                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs shadow-xs",
+                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs shadow-xs font-mono",
                     isUser
                       ? "border-primary/30 bg-primary text-primary-foreground"
-                      : "border-border bg-muted/70 text-foreground"
+                      : "border-primary/20 bg-primary/10 text-primary font-bold text-[10px]"
                   )}
                 >
-                  {isUser ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
+                  {isUser ? <User className="h-3.5 w-3.5" /> : "JS"}
                 </div>
 
                 <div
@@ -394,12 +394,12 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
 
           {isLoading && (
             <div className="flex items-start gap-2.5">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/70 text-foreground">
-                <Bot className="h-3.5 w-3.5" />
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-[10px] font-bold text-primary shadow-xs">
+                JS
               </div>
               <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-xs text-muted-foreground shadow-xs">
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
-                <span className="font-mono text-xs">Analyzing portfolio data...</span>
+                <span className="font-mono text-xs">Joshua is typing...</span>
               </div>
             </div>
           )}
