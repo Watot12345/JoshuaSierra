@@ -96,7 +96,7 @@ export function SidebarNav() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            <span>Available for work</span>
+            <span>Available for Work &amp; Internship</span>
           </div>
 
           {/* Navigation Links */}
@@ -240,7 +240,7 @@ export function SidebarNav() {
           </div>
 
           <p className="text-[11px] leading-relaxed text-muted-foreground">
-            For roles, projects & collabs, reach me at
+            For internships, engineering roles &amp; collabs:
           </p>
           <a
             href={`mailto:${profile.email}`}
@@ -303,9 +303,13 @@ export function SidebarNav() {
               <span className="font-mono text-sm font-bold text-foreground">
                 {profile.fullName}
               </span>
-              <span className="block text-xs font-mono text-muted-foreground">
-                Navigation
-              </span>
+              <div className="mt-1.5 flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 w-fit">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
+                <span>Available for Work &amp; Internship</span>
+              </div>
             </div>
             <button
               type="button"

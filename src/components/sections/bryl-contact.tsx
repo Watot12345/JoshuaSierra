@@ -66,7 +66,7 @@ export function BrylContact() {
               Direct Channels
             </h3>
             <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-              Open to full-time roles, freelance platforms, and technical consulting.
+              Open to internships (OJT), software engineering roles, and technical consulting.
             </p>
 
             <div className="mt-5 flex flex-col gap-3 font-mono text-xs">

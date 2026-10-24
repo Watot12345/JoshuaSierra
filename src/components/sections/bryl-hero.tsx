@@ -95,7 +95,7 @@ export function BrylHero() {
             Bestlink College
           </span>
           <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            BS IT · 4th Year
+            BS IT · Seeking Internship
           </span>
         </div>
       </div>
