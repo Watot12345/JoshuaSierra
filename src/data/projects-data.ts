@@ -176,7 +176,7 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
     id: "civentral-app",
     category: "gov",
     badge: "Cross-Platform Mobile App",
-    role: "Co-Founder & Mobile Lead",
+    role: "Lead Backend & Mobile Co-Developer",
     tag: "Expo / Android & iOS",
     title: "Civentral Mobile App",
     description:

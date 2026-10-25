@@ -95,7 +95,7 @@ export const profile: Profile = {
   avatar: "/profile.png",
   resumeUrl: "/resume.pdf?v=2",
   yearsOfExperience: 2,
-  projectsCompleted: 2,
+  projectsCompleted: 15,
   happyClients: 2,
   awardsWon: 1,
 };
@@ -328,7 +328,6 @@ export const education: EducationItem[] = [
     endYear: 2027,
     description:
       "Specializing in Web Development, Networking, Systems Troubleshooting, Database Architecture, and IT Management.",
-    gpa: "2.0",
   },
 ];
 
@@ -376,7 +375,7 @@ export const projects: Project[] = [
     image: "/civentral-web.png",
     gallery: [
       "/civentral-web.png",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop",
+      "/civentral-app.png",
     ],
     techStack: ["PHP", "JavaScript", "Tailwind CSS", "Supabase", "PostgreSQL"],
     features: [
@@ -411,7 +410,7 @@ export const projects: Project[] = [
     image: "/civentral-app.png",
     gallery: [
       "/civentral-app.png",
-      "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?w=1200&h=800&fit=crop",
+      "/civentral-web.png",
     ],
     techStack: ["React Native", "Expo", "Supabase", "Tailwind CSS", "TypeScript"],
     features: [
