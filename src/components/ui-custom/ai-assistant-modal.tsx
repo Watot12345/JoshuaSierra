@@ -358,18 +358,18 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         </div>
 
         {/* Quick FAQ Suggestion Chips */}
-        <div className="border-b border-border/60 bg-muted/20 px-4 py-2.5 overflow-x-auto no-scrollbar">
-          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+        <div className="border-b border-border/60 bg-muted/20 px-4 py-2.5">
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
             Suggested Questions:
           </p>
-          <div className="flex items-center gap-1.5 flex-nowrap sm:flex-wrap">
+          <div className="flex flex-row flex-nowrap items-center gap-2 overflow-x-auto no-scrollbar pb-1 touch-pan-x sm:flex-wrap">
             {QUICK_QUESTIONS.map((q) => (
               <button
                 key={q}
                 type="button"
                 disabled={isLoading}
                 onClick={() => handleSend(q)}
-                className="shrink-0 rounded-full border border-border bg-card px-2.5 py-1 font-mono text-[11px] text-foreground hover:border-foreground/30 hover:bg-muted transition-colors disabled:opacity-50 text-left"
+                className="shrink-0 whitespace-nowrap inline-flex items-center rounded-full border border-border bg-card px-3 py-1.5 font-mono text-[11px] text-foreground hover:border-foreground/30 hover:bg-muted active:scale-95 transition-all disabled:opacity-50 select-none cursor-pointer"
               >
                 {q}
               </button>
