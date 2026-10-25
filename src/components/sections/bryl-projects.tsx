@@ -48,8 +48,8 @@ const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "sarisari-app",
     category: "personal",
-    badge: "Startup Retail POS",
-    role: "Founder & Developer",
+    badge: "Retail POS App",
+    role: "Creator & Mobile Developer",
     tag: "Flutter / Dart · Offline-First",
     title: "SariSari App — Retail POS & Inventory",
     shortLabel: "02 · SariSari App",
