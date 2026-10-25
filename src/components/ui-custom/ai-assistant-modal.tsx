@@ -360,20 +360,20 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         </div>
 
         {/* Quick FAQ Suggestion Questions (Vertical: top-to-bottom) */}
-        <div className="border-b border-border/60 bg-muted/20 px-4 py-2.5">
-          <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
+        <div className="border-b border-border/60 bg-muted/20 px-4 py-2">
+          <p className="mb-1.5 font-mono text-[9.5px] uppercase tracking-wider text-muted-foreground select-none">
             Suggested Questions:
           </p>
-          <div className="flex flex-col gap-1.5 w-full">
+          <div className="flex flex-col gap-1 w-full">
             {QUICK_QUESTIONS.map((q) => (
               <button
                 key={q}
                 type="button"
                 disabled={isLoading}
                 onClick={() => handleSend(q)}
-                className="w-full text-left rounded-lg border border-border bg-card px-3 py-2 font-mono text-xs text-foreground hover:border-foreground/30 hover:bg-muted active:scale-[0.99] transition-all disabled:opacity-50 select-none cursor-pointer flex items-center justify-between gap-2 group"
+                className="w-full text-left rounded-lg border border-border/70 bg-card/80 px-2.5 py-1.5 font-mono text-[10.5px] text-muted-foreground hover:text-foreground hover:border-foreground/30 hover:bg-muted active:scale-[0.99] transition-all disabled:opacity-50 select-none cursor-pointer flex items-center justify-between gap-2 group shadow-2xs"
               >
-                <span className="leading-snug">{q}</span>
+                <span className="leading-snug truncate">{q}</span>
                 <span className="text-[10px] text-muted-foreground group-hover:text-foreground shrink-0 opacity-60 group-hover:opacity-100">
                   ↗
                 </span>
@@ -448,24 +448,26 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Footer */}
+        {/* Input Footer with Highlighted Chat Box */}
         <form
           onSubmit={handleSubmit}
-          className="border-t border-border p-3 sm:p-3.5 bg-muted/30 flex items-center gap-2"
+          className="border-t border-border p-3 sm:p-3.5 bg-muted/40 flex items-center gap-2"
         >
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question about Joshua's skills, OJT, or projects..."
-            disabled={isLoading}
-            className="flex-1 rounded-xl border border-border bg-card px-3.5 py-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary shadow-xs"
-          />
+          <div className="relative flex-1 flex items-center">
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask a question about Joshua's skills, OJT, or projects..."
+              disabled={isLoading}
+              className="w-full rounded-xl border-2 border-primary/25 bg-background px-3.5 py-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/70 transition-all duration-150 hover:border-primary/45 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-xs"
+            />
+          </div>
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-40 transition-opacity shadow-xs"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 transition-all duration-150 shadow-xs active:scale-95 cursor-pointer"
             title="Send Message"
           >
             {isLoading ? (
