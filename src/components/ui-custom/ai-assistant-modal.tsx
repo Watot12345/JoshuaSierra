@@ -20,18 +20,9 @@ interface Message {
 }
 
 const QUICK_QUESTIONS = [
-  {
-    label: "Internship (OJT)",
-    query: "Are you available for an internship (OJT)?",
-  },
-  {
-    label: "Top Projects",
-    query: "What are your top production & AI systems?",
-  },
-  {
-    label: "Tech Stack",
-    query: "What is your tech stack and workstation setup?",
-  },
+  "Are you available for an internship (OJT)?",
+  "What are your top production & AI systems?",
+  "What is your tech stack and workstation setup?",
 ];
 
 const INITIAL_MESSAGE: Message = {
@@ -368,29 +359,24 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           </div>
         </div>
 
-        {/* Quick FAQ Suggestion Chips */}
-        <div className="border-b border-border/60 bg-muted/20 px-4 py-2">
-          <div
-            onWheel={(e) => {
-              if (e.deltaY !== 0) {
-                e.currentTarget.scrollLeft += e.deltaY;
-              }
-            }}
-            className="flex flex-row flex-nowrap items-center gap-2 overflow-x-auto no-scrollbar touch-pan-x"
-          >
-            <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
-              Suggested:
-            </span>
+        {/* Quick FAQ Suggestion Questions (Vertical: top-to-bottom) */}
+        <div className="border-b border-border/60 bg-muted/20 px-4 py-2.5">
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
+            Suggested Questions:
+          </p>
+          <div className="flex flex-col gap-1.5 w-full">
             {QUICK_QUESTIONS.map((q) => (
               <button
-                key={q.label}
+                key={q}
                 type="button"
                 disabled={isLoading}
-                onClick={() => handleSend(q.query)}
-                title={q.query}
-                className="shrink-0 whitespace-nowrap inline-flex items-center rounded-full border border-border bg-card px-2.5 py-1 font-mono text-[11px] text-foreground hover:border-foreground/30 hover:bg-muted active:scale-95 transition-all disabled:opacity-50 select-none cursor-pointer"
+                onClick={() => handleSend(q)}
+                className="w-full text-left rounded-lg border border-border bg-card px-3 py-2 font-mono text-xs text-foreground hover:border-foreground/30 hover:bg-muted active:scale-[0.99] transition-all disabled:opacity-50 select-none cursor-pointer flex items-center justify-between gap-2 group"
               >
-                {q.label}
+                <span className="leading-snug">{q}</span>
+                <span className="text-[10px] text-muted-foreground group-hover:text-foreground shrink-0 opacity-60 group-hover:opacity-100">
+                  ↗
+                </span>
               </button>
             ))}
           </div>
