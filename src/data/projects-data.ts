@@ -37,8 +37,8 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
   {
     id: "sarisari-app",
     category: "personal",
-    badge: "Startup Retail POS",
-    role: "Founder & Developer",
+    badge: "Retail POS App",
+    role: "Creator & Mobile Developer",
     tag: "Flutter / Dart · Offline-First",
     title: "SariSari App — Retail POS & Inventory",
     description:
@@ -224,15 +224,15 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
   {
     id: "tenera-app",
     category: "personal",
-    badge: "Personal Venture",
-    role: "Co-Founder & Architect",
+    badge: "Cloud Platform",
+    role: "Full-Stack Developer & Architect",
     tag: "Full-Stack Ecosystem",
     title: "Tenera Platform",
     description:
       "Modular full-stack web and cloud service ecosystem exploring automated business workflows, multi-tenant database models, and modern UI engineering.",
     githubUrl: "https://github.com/Watot12345/Tenera.git",
     tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
-    metrics: "Personal Venture",
+    metrics: "Modular Services",
   },
 
   // ── 14. Attendance & Payroll ──

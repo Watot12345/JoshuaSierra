@@ -27,7 +27,7 @@ export function Hero() {
     { value: `${profile.yearsOfExperience}+`, label: "Years Experience" },
     { value: `${profile.projectsCompleted}+`, label: "Projects Shipped" },
     { value: `${profile.happyClients}+`, label: "Happy Clients" },
-    { value: `${profile.awardsWon}`, label: "Awards Won" },
+    { value: `${profile.awardsWon}`, label: "Certifications" },
   ];
 
   return (
@@ -290,10 +290,10 @@ export function Hero() {
               animate={{ y: [0, 4, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             >
-              <span className="text-lg">🏆</span>
+              <span className="text-lg">📜</span>
               <div className="text-left">
-                <p className="text-xs font-semibold text-foreground">{profile.awardsWon} Awards</p>
-                <p className="text-[10px] text-muted-foreground">Recognitions</p>
+                <p className="text-xs font-semibold text-foreground">{profile.awardsWon} Credential</p>
+                <p className="text-[10px] text-muted-foreground">Certified</p>
               </div>
             </motion.div>
           </div>

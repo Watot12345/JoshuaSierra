@@ -153,7 +153,7 @@ const jsonLdPerson = {
   worksFor: [
     {
       "@type": "Organization",
-      name: "Civentral",
+      name: "Civentral — Health & Sanitation Management",
       url: "https://healthsanitation.civentral.tech",
     },
     {

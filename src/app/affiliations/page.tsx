@@ -58,39 +58,39 @@ const AFFILIATIONS: AffiliationItem[] = [
     id: "krypton-dev",
     name: "Krypton Dev",
     logoUrl: "/krypton-dev-logo.jpg",
-    role: "Co-Founder & Tech Lead",
+    role: "Freelance Web Developer & Co-Founder",
     period: "2025 — Present",
-    badge: "Active · Co-Founder",
+    badge: "Active · Dev Team",
     description:
-      "Digital development collective delivering custom web and mobile app development solutions built for growing businesses and modern startups.",
+      "Development collective delivering custom web and mobile app solutions built for growing businesses and modern startups.",
     bullets: [
-      "Co-founded software agency collective delivering custom full-stack web platforms, client portals, and mobile applications.",
+      "Co-founded developer collective delivering custom full-stack web platforms, client portals, and mobile applications.",
       "Lead architectural planning, technical scoping, and modern development sprints using Next.js, TypeScript, and React Native.",
       "Collaborate with founders and business owners to digitize business workflows and launch responsive, high-performance web products.",
     ],
     links: [
       { label: "Facebook Page", href: "https://www.facebook.com/profile.php?id=61593412577165" },
     ],
-    tag: "Software Agency",
+    tag: "Client Web Solutions",
   },
   {
     id: "jworks",
     name: "JWorks",
     logoUrl: "/jworks-logo.jpg",
-    role: "Founder & Full-Stack Developer",
+    role: "Independent Full-Stack Developer",
     period: "2025 — Present",
-    badge: "Active · Founder",
+    badge: "Active · Freelance",
     description:
       "Independent software development services and digital consultancy crafting high-performance web applications, responsive websites, and custom business tools.",
     bullets: [
-      "Founded independent software development studio delivering tailored full-stack engineering and web solutions for clients.",
+      "Operate independent software development initiative delivering tailored full-stack engineering and web solutions for clients.",
       "Architect and ship end-to-end client applications, modern landing pages, and business automation workflows.",
       "Oversee complete client lifecycle from technical requirement discovery to UI engineering, API integration, and cloud deployment.",
     ],
     links: [
       { label: "Facebook Page", href: "https://www.facebook.com/profile.php?id=61591583158210" },
     ],
-    tag: "Freelance Studio",
+    tag: "Freelance Solutions",
   },
   {
     id: "cits",

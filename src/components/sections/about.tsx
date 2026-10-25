@@ -149,7 +149,7 @@ export function About() {
           className="mt-14"
         >
           <h3 className="mb-5 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Recognitions & Awards
+            Recognitions & Credentials
           </h3>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {awards.map((award, index) => (

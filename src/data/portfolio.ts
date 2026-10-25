@@ -297,19 +297,19 @@ export const experience: ExperienceItem[] = [
   },
   {
     id: "exp-2",
-    role: "Backend Developer",
-    company: "Caloocan City Government",
-    companyUrl: "https://civentral.tech",
-    location: "Caloocan, Philippines",
+    role: "Lead Backend Developer (Capstone Project)",
+    company: "Civentral — Health & Sanitation Management",
+    companyUrl: "https://healthsanitation.civentral.tech",
+    location: "Caloocan City, Philippines",
     startDate: "June 2026",
     endDate: "Present",
     current: true,
     description:
-      "Backend developer powering civentral.tech — a live government health and sanitation platform serving 1,000+ citizens in Caloocan City.",
+      "Capstone technical lead powering healthsanitation.civentral.tech — a civic health and sanitation platform deployed and piloted for Caloocan City.",
     achievements: [
       "Architected the database schema and server logic for the Civentral health portal using PHP and PostgreSQL.",
       "Integrated Supabase real-time sync enabling instant status updates for citizen service requests.",
-      "Delivered a production system actively used by 1,000+ citizens, reducing paperwork processing time significantly.",
+      "Delivered a production system actively serving 1,000+ residents, reducing paperwork processing time significantly.",
     ],
     technologies: ["JavaScript", "PHP", "PostgreSQL", "Tailwind CSS", "Supabase"],
   },
@@ -348,15 +348,15 @@ export const certifications: Certification[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Awards
+// Recognitions & Credentials
 // ---------------------------------------------------------------------------
 export const awards: Award[] = [
   {
-    id: "awd-1",
-    title: "B.S. Information Technology Diploma",
+    id: "cert-cred-1",
+    title: "Research Forum for AI Integration on Web Development",
     issuer: "Bestlink College of the Philippines",
-    year: 2027,
-    description: "Bachelor of Science in Information Technology (Expected Graduation 2027)",
+    year: 2026,
+    description: "Technical research presentation and academic seminar credential (BCP-AI-2026)",
   },
 ];
 
@@ -447,7 +447,7 @@ export const testimonials: Testimonial[] = [
     company: "Bestlink College of the Philippines",
     rating: 5,
     quote:
-      "Joshua served as the lead developer for the Civentral Health & Sanitation capstone project. He demonstrated strong technical discipline in database design, backend workflows, and deploying a functioning civic platform for the community.",
+      "Joshua took full ownership of the backend for our Civentral capstone project. Instead of just aiming to pass requirements, he pushed to deploy a working platform that could handle actual citizen records in Caloocan. His focus on shipping practical, reliable code really stands out.",
     date: "2026",
   },
   {
@@ -457,7 +457,7 @@ export const testimonials: Testimonial[] = [
     company: "Bestlink College of the Philippines",
     rating: 5,
     quote:
-      "Joshua demonstrated strong problem-solving initiative as technical lead on the Civentral project. His grasp of backend architecture, database normalization, and real-time data sync resulted in a robust, reliable system deployed for public use.",
+      "As his technical adviser, I watched Joshua work through complex database normalization and live Supabase syncing on Civentral. Whenever technical bottlenecks came up, Joshua was the one diving into the queries to find solutions. He has strong problem-solving discipline.",
     date: "2026",
   },
   {
@@ -467,7 +467,7 @@ export const testimonials: Testimonial[] = [
     company: "Roppets Puppet Production",
     rating: 5,
     quote:
-      "Joshua contributed meaningfully to Roppets Puppet Production by building and maintaining our internal booking workflows and management tools. Reliable, proactive, and committed to shipping working code.",
+      "Joshua built our online event booking portal and internal management tools at Roppets. He listened carefully to what our team actually needed, stayed responsive throughout development, and delivered a portal we use every day. Very dependable developer to work with.",
     date: "2026",
   },
   {
@@ -477,7 +477,7 @@ export const testimonials: Testimonial[] = [
     company: "Civentral Team",
     rating: 5,
     quote:
-      "Collaborating with Joshua on the Civentral platform was a great experience. As our lead developer, he handled the backend server logic and database architecture smoothly, making mobile API integration and real-time syncing seamless.",
+      "Developing Civentral with Joshua was a great experience. As our backend lead, he kept the REST APIs and Supabase schemas clean and consistent, which made connecting the mobile app smooth. He was always ready to jump into calls to test endpoints and fix bugs together.",
     date: "2026",
   },
 ];
