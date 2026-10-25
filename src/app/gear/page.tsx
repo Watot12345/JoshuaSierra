@@ -7,9 +7,9 @@ import { BrylGear } from "@/components/sections/bryl-gear";
 import { socialLinks } from "@/data/portfolio";
 
 export const metadata: Metadata = {
-  title: "Workspace & Gear — Joshua Arncel Sierra",
+  title: "Workspace & Gear",
   description:
-    "A transparent breakdown of the daily workstation rig, Linux Mint environment, and peripherals used by Joshua Arncel Sierra for full-stack engineering.",
+    "Workstation rig, dual-monitor setup, Linux Mint environment, and development tools used by Joshua Arncel Sierra.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/gear",
   },

@@ -128,9 +128,9 @@ const jsonLdPerson = {
     "Joshua Sierra Developer",
     "Joshua Sierra AI Engineer",
   ],
-  jobTitle: "AI & Full-Stack Software Engineer",
+  jobTitle: "Full-Stack Developer",
   description:
-    "AI & Full-Stack Software Engineer based in Manila, Philippines. Specializing in intelligent web applications, AI integration, Next.js, TypeScript, and full-stack software development.",
+    "Full-Stack Developer and 4th-year BSIT student based in Manila, Philippines. Building real-world municipal systems, business platforms, and mobile apps including Civentral, SariSari App, and Soleverse.",
   url: SITE_URL,
   image: `${SITE_URL}/profile.png`,
   address: {
@@ -172,6 +172,55 @@ const jsonLdPerson = {
       url: "https://www.facebook.com/profile.php?id=61591583158210",
     },
   ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "Computer Systems Servicing NC II",
+      credentialCategory: "National Certificate",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "Technical Education and Skills Development Authority (TESDA)",
+      },
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "Certificate of Participation — Research Colloquium",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "Bestlink College of the Philippines",
+      },
+    },
+  ],
+  owns: [
+    {
+      "@type": "SoftwareApplication",
+      name: "Civentral",
+      operatingSystem: "Web",
+      applicationCategory: "Health & Sanitation Management System",
+      url: "https://healthsanitation.civentral.tech",
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "SariSari App",
+      operatingSystem: "Web / Mobile",
+      applicationCategory: "Inventory & POS System",
+      url: "https://watot12345.github.io/sarisariApp/",
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "Barangay San Agustin Community Focus System",
+      operatingSystem: "Web",
+      applicationCategory: "Local Government Portal",
+      url: "https://barangay-san-agustin.onrender.com",
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "Soleverse Chronos",
+      operatingSystem: "Web",
+      applicationCategory: "E-Commerce Sneaker Platform",
+      url: "https://sole-verse-chronos-main.vercel.app/",
+    },
+  ],
   sameAs: [
     "https://github.com/Watot12345",
     "https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275",
@@ -180,23 +229,20 @@ const jsonLdPerson = {
     "https://www.tiktok.com/@joshuasierra143",
   ],
   knowsAbout: [
-    "Artificial Intelligence",
-    "AI Engineering",
-    "Machine Learning Applications",
-    "Software Engineering",
     "Full-Stack Development",
+    "Web Application Development",
     "Next.js",
     "React",
     "TypeScript",
     "JavaScript",
-    "Python",
     "PHP",
     "Laravel",
+    "MySQL",
     "PostgreSQL",
     "Supabase",
     "Tailwind CSS",
-    "React Native",
     "Mobile App Development",
+    "Computer Systems Servicing (CSS NC II)",
   ],
 };
 
@@ -218,6 +264,36 @@ const jsonLdWebsite = {
   },
 };
 
+const jsonLdSiteNavigation = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SiteNavigationElement",
+      name: "Projects",
+      description: "Products, live municipal systems, and open-source applications built by Joshua Arncel Sierra.",
+      url: `${SITE_URL}/projects`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Certifications",
+      description: "Professional certifications, technical research credentials, and academic recognitions earned by Joshua Arncel Sierra.",
+      url: `${SITE_URL}/certifications`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Affiliations",
+      description: "Civic technology initiatives, student chapters, and engineering organizations affiliated with Joshua Arncel Sierra.",
+      url: `${SITE_URL}/affiliations`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Workspace & Gear",
+      description: "Workstation rig, dual-monitor setup, Linux Mint environment, and development tools used by Joshua Arncel Sierra.",
+      url: `${SITE_URL}/gear`,
+    },
+  ],
+};
+
 const jsonLdBreadcrumbs = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -232,31 +308,25 @@ const jsonLdBreadcrumbs = {
       "@type": "ListItem",
       position: 2,
       name: "Projects",
-      item: `${SITE_URL}/#projects`,
+      item: `${SITE_URL}/projects`,
     },
     {
       "@type": "ListItem",
       position: 3,
-      name: "Experience",
-      item: `${SITE_URL}/#experience`,
+      name: "Certifications",
+      item: `${SITE_URL}/certifications`,
     },
     {
       "@type": "ListItem",
       position: 4,
-      name: "Tech Stack",
-      item: `${SITE_URL}/#stack`,
+      name: "Affiliations",
+      item: `${SITE_URL}/affiliations`,
     },
     {
       "@type": "ListItem",
       position: 5,
       name: "Workspace & Gear",
       item: `${SITE_URL}/gear`,
-    },
-    {
-      "@type": "ListItem",
-      position: 6,
-      name: "Contact",
-      item: `${SITE_URL}/#contact`,
     },
   ],
 };
@@ -265,7 +335,7 @@ const jsonLdProfilePage = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
   dateCreated: "2024-01-01T00:00:00+08:00",
-  dateModified: "2026-10-24T12:00:00+08:00",
+  dateModified: "2026-10-25T16:00:00+08:00",
   mainEntity: jsonLdPerson,
 };
 
@@ -284,6 +354,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSiteNavigation) }}
         />
         <script
           type="application/ld+json"

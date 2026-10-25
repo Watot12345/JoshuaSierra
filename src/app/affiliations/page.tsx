@@ -8,7 +8,7 @@ import { ActiveDot } from "@/components/ui-custom/active-dot";
 import { socialLinks } from "@/data/portfolio";
 
 export const metadata: Metadata = {
-  title: "Affiliations & Community — Joshua Arncel Sierra",
+  title: "Affiliations",
   description:
     "Engineering initiatives, student chapters, and civic technology organizations affiliated with Joshua Arncel Sierra.",
   alternates: {

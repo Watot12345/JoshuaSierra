@@ -5,9 +5,9 @@ import { BackToTop } from "@/components/layouts/back-to-top";
 import { ProjectsCatalog } from "@/components/sections/projects-catalog";
 
 export const metadata: Metadata = {
-  title: "All Projects & Repositories — Joshua Arncel Sierra",
+  title: "Projects",
   description:
-    "Complete portfolio catalog of 17 software projects, live municipal systems, mobile apps, and open-source code built by Joshua Arncel Sierra.",
+    "Products, municipal platforms, and open-source applications built by Joshua Arncel Sierra, including Civentral, SariSari App, and Soleverse.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/projects",
   },

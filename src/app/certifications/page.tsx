@@ -7,9 +7,9 @@ import { BackToTop } from "@/components/layouts/back-to-top";
 import { socialLinks } from "@/data/portfolio";
 
 export const metadata: Metadata = {
-  title: "Certifications & Credentials — Joshua Arncel Sierra",
+  title: "Certifications",
   description:
-    "Official certifications, technical research seminars, and academic credentials earned by Joshua Arncel Sierra.",
+    "Professional certifications, technical research credentials, and academic recognitions earned by Joshua Arncel Sierra.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/certifications",
   },
