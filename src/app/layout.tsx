@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     description:
       "Full Stack Developer and 4th-year BSIT student based in Manila, Philippines. Building real-world web and mobile applications.",
     url: SITE_URL,
-    siteName: "Joshua Sierra — Portfolio",
+    siteName: "Joshua Arncel Sierra",
     images: [
       {
         url: "/profile.png",
@@ -118,6 +118,7 @@ export const metadata: Metadata = {
 const jsonLdPerson = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${SITE_URL}/#person`,
   name: "Joshua Arncel Sierra",
   alternateName: [
     "Joshua Sierra",
@@ -138,6 +139,29 @@ const jsonLdPerson = {
     addressCountry: "Philippines",
   },
   email: "joshuaarncel@gmail.com",
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Bestlink College of the Philippines",
+      sameAs: "https://bcp.edu.ph",
+    },
+    {
+      "@type": "EducationalOrganization",
+      name: "Paradise Farms National High School",
+    },
+  ],
+  worksFor: [
+    {
+      "@type": "Organization",
+      name: "Civentral",
+      url: "https://healthsanitation.civentral.tech",
+    },
+    {
+      "@type": "Organization",
+      name: "Roppets",
+      url: "https://roppets.vercel.app",
+    },
+  ],
   sameAs: [
     "https://github.com/Watot12345",
     "https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275",
@@ -169,12 +193,18 @@ const jsonLdPerson = {
 const jsonLdWebsite = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Joshua Sierra Portfolio",
-  alternateName: "Joshua Sierra Software Engineer",
+  "@id": `${SITE_URL}/#website`,
+  name: "Joshua Arncel Sierra",
+  alternateName: [
+    "Joshua Sierra Portfolio",
+    "Joshua Arncel Sierra Portfolio",
+  ],
   url: SITE_URL,
   author: {
-    "@type": "Person",
-    name: "Joshua Sierra",
+    "@id": `${SITE_URL}/#person`,
+  },
+  publisher: {
+    "@id": `${SITE_URL}/#person`,
   },
 };
 
