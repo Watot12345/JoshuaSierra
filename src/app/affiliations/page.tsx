@@ -26,6 +26,7 @@ interface AffiliationItem {
   bullets: string[];
   links?: { label: string; href: string }[];
   tag: string;
+  logoUrl?: string;
   imageUrl?: string;
   imageCaption?: string;
 }
@@ -34,6 +35,7 @@ const AFFILIATIONS: AffiliationItem[] = [
   {
     id: "civentral",
     name: "Civentral",
+    logoUrl: "/civentral-logo.png",
     role: "Co-Founder & Engineering Lead",
     period: "2025 — Present",
     badge: "Active · Core Team",
@@ -49,6 +51,46 @@ const AFFILIATIONS: AffiliationItem[] = [
       { label: "Initiative Portal (civentral.tech)", href: "https://civentral.tech" },
     ],
     tag: "Civic Technology",
+    imageUrl: "/civentral-web.png",
+    imageCaption: "Civentral Health & Sanitation Management Portal deployed for Caloocan City",
+  },
+  {
+    id: "krypton-dev",
+    name: "Krypton Dev",
+    logoUrl: "/krypton-dev-logo.jpg",
+    role: "Co-Founder & Tech Lead",
+    period: "2025 — Present",
+    badge: "Active · Co-Founder",
+    description:
+      "Digital development collective delivering custom web and mobile app development solutions built for growing businesses and modern startups.",
+    bullets: [
+      "Co-founded software agency collective delivering custom full-stack web platforms, client portals, and mobile applications.",
+      "Lead architectural planning, technical scoping, and modern development sprints using Next.js, TypeScript, and React Native.",
+      "Collaborate with founders and business owners to digitize business workflows and launch responsive, high-performance web products.",
+    ],
+    links: [
+      { label: "Facebook Page", href: "https://www.facebook.com/profile.php?id=61593412577165" },
+    ],
+    tag: "Software Agency",
+  },
+  {
+    id: "jworks",
+    name: "JWorks",
+    logoUrl: "/jworks-logo.jpg",
+    role: "Founder & Full-Stack Developer",
+    period: "2025 — Present",
+    badge: "Active · Founder",
+    description:
+      "Independent software development services and digital consultancy crafting high-performance web applications, responsive websites, and custom business tools.",
+    bullets: [
+      "Founded independent software development studio delivering tailored full-stack engineering and web solutions for clients.",
+      "Architect and ship end-to-end client applications, modern landing pages, and business automation workflows.",
+      "Oversee complete client lifecycle from technical requirement discovery to UI engineering, API integration, and cloud deployment.",
+    ],
+    links: [
+      { label: "Facebook Page", href: "https://www.facebook.com/profile.php?id=61591583158210" },
+    ],
+    tag: "Freelance Studio",
   },
   {
     id: "cits",
@@ -106,9 +148,13 @@ export default function AffiliationsPage() {
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-border pb-3">
                   <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/60 text-foreground">
-                      {item.id === "civentral" ? (
-                        <Building2 className="h-4 w-4" />
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/60 text-foreground overflow-hidden">
+                      {item.logoUrl ? (
+                        <img
+                          src={item.logoUrl}
+                          alt={`${item.name} logo`}
+                          className="h-full w-full object-contain p-1"
+                        />
                       ) : (
                         <Users className="h-4 w-4" />
                       )}
@@ -148,36 +194,22 @@ export default function AffiliationsPage() {
                   ))}
                 </ul>
 
-                {/* Image Placeholder or Image Render */}
-                <div className="mt-4">
-                  {item.imageUrl ? (
-                    <div className="overflow-hidden rounded-lg border border-border bg-muted/30">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.imageCaption || item.name}
-                        className="h-48 w-full object-cover sm:h-56"
-                        loading="lazy"
-                      />
-                      {item.imageCaption && (
-                        <p className="border-t border-border/60 bg-card/60 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
-                          {item.imageCaption}
-                        </p>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="group/img flex flex-col items-center justify-center rounded-lg border border-dashed border-border/80 bg-muted/20 px-4 py-6 text-center transition-colors hover:border-foreground/30 hover:bg-muted/30">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground group-hover/img:text-foreground">
-                        <ImageIcon className="h-4 w-4" />
-                      </div>
-                      <span className="mt-2 font-mono text-xs font-semibold text-foreground">
-                        Affiliation / Organization Photo
-                      </span>
-                      <p className="mt-0.5 font-mono text-[11px] text-muted-foreground max-w-sm">
-                        {item.imageCaption || "Image placeholder — drop in your organization photo, team snapshot, or ID"}
+                {/* Image Render if available */}
+                {item.imageUrl && (
+                  <div className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.imageCaption || item.name}
+                      className="h-48 w-full object-cover sm:h-56"
+                      loading="lazy"
+                    />
+                    {item.imageCaption && (
+                      <p className="border-t border-border/60 bg-card/60 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
+                        {item.imageCaption}
                       </p>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
 
                 {/* External Links if available */}
                 {item.links && (

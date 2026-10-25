@@ -161,6 +161,16 @@ const jsonLdPerson = {
       name: "Roppets",
       url: "https://roppets.vercel.app",
     },
+    {
+      "@type": "Organization",
+      name: "Krypton Dev",
+      url: "https://www.facebook.com/profile.php?id=61593412577165",
+    },
+    {
+      "@type": "Organization",
+      name: "JWorks",
+      url: "https://www.facebook.com/profile.php?id=61591583158210",
+    },
   ],
   sameAs: [
     "https://github.com/Watot12345",
