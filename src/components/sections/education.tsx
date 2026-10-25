@@ -63,11 +63,13 @@ export function Education() {
               </p>
 
               {/* GPA */}
-              <div className="mt-4 flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3.5 py-2.5">
-                <Award className="h-4 w-4 text-primary" />
-                <span className="text-xs text-muted-foreground">GPA</span>
-                <span className="ml-auto text-xs font-bold text-foreground sm:text-sm">{edu.gpa}</span>
-              </div>
+              {edu.gpa && (
+                <div className="mt-4 flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3.5 py-2.5">
+                  <Award className="h-4 w-4 text-primary" />
+                  <span className="text-xs text-muted-foreground">GPA</span>
+                  <span className="ml-auto text-xs font-bold text-foreground sm:text-sm">{edu.gpa}</span>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>

@@ -87,7 +87,7 @@ export interface EducationItem {
   startYear: number;
   endYear: number;
   description: string;
-  gpa: string;
+  gpa?: string;
 }
 
 export interface Certification {

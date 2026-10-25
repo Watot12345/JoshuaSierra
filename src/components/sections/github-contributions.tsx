@@ -5,10 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import {
   FaGithub,
-  FaCodeBranch,
-  FaStar,
-  FaCalendarAlt,
-  FaFire,
   FaSpinner,
 } from "react-icons/fa";
 import { SectionHeading } from "@/components/ui-custom/section-heading";
@@ -27,26 +23,26 @@ const YEAR_DETAILS: Record<
   { commits: string; description: string; url: string; tag: string }
 > = {
   "2026": {
-    commits: "392",
-    description: "392 contributions in 2026",
-    url: "https://github.com/Watot12345?tab=overview&from=2026-08-01&to=2026-08-09",
+    commits: "803",
+    description: "803 contributions in 2026",
+    url: "https://github.com/Watot12345",
     tag: "2026",
   },
   "2025": {
     commits: "249",
     description: "249 contributions in 2025",
-    url: "https://github.com/Watot12345?tab=overview&from=2025-12-01&to=2025-12-31",
+    url: "https://github.com/Watot12345",
     tag: "2025",
   },
   "2024": {
     commits: "1",
     description: "1 contribution in 2024",
-    url: "https://github.com/Watot12345?tab=overview&from=2024-12-01&to=2024-12-31",
+    url: "https://github.com/Watot12345",
     tag: "2024",
   },
   "All Time": {
-    commits: "642",
-    description: "642 total contributions across all years",
+    commits: "1053",
+    description: "1053 total contributions across all years",
     url: "https://github.com/Watot12345",
     tag: "All Time",
   },
@@ -275,99 +271,14 @@ export function GithubContributions() {
         </a>
       </div>
 
-        {/* Year Filter Tabs */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-          {years.map((year) => {
-            const count =
-              liveYearTotals[year] !== undefined
-                ? liveYearTotals[year]
-                : YEAR_DETAILS[year].commits;
-            const isSelected = selectedYear === year;
-            return (
-              <button
-                key={year}
-                type="button"
-                onClick={() => setSelectedYear(year)}
-                className={cn(
-                  "flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors sm:text-sm",
-                  isSelected
-                    ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                    : "border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
-                <FaCalendarAlt className="h-3 w-3" />
-                <span>{year}</span>
-                <span
-                  className={cn(
-                    "ml-1 rounded-md px-1.5 py-0.2 text-[10px] font-bold",
-                    isSelected ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Stat Cards */}
-        <div className="mt-8 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3.5">
-          {[
-            {
-              icon: <FaFire className="h-5 w-5 text-primary" />,
-              label: `Commits (${selectedYear})`,
-              value: displayYearCommits,
-            },
-            {
-              icon: <FaCodeBranch className="h-5 w-5 text-primary" />,
-              label: "All-Time Commits",
-              value: displayAllTimeCommits,
-            },
-            {
-              icon: <FaStar className="h-5 w-5 text-primary" />,
-              label: "Public Repositories",
-              value: publicRepos !== null && publicRepos !== undefined ? String(publicRepos) : "34",
-            },
-            {
-              icon: <FaGithub className="h-5 w-5 text-primary" />,
-              label: "GitHub Handle",
-              value: `@${username}`,
-            },
-          ].map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              data-sound="tick"
-              className="rounded-xl border border-border bg-card p-4 shadow-xs transition-colors hover:border-foreground/30 cursor-pointer"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted/60 shrink-0">
-                  {card.icon}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground truncate">
-                    {card.label}
-                  </p>
-                  <p className="mt-0.5 text-lg font-bold text-foreground truncate sm:text-xl">
-                    {card.value}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* GitHub Contribution Heatmap Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="relative mt-8 overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xs text-center"
-        >
+      {/* GitHub Contribution Heatmap Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xs text-center"
+      >
           {/* Card Header */}
           <div className="flex flex-col items-center justify-center gap-1.5 border-b border-border pb-5 text-center">
             <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
