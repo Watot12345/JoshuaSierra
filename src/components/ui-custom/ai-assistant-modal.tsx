@@ -20,9 +20,18 @@ interface Message {
 }
 
 const QUICK_QUESTIONS = [
-  "Are you available for an internship (OJT)?",
-  "What are your top production & AI systems?",
-  "What is your tech stack and workstation setup?",
+  {
+    label: "Internship (OJT)",
+    query: "Are you available for an internship (OJT)?",
+  },
+  {
+    label: "Top Projects",
+    query: "What are your top production & AI systems?",
+  },
+  {
+    label: "Tech Stack",
+    query: "What is your tech stack and workstation setup?",
+  },
 ];
 
 const INITIAL_MESSAGE: Message = {
@@ -214,7 +223,9 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {
-        inputRef.current?.focus();
+        if (typeof window !== "undefined" && window.innerWidth >= 768) {
+          inputRef.current?.focus();
+        }
       }, 150);
     }
   }, [isOpen]);
@@ -358,20 +369,28 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         </div>
 
         {/* Quick FAQ Suggestion Chips */}
-        <div className="border-b border-border/60 bg-muted/20 px-4 py-2.5">
-          <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
-            Suggested Questions:
-          </p>
-          <div className="flex flex-row flex-nowrap items-center gap-2 overflow-x-auto no-scrollbar pb-1 touch-pan-x sm:flex-wrap">
+        <div className="border-b border-border/60 bg-muted/20 px-4 py-2">
+          <div
+            onWheel={(e) => {
+              if (e.deltaY !== 0) {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }
+            }}
+            className="flex flex-row flex-nowrap items-center gap-2 overflow-x-auto no-scrollbar touch-pan-x"
+          >
+            <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground select-none">
+              Suggested:
+            </span>
             {QUICK_QUESTIONS.map((q) => (
               <button
-                key={q}
+                key={q.label}
                 type="button"
                 disabled={isLoading}
-                onClick={() => handleSend(q)}
-                className="shrink-0 whitespace-nowrap inline-flex items-center rounded-full border border-border bg-card px-3 py-1.5 font-mono text-[11px] text-foreground hover:border-foreground/30 hover:bg-muted active:scale-95 transition-all disabled:opacity-50 select-none cursor-pointer"
+                onClick={() => handleSend(q.query)}
+                title={q.query}
+                className="shrink-0 whitespace-nowrap inline-flex items-center rounded-full border border-border bg-card px-2.5 py-1 font-mono text-[11px] text-foreground hover:border-foreground/30 hover:bg-muted active:scale-95 transition-all disabled:opacity-50 select-none cursor-pointer"
               >
-                {q}
+                {q.label}
               </button>
             ))}
           </div>
