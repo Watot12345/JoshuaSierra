@@ -10,8 +10,17 @@ import {
   Bot,
   User,
   ArrowRight,
+  Mic,
+  MicOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+declare global {
+  interface Window {
+    SpeechRecognition?: any;
+    webkitSpeechRecognition?: any;
+  }
+}
 
 interface Message {
   id: string;
@@ -208,8 +217,92 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeechSupported, setIsSpeechSupported] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize Web Speech API for voice-to-text
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const SpeechRecognitionClass =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (SpeechRecognitionClass) {
+        setIsSpeechSupported(true);
+        const recognition = new SpeechRecognitionClass();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = "en-US";
+
+        recognition.onstart = () => {
+          setIsListening(true);
+        };
+
+        recognition.onresult = (event: any) => {
+          let transcript = "";
+          for (let i = 0; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          if (transcript) {
+            setInput(transcript);
+          }
+        };
+
+        recognition.onerror = (event: any) => {
+          console.error("Speech recognition error:", event?.error);
+          setIsListening(false);
+        };
+
+        recognition.onend = () => {
+          setIsListening(false);
+        };
+
+        recognitionRef.current = recognition;
+      }
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // ignore
+        }
+      }
+    };
+  }, []);
+
+  // Stop listening if modal is closed
+  useEffect(() => {
+    if (!isOpen && isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch {
+        // ignore
+      }
+      setIsListening(false);
+    }
+  }, [isOpen, isListening]);
+
+  const toggleListening = () => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      try {
+        recognitionRef.current.stop();
+      } catch {
+        // ignore
+      }
+      setIsListening(false);
+    } else {
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.error("Error starting speech recognition:", err);
+      }
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -237,6 +330,15 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   }, [isOpen, onClose]);
 
   const handleSend = async (questionText?: string) => {
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {
+        // ignore
+      }
+      setIsListening(false);
+    }
+
     const query = (questionText || input).trim();
     if (!query || isLoading) return;
 
@@ -448,7 +550,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Footer with Highlighted Chat Box */}
+        {/* Input Footer with Highlighted Chat Box & Speech-to-Text */}
         <form
           onSubmit={handleSubmit}
           className="border-t border-border p-3 sm:p-3.5 bg-muted/40 flex items-center gap-2"
@@ -459,10 +561,40 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a question about Joshua's skills, OJT, or projects..."
+              placeholder={
+                isListening
+                  ? "Listening... speak into your microphone"
+                  : "Ask a question about Joshua's skills, OJT, or projects..."
+              }
               disabled={isLoading}
-              className="w-full rounded-xl border-2 border-primary/25 bg-background px-3.5 py-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/70 transition-all duration-150 hover:border-primary/45 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-xs"
+              className={cn(
+                "w-full rounded-xl border-2 bg-background py-2 pl-3.5 text-xs sm:text-sm text-foreground transition-all duration-150 shadow-xs focus:outline-none",
+                isSpeechSupported ? "pr-10" : "pr-3.5",
+                isListening
+                  ? "border-red-500/80 ring-2 ring-red-500/20 placeholder:text-red-500/80 animate-pulse"
+                  : "border-primary/25 placeholder:text-muted-foreground/70 hover:border-primary/45 focus:border-primary focus:ring-2 focus:ring-primary/20"
+              )}
             />
+            {isSpeechSupported && (
+              <button
+                type="button"
+                onClick={toggleListening}
+                disabled={isLoading}
+                title={isListening ? "Stop listening" : "Voice to text (Speech Recognition)"}
+                className={cn(
+                  "absolute right-2 flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-150 cursor-pointer disabled:opacity-40",
+                  isListening
+                    ? "bg-red-500 text-white animate-pulse shadow-sm"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+              >
+                {isListening ? (
+                  <MicOff className="h-3.5 w-3.5" />
+                ) : (
+                  <Mic className="h-3.5 w-3.5" />
+                )}
+              </button>
+            )}
           </div>
           <button
             type="submit"
