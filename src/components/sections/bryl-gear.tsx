@@ -13,6 +13,7 @@ import {
   Smartphone,
   Wrench,
 } from "lucide-react";
+import { PixelBreakdownImage } from "@/components/ui-custom/pixel-breakdown-image";
 
 interface GearItem {
   name: string;
@@ -212,14 +213,14 @@ export function BrylGear() {
                   className="group rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-foreground/20 hover:bg-muted/40 shadow-xs flex flex-col justify-between cursor-pointer"
                 >
                   <div>
-                    {/* Visual Media Thumbnail */}
+                    {/* Visual Media Thumbnail with Monochrome Pixel Breakdown */}
                     {item.image && (
-                      <div className="mb-3.5 relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-border bg-white dark:bg-muted/30 p-2 flex items-center justify-center">
-                        <img
+                      <div className="mb-3.5 relative aspect-[16/10] w-full">
+                        <PixelBreakdownImage
                           src={item.image}
                           alt={item.name}
-                          className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
+                          className="h-full aspect-[16/10]"
+                          pixelSize={7}
                         />
                       </div>
                     )}
