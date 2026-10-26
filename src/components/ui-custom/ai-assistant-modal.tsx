@@ -223,6 +223,8 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
+  const currentTranscriptRef = useRef<string>("");
+  const handleSendRef = useRef<(text?: string) => void>(() => {});
 
   // Check speech recognition capability on mount
   useEffect(() => {
@@ -234,7 +236,15 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
     }
   }, []);
 
-  const stopListening = () => {
+  const sendRecordedTranscript = () => {
+    const text = currentTranscriptRef.current.trim();
+    if (text) {
+      currentTranscriptRef.current = "";
+      handleSendRef.current(text);
+    }
+  };
+
+  const stopListening = (shouldAutoSend = false) => {
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
@@ -249,10 +259,17 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       recognitionRef.current = null;
     }
     setIsListening(false);
+
+    if (shouldAutoSend) {
+      sendRecordedTranscript();
+    } else {
+      currentTranscriptRef.current = "";
+    }
   };
 
   const startListening = () => {
     setSpeechError(null);
+    currentTranscriptRef.current = "";
     if (typeof window === "undefined") return;
 
     const SpeechRecognitionClass =
@@ -290,6 +307,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           transcript += event.results[i][0].transcript;
         }
         if (transcript) {
+          currentTranscriptRef.current = transcript;
           setInput(transcript);
         }
       };
@@ -297,6 +315,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       recognition.onerror = (event: any) => {
         console.error("Speech recognition error:", event?.error);
         setIsListening(false);
+        currentTranscriptRef.current = "";
         if (event?.error === "not-allowed") {
           setSpeechError(
             "Microphone permission blocked. Please allow mic access in browser settings."
@@ -313,6 +332,8 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       recognition.onend = () => {
         setIsListening(false);
         recognitionRef.current = null;
+        // Auto-send transcribed text when speech recognition finishes
+        sendRecordedTranscript();
       };
 
       recognitionRef.current = recognition;
@@ -320,6 +341,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
     } catch (err: any) {
       console.error("Error starting speech recognition:", err);
       setIsListening(false);
+      currentTranscriptRef.current = "";
       setSpeechError("Could not start microphone. Please check permissions.");
     }
   };
@@ -331,16 +353,17 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
     }
 
     if (isListening) {
-      stopListening();
+      // Tap while listening stops and auto-sends captured text
+      stopListening(true);
     } else {
       startListening();
     }
   };
 
-  // Stop listening if modal is closed
+  // Stop listening if modal is closed (without auto-sending)
   useEffect(() => {
     if (!isOpen && isListening) {
-      stopListening();
+      stopListening(false);
     }
   }, [isOpen, isListening]);
 
@@ -370,7 +393,8 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   }, [isOpen, onClose]);
 
   const handleSend = async (questionText?: string) => {
-    stopListening();
+    currentTranscriptRef.current = "";
+    stopListening(false);
     setSpeechError(null);
 
     const query = (questionText || input).trim();
@@ -427,6 +451,8 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       setIsLoading(false);
     }
   };
+
+  handleSendRef.current = handleSend;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -612,14 +638,14 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 isListening
-                  ? "Listening... speak now"
+                  ? "Listening... speak now (auto-sends when done)"
                   : "Ask a question about Joshua's skills, OJT, or projects..."
               }
               disabled={isLoading}
               className={cn(
                 "w-full rounded-xl border-2 bg-background px-3.5 py-2 text-base sm:text-sm text-foreground transition-all duration-150 shadow-xs focus:outline-none",
                 isListening
-                  ? "border-red-500/80 ring-2 ring-red-500/20 placeholder:text-red-500/80 animate-pulse"
+                  ? "border-emerald-500/80 ring-2 ring-emerald-500/25 placeholder:text-emerald-600 dark:placeholder:text-emerald-400"
                   : "border-primary/25 placeholder:text-muted-foreground/70 hover:border-primary/45 focus:border-primary focus:ring-2 focus:ring-primary/20"
               )}
             />
@@ -633,7 +659,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
             disabled={isLoading}
             title={
               isListening
-                ? "Stop listening"
+                ? "Listening... tap to send or stop"
                 : isSpeechSupported
                 ? "Voice to text (Speech Recognition)"
                 : "Speech recognition not supported in this browser"
@@ -641,7 +667,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
             className={cn(
               "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition-all duration-150 select-none active:scale-95 touch-manipulation cursor-pointer disabled:opacity-40",
               isListening
-                ? "bg-red-500 text-white border-red-600 animate-pulse shadow-md ring-2 ring-red-500/30"
+                ? "bg-emerald-500 text-white border-emerald-600 animate-pulse shadow-md ring-2 ring-emerald-500/30"
                 : "border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted shadow-2xs"
             )}
           >
