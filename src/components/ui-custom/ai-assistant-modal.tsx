@@ -219,51 +219,51 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeechSupported, setIsSpeechSupported] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
 
-  // Initialize Web Speech API for voice-to-text
+  // Check speech recognition capability on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const SpeechRecognitionClass =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
+      const hasSupport = !!(
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      );
+      setIsSpeechSupported(hasSupport);
+    }
+  }, []);
 
-      if (SpeechRecognitionClass) {
-        setIsSpeechSupported(true);
-        const recognition = new SpeechRecognitionClass();
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        recognition.lang = "en-US";
-
-        recognition.onstart = () => {
-          setIsListening(true);
-        };
-
-        recognition.onresult = (event: any) => {
-          let transcript = "";
-          for (let i = 0; i < event.results.length; i++) {
-            transcript += event.results[i][0].transcript;
-          }
-          if (transcript) {
-            setInput(transcript);
-          }
-        };
-
-        recognition.onerror = (event: any) => {
-          console.error("Speech recognition error:", event?.error);
-          setIsListening(false);
-        };
-
-        recognition.onend = () => {
-          setIsListening(false);
-        };
-
-        recognitionRef.current = recognition;
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {
+        // ignore
       }
+      try {
+        recognitionRef.current.abort();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+    }
+    setIsListening(false);
+  };
+
+  const startListening = () => {
+    setSpeechError(null);
+    if (typeof window === "undefined") return;
+
+    const SpeechRecognitionClass =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognitionClass) {
+      setSpeechError("Speech recognition is not supported on this browser.");
+      return;
     }
 
-    return () => {
+    try {
       if (recognitionRef.current) {
         try {
           recognitionRef.current.abort();
@@ -271,38 +271,78 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           // ignore
         }
       }
-    };
-  }, []);
+
+      // Instantiate fresh instance synchronously on user touch/click for mobile security policy
+      const recognition = new SpeechRecognitionClass();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+        setSpeechError(null);
+      };
+
+      recognition.onresult = (event: any) => {
+        let transcript = "";
+        for (let i = 0; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        if (transcript) {
+          setInput(transcript);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error("Speech recognition error:", event?.error);
+        setIsListening(false);
+        if (event?.error === "not-allowed") {
+          setSpeechError(
+            "Microphone permission blocked. Please allow mic access in browser settings."
+          );
+        } else if (event?.error === "no-speech") {
+          setSpeechError(null);
+        } else if (event?.error === "network") {
+          setSpeechError("Network error. Please check your internet connection.");
+        } else if (event?.error) {
+          setSpeechError(`Voice error: ${event.error}`);
+        }
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+        recognitionRef.current = null;
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (err: any) {
+      console.error("Error starting speech recognition:", err);
+      setIsListening(false);
+      setSpeechError("Could not start microphone. Please check permissions.");
+    }
+  };
+
+  const toggleListening = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  };
 
   // Stop listening if modal is closed
   useEffect(() => {
-    if (!isOpen && isListening && recognitionRef.current) {
-      try {
-        recognitionRef.current.abort();
-      } catch {
-        // ignore
-      }
-      setIsListening(false);
+    if (!isOpen && isListening) {
+      stopListening();
     }
   }, [isOpen, isListening]);
-
-  const toggleListening = () => {
-    if (!recognitionRef.current) return;
-    if (isListening) {
-      try {
-        recognitionRef.current.stop();
-      } catch {
-        // ignore
-      }
-      setIsListening(false);
-    } else {
-      try {
-        recognitionRef.current.start();
-      } catch (err) {
-        console.error("Error starting speech recognition:", err);
-      }
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {
@@ -330,14 +370,8 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   }, [isOpen, onClose]);
 
   const handleSend = async (questionText?: string) => {
-    if (isListening && recognitionRef.current) {
-      try {
-        recognitionRef.current.stop();
-      } catch {
-        // ignore
-      }
-      setIsListening(false);
-    }
+    stopListening();
+    setSpeechError(null);
 
     const query = (questionText || input).trim();
     if (!query || isLoading) return;
@@ -550,6 +584,21 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Speech Error Banner (e.g. Permission Denied) */}
+        {speechError && (
+          <div className="flex items-center justify-between gap-2 border-t border-red-500/20 bg-red-500/10 px-4 py-2 font-mono text-[11px] text-red-600 dark:text-red-400">
+            <span className="truncate">{speechError}</span>
+            <button
+              type="button"
+              onClick={() => setSpeechError(null)}
+              className="p-1 hover:opacity-75 cursor-pointer shrink-0"
+              title="Dismiss error"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
+
         {/* Input Footer with Highlighted Chat Box & Speech-to-Text */}
         <form
           onSubmit={handleSubmit}
@@ -563,43 +612,50 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 isListening
-                  ? "Listening... speak into your microphone"
+                  ? "Listening... speak now"
                   : "Ask a question about Joshua's skills, OJT, or projects..."
               }
               disabled={isLoading}
               className={cn(
-                "w-full rounded-xl border-2 bg-background py-2 pl-3.5 text-xs sm:text-sm text-foreground transition-all duration-150 shadow-xs focus:outline-none",
-                isSpeechSupported ? "pr-10" : "pr-3.5",
+                "w-full rounded-xl border-2 bg-background px-3.5 py-2 text-base sm:text-sm text-foreground transition-all duration-150 shadow-xs focus:outline-none",
                 isListening
                   ? "border-red-500/80 ring-2 ring-red-500/20 placeholder:text-red-500/80 animate-pulse"
                   : "border-primary/25 placeholder:text-muted-foreground/70 hover:border-primary/45 focus:border-primary focus:ring-2 focus:ring-primary/20"
               )}
             />
-            {isSpeechSupported && (
-              <button
-                type="button"
-                onClick={toggleListening}
-                disabled={isLoading}
-                title={isListening ? "Stop listening" : "Voice to text (Speech Recognition)"}
-                className={cn(
-                  "absolute right-2 flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-150 cursor-pointer disabled:opacity-40",
-                  isListening
-                    ? "bg-red-500 text-white animate-pulse shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-              >
-                {isListening ? (
-                  <MicOff className="h-3.5 w-3.5" />
-                ) : (
-                  <Mic className="h-3.5 w-3.5" />
-                )}
-              </button>
-            )}
           </div>
+
+          {/* Standalone Mic Button - Optimized for Mobile Touch & Desktop */}
+          <button
+            type="button"
+            onClick={toggleListening}
+            onPointerDown={(e) => e.stopPropagation()}
+            disabled={isLoading}
+            title={
+              isListening
+                ? "Stop listening"
+                : isSpeechSupported
+                ? "Voice to text (Speech Recognition)"
+                : "Speech recognition not supported in this browser"
+            }
+            className={cn(
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition-all duration-150 select-none active:scale-95 touch-manipulation cursor-pointer disabled:opacity-40",
+              isListening
+                ? "bg-red-500 text-white border-red-600 animate-pulse shadow-md ring-2 ring-red-500/30"
+                : "border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted shadow-2xs"
+            )}
+          >
+            {isListening ? (
+              <MicOff className="h-4 w-4" />
+            ) : (
+              <Mic className="h-4 w-4" />
+            )}
+          </button>
+
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 transition-all duration-150 shadow-xs active:scale-95 cursor-pointer"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 transition-all duration-150 shadow-xs active:scale-95 cursor-pointer touch-manipulation"
             title="Send Message"
           >
             {isLoading ? (
