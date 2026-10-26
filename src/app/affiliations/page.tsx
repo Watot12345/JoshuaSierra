@@ -36,8 +36,8 @@ const AFFILIATIONS: AffiliationItem[] = [
     id: "civentral",
     name: "Civentral",
     logoUrl: "/civentral-logo.png",
-    role: "Co-Founder & Engineering Lead",
-    period: "2025 — Present",
+    role: "Lead Developer",
+    period: "2026 — Present",
     badge: "Active · Core Team",
     description:
       "Civic technology and community platform initiative developing modern digital public infrastructure and health sanitation systems for local government units and residents.",
@@ -51,8 +51,6 @@ const AFFILIATIONS: AffiliationItem[] = [
       { label: "Initiative Portal (civentral.tech)", href: "https://civentral.tech" },
     ],
     tag: "Civic Technology",
-    imageUrl: "/civentral-web.png",
-    imageCaption: "Civentral Health & Sanitation Management Portal deployed for Caloocan City",
   },
   {
     id: "krypton-dev",
