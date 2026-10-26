@@ -638,7 +638,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 isListening
-                  ? "Listening... speak now (auto-sends when done)"
+                  ? "Listening..."
                   : "Ask a question about Joshua's skills, OJT, or projects..."
               }
               disabled={isLoading}
