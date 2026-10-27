@@ -27,8 +27,6 @@ interface AffiliationItem {
   links?: { label: string; href: string }[];
   tag: string;
   logoUrl?: string;
-  imageUrl?: string;
-  imageCaption?: string;
 }
 
 const AFFILIATIONS: AffiliationItem[] = [
@@ -36,7 +34,7 @@ const AFFILIATIONS: AffiliationItem[] = [
     id: "civentral",
     name: "Civentral",
     logoUrl: "/civentral-logo.png",
-    role: "Lead Developer",
+    role: "Capstone Project",
     period: "2026 — Present",
     badge: "Active · Core Team",
     description:
@@ -48,7 +46,6 @@ const AFFILIATIONS: AffiliationItem[] = [
     ],
     links: [
       { label: "Live Platform (healthsanitation.civentral.tech)", href: "https://healthsanitation.civentral.tech" },
-      { label: "Initiative Portal (civentral.tech)", href: "https://civentral.tech" },
     ],
     tag: "Civic Technology",
   },
@@ -191,23 +188,6 @@ export default function AffiliationsPage() {
                     </li>
                   ))}
                 </ul>
-
-                {/* Image Render if available */}
-                {item.imageUrl && (
-                  <div className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.imageCaption || item.name}
-                      className="h-48 w-full object-cover sm:h-56"
-                      loading="lazy"
-                    />
-                    {item.imageCaption && (
-                      <p className="border-t border-border/60 bg-card/60 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
-                        {item.imageCaption}
-                      </p>
-                    )}
-                  </div>
-                )}
 
                 {/* External Links if available */}
                 {item.links && (
