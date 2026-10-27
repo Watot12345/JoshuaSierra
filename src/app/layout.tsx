@@ -299,43 +299,6 @@ const jsonLdSiteNavigation = {
   ],
 };
 
-const jsonLdBreadcrumbs = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: SITE_URL,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Projects",
-      item: `${SITE_URL}/projects`,
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Certifications",
-      item: `${SITE_URL}/certifications`,
-    },
-    {
-      "@type": "ListItem",
-      position: 4,
-      name: "Affiliations",
-      item: `${SITE_URL}/affiliations`,
-    },
-    {
-      "@type": "ListItem",
-      position: 5,
-      name: "Workspace & Gear",
-      item: `${SITE_URL}/gear`,
-    },
-  ],
-};
-
 const jsonLdProfilePage = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
@@ -363,10 +326,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSiteNavigation) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }}
         />
         <script
           type="application/ld+json"
