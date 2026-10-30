@@ -12,6 +12,8 @@ import {
   ArrowRight,
   Mic,
   MicOff,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -220,21 +222,100 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const [isListening, setIsListening] = useState(false);
   const [isSpeechSupported, setIsSpeechSupported] = useState(false);
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const [isTtsSupported, setIsTtsSupported] = useState(false);
+  const [autoVoiceReply, setAutoVoiceReply] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
   const currentTranscriptRef = useRef<string>("");
   const handleSendRef = useRef<(text?: string) => void>(() => {});
 
-  // Check speech recognition capability on mount
+  // Clean markdown syntax for natural voice reading
+  const stripMarkdown = (raw: string): string => {
+    return raw
+      .replace(/!\[.*?\]\(.*?\)/g, "") // remove images
+      .replace(/\[(.*?)\]\(.*?\)/g, "$1") // replace links with anchor text
+      .replace(/[*_#`~>]/g, "") // remove formatting symbols
+      .replace(/•\s+/g, "") // remove bullet icons
+      .replace(/\s+/g, " ") // normalize spacing
+      .trim();
+  };
+
+  const stopSpeaking = () => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setSpeakingMessageId(null);
+  };
+
+  const speakText = (text: string, msgId: string) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    // If currently speaking this message, toggle off
+    if (speakingMessageId === msgId) {
+      stopSpeaking();
+      return;
+    }
+
+    stopSpeaking();
+
+    const cleanText = stripMarkdown(text);
+    if (!cleanText) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = "en-US";
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    // Pick pleasant English voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice =
+      voices.find(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (v.name.includes("Natural") ||
+            v.name.includes("Google") ||
+            v.name.includes("Samantha") ||
+            v.name.includes("Daniel"))
+      ) || voices.find((v) => v.lang.startsWith("en"));
+
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    utterance.onstart = () => {
+      setSpeakingMessageId(msgId);
+    };
+
+    utterance.onend = () => {
+      setSpeakingMessageId(null);
+    };
+
+    utterance.onerror = () => {
+      setSpeakingMessageId(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Check speech recognition & synthesis capability on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const hasSupport = !!(
+      const hasSpeechRec = !!(
         window.SpeechRecognition || window.webkitSpeechRecognition
       );
-      setIsSpeechSupported(hasSupport);
+      setIsSpeechSupported(hasSpeechRec);
+      setIsTtsSupported("speechSynthesis" in window);
     }
   }, []);
+
+  // Stop TTS if modal is closed
+  useEffect(() => {
+    if (!isOpen) {
+      stopSpeaking();
+    }
+  }, [isOpen]);
 
   const sendRecordedTranscript = () => {
     const text = currentTranscriptRef.current.trim();
@@ -436,6 +517,11 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
+
+      // If user enabled auto voice reply, read the response aloud
+      if (autoVoiceReply && assistantMsg.content) {
+        speakText(assistantMsg.content, assistantMsg.id);
+      }
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
@@ -502,10 +588,38 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
           </div>
 
           <div className="flex items-center gap-1">
+            {isTtsSupported && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (speakingMessageId) {
+                    stopSpeaking();
+                  }
+                  setAutoVoiceReply((prev) => !prev);
+                }}
+                className={cn(
+                  "rounded-lg p-1.5 transition-colors cursor-pointer",
+                  autoVoiceReply
+                    ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )}
+                title={
+                  autoVoiceReply
+                    ? "Auto voice reply: ON (Click to turn off)"
+                    : "Auto voice reply: OFF (Click to read answers aloud)"
+                }
+              >
+                {autoVoiceReply ? (
+                  <Volume2 className="h-3.5 w-3.5" />
+                ) : (
+                  <VolumeX className="h-3.5 w-3.5 opacity-60" />
+                )}
+              </button>
+            )}
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
               title="Reset conversation"
             >
               <RotateCcw className="h-3.5 w-3.5" />
@@ -513,7 +627,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
               title="Close modal"
             >
               <X className="h-4 w-4" />
@@ -576,15 +690,46 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
                   )}
                 </div>
 
-                <div
-                  className={cn(
-                    "max-w-[85%] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm shadow-xs",
-                    isUser
-                      ? "bg-primary text-primary-foreground rounded-tr-xs"
-                      : "border border-border bg-card text-foreground rounded-tl-xs"
+                <div className="flex flex-col gap-1 max-w-[85%]">
+                  <div
+                    className={cn(
+                      "rounded-xl px-3.5 py-2.5 text-xs sm:text-sm shadow-xs",
+                      isUser
+                        ? "bg-primary text-primary-foreground rounded-tr-xs"
+                        : "border border-border bg-card text-foreground rounded-tl-xs"
+                    )}
+                  >
+                    <FormattedContent content={m.content} isUser={isUser} onClose={onClose} />
+                  </div>
+
+                  {/* Speaker Button for Assistant Messages */}
+                  {!isUser && isTtsSupported && (
+                    <div className="flex items-center gap-1.5 self-start pl-1">
+                      <button
+                        type="button"
+                        onClick={() => speakText(m.content, m.id)}
+                        className={cn(
+                          "inline-flex items-center gap-1 font-mono text-[10px] rounded-md px-1.5 py-0.5 transition-all duration-150 cursor-pointer select-none",
+                          speakingMessageId === m.id
+                            ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 animate-pulse font-semibold"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        )}
+                        title={speakingMessageId === m.id ? "Stop voice" : "Read answer aloud"}
+                      >
+                        {speakingMessageId === m.id ? (
+                          <>
+                            <VolumeX className="h-3 w-3" />
+                            <span>Stop voice</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="h-3 w-3 opacity-70" />
+                            <span>Listen</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   )}
-                >
-                  <FormattedContent content={m.content} isUser={isUser} onClose={onClose} />
                 </div>
               </div>
             );
