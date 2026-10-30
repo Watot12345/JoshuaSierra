@@ -9,7 +9,7 @@ import { socialLinks } from "@/data/portfolio";
 export const metadata: Metadata = {
   title: "Workspace & Gear",
   description:
-    "Workstation rig, dual-monitor setup, Linux Mint environment, and development tools used by Joshua Arncel Sierra.",
+    "Workstation rig, dual-monitor setup, Linux Mint environment, and development hardware used daily by Full-Stack Engineer Joshua Arncel Sierra.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/gear",
   },

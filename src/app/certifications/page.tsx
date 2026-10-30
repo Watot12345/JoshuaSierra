@@ -9,7 +9,7 @@ import { socialLinks } from "@/data/portfolio";
 export const metadata: Metadata = {
   title: "Certifications",
   description:
-    "Professional certifications, technical research credentials, and academic recognitions earned by Joshua Arncel Sierra.",
+    "Technical research papers, TESDA NC II certifications, and academic recognitions earned by Full-Stack Engineer Joshua Arncel Sierra.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/certifications",
   },

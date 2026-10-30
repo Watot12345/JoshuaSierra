@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Joshua Arncel Sierra",
   },
   description:
-    "Official portfolio of Joshua Arncel Sierra, a Full-Stack Software Engineer and 4th-year BSIT student based in Manila, Philippines. Building production web and mobile systems that serve real users.",
+    "Official portfolio of Joshua Arncel Sierra, a Full-Stack Software Engineer and 4th-year BSIT student in Manila. Building production web, mobile, and civic apps.",
   keywords: [
     "Joshua Arncel Sierra",
     "Joshua Sierra",
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Joshua Arncel Sierra — Full-Stack Software Engineer",
     description:
-      "Full-Stack Software Engineer and 4th-year BSIT student based in Manila, Philippines. Building production web and mobile systems that serve real users.",
+      "Official portfolio of Joshua Arncel Sierra, a Full-Stack Software Engineer and 4th-year BSIT student in Manila. Building production web, mobile, and civic apps.",
     url: SITE_URL,
     siteName: "Joshua Arncel Sierra",
     images: [
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Joshua Arncel Sierra — Full-Stack Software Engineer",
     description:
-      "Full-Stack Software Engineer and 4th-year BSIT student based in Manila, Philippines. Building production web and mobile systems that serve real users.",
+      "Official portfolio of Joshua Arncel Sierra, a Full-Stack Software Engineer and 4th-year BSIT student in Manila. Building production web, mobile, and civic apps.",
     images: ["/profile.png"],
     creator: "@joshuasierra143",
   },

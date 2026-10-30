@@ -10,7 +10,7 @@ import { socialLinks } from "@/data/portfolio";
 export const metadata: Metadata = {
   title: "Affiliations",
   description:
-    "Engineering initiatives, student chapters, and civic technology organizations affiliated with Joshua Arncel Sierra.",
+    "Civic technology initiatives, student chapters, and developer collectives affiliated with Full-Stack Software Engineer Joshua Arncel Sierra.",
   alternates: {
     canonical: "https://joshuasierra.vercel.app/affiliations",
   },

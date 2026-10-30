@@ -134,9 +134,9 @@ export function SidebarNav() {
             onClick={(e) => handleNavClick(e, "#home")}
             className="group block"
           >
-            <h1 className="font-mono text-base font-bold tracking-tight text-foreground transition-opacity group-hover:opacity-75">
+            <span className="block font-mono text-base font-bold tracking-tight text-foreground transition-opacity group-hover:opacity-75">
               {profile.fullName}
-            </h1>
+            </span>
             <p className="mt-1 font-mono text-xs text-muted-foreground">
               Full-Stack Developer
             </p>
