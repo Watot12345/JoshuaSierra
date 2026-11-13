@@ -433,6 +433,41 @@ export const projects: Project[] = [
       "Designed for accessibility: usable even on entry-level Android phones",
     ],
   },
+  {
+    id: "prj-3",
+    title: "Tenera Property Manager",
+    slug: "tenera-app",
+    category: "Mobile App",
+    shortDescription:
+      "Offline-first Flutter mobile application for property & tenant management, featuring SQLite SSOT and Firebase cloud sync.",
+    fullDescription:
+      "Tenera is an offline-first mobile application engineered with Flutter for independent landlords, boarding house operators, and apartment managers. Designed without predatory subscription walls, Tenera uses local SQLite as its Single Source of Truth (SSOT), providing full offline functionality, real-time rental ledger metrics, cash payment photo verification, and optional cloud backup via Firebase Firestore.",
+    image: "/tenera-banner.png",
+    gallery: [
+      "/tenera-banner.png",
+    ],
+    techStack: ["Flutter", "Dart", "SQLite", "Firebase", "Android"],
+    features: [
+      "100% Offline Single Source of Truth with SQLite transactions",
+      "Concept C Roof Ledger dashboard with dynamic revenue metrics",
+      "Cash payment photo proof attachment & digital reference logging",
+      "Visual room & unit status matrix (Occupied, Overdue, Vacant)",
+      "Optional cloud backup and cross-device sync with Firebase Firestore",
+    ],
+    githubUrl: "https://github.com/Watot12345/Tenera.git",
+    liveUrl: "https://watot12345.github.io/Tenera/",
+    featured: true,
+    year: 2026,
+    role: "Lead Mobile Developer & Architect",
+    duration: "Production Release",
+    challenges:
+      "Engineering an offline-first architecture with transactional consistency on SQLite while offering seamless optional cloud synchronization to Firebase without data loss or race conditions.",
+    results: [
+      "Production v1.0 Android APK released on GitHub with dedicated landing site",
+      "100% operational offline without requiring network connectivity or recurring subscription",
+      "Atomic database transactions protecting financial records and payment receipts",
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------------------

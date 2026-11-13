@@ -53,6 +53,8 @@ export const metadata: Metadata = {
     "SariSari App",
     "SoleVerse",
     "Roppets",
+    "Tenera",
+    "Tenera Property Manager",
   ],
   authors: [{ name: "Joshua Arncel Sierra", url: SITE_URL }],
   creator: "Joshua Arncel Sierra",
@@ -224,6 +226,13 @@ const jsonLdPerson = {
       operatingSystem: "Web",
       applicationCategory: "E-Commerce Sneaker Platform",
       url: "https://sole-verse-chronos-main.vercel.app/",
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "Tenera Property Manager",
+      operatingSystem: "Android",
+      applicationCategory: "Property & Tenant Management Mobile Application",
+      url: "https://watot12345.github.io/Tenera/",
     },
   ],
   sameAs: [

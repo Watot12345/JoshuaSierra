@@ -220,19 +220,21 @@ export const ALL_PROJECTS: ProjectCatalogItem[] = [
     metrics: "Automated Data Pipeline",
   },
 
-  // ── 13. Modular Cloud Ecosystem ──
+  // ── 13. Property & Tenant Management ──
   {
     id: "tenera-app",
     category: "personal",
-    badge: "Cloud Platform",
-    role: "Full-Stack Developer & Architect",
-    tag: "Full-Stack Ecosystem",
-    title: "Tenera Platform",
+    badge: "Mobile & Property Tech",
+    role: "Mobile Developer & Architect",
+    tag: "Flutter / Android · Live",
+    title: "Tenera Property Manager",
     description:
-      "Modular full-stack web and cloud service ecosystem exploring automated business workflows, multi-tenant database models, and modern UI engineering.",
+      "Offline-first mobile application built with Flutter for independent landlords and boarding house operators. Features SQLite SSOT, Firebase sync, automated rent ledgers, and cash payment proof tracking.",
+    image: "/tenera-banner.png",
+    liveUrl: "https://watot12345.github.io/Tenera/",
     githubUrl: "https://github.com/Watot12345/Tenera.git",
-    tech: ["TypeScript", "Full-Stack", "Modular Services", "Cloud Database"],
-    metrics: "Modular Services",
+    tech: ["Flutter", "Dart", "SQLite", "Firebase", "Android"],
+    metrics: "Offline-First SQLite SSOT",
   },
 
   // ── 14. Attendance & Payroll ──

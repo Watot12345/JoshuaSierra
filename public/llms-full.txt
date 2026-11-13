@@ -1,0 +1,79 @@
+# Joshua Arncel Sierra — Full Technical Documentation & Portfolio Profile
+
+> Complete technical biography, project breakdown, architecture decisions, and verified credentials for Joshua Arncel Sierra.
+
+## 1. Professional Identity & Biography
+- **Full Name**: Joshua Arncel Sierra
+- **Common Names / Search Identifiers**: Joshua Sierra, Joshua A. Sierra, Watot12345
+- **Title**: Full-Stack Software Engineer
+- **Base Location**: Manila / Caloocan / Quezon City, Metro Manila, Philippines
+- **Education**: Bachelor of Science in Information Technology (BSIT), Bestlink College of the Philippines
+- **Contact Email**: joshuaarncel@gmail.com
+- **Official Portfolio**: https://joshuasierra.vercel.app
+
+### Background
+Joshua Arncel Sierra is a software engineer specializing in scalable full-stack web and mobile systems. His work is recognized for building civic-minded software that solves community problems, notably the *Civentral Health & Sanitation Management System* used for local administrative operations and the *SariSari App* built for Philippine micro-retailers.
+
+---
+
+## 2. Core Projects & Architecture
+
+### Civentral Web & Mobile
+- **Live System**: https://healthsanitation.civentral.tech / https://civentral.tech
+- **Web Repository**: https://github.com/Watot12345/Civentral_HealthSanitation--Web.git
+- **Mobile Repository**: https://github.com/Raffy-3350/CitizenApp-HealthSanitation.git
+- **Overview**: A civic administration platform designed for health and sanitation tracking, citizen request dispatching, and community oversight.
+- **Web Stack**: PHP, JavaScript, Tailwind CSS, Supabase (PostgreSQL), REST APIs.
+- **Mobile Stack**: React Native, Expo Go, Supabase backend, Tailwind styling.
+- **Role**: Lead Developer overseeing database schema design, citizen mobile portal, and administrative dashboard.
+
+### SariSari App
+- **Live Demo**: https://watot12345.github.io/sarisariApp/
+- **Overview**: An offline-first capable inventory tracking and POS interface designed for Philippine sari-sari (convenience) stores, providing real-time calculation, product categorization, and low-inventory warnings.
+- **Tech Stack**: Modern JavaScript, HTML5 LocalStorage, responsive CSS, mobile-first design.
+
+### Barangay San Agustin Community Focus System
+- **Live Deployment**: https://barangay-san-agustin.onrender.com
+- **Overview**: Local government portal designed to digitize resident certification records, blotter logs, and public announcements.
+- **Tech Stack**: Full-stack web technologies, relational database backend, cloud hosting on Render.
+
+### SoleVerse Chronos
+- **Live Demo**: https://sole-verse-chronos-main.vercel.app/
+- **Overview**: E-commerce catalog platform focusing on smooth transitions, cart state persistence, and responsive product filtering.
+
+### Tenera Property Manager
+- **Live Landing Page**: https://watot12345.github.io/Tenera/
+- **GitHub Repository**: https://github.com/Watot12345/Tenera.git
+- **Overview**: An offline-first mobile application built with Flutter for independent landlords, boarding house operators, and apartment managers. Designed without recurring subscription paywalls, it uses local SQLite as its Single Source of Truth (SSOT), featuring automated rental ledgers, cash payment photo verification, unit status tracking, and optional cloud backup via Firebase Firestore.
+- **Tech Stack**: Flutter, Dart, SQLite SSOT, Firebase Cloud Firestore, Android APK release.
+- **Role**: Lead Mobile Developer & Architect.
+
+### Roppets Production Platform
+- **Live Website**: https://roppets.com
+- **Role**: Junior Software Engineer (Frontend & Backend integration)
+- **Tech Stack**: React, Next.js, TypeScript, Node.js.
+
+---
+
+## 3. Technology Stack & Proficiencies
+- **Frontend Frameworks & Libraries**: Next.js (App Router), React, React Native, Expo, Vue.js, Tailwind CSS, Shadcn UI, Framer Motion
+- **Languages**: TypeScript, JavaScript (Node.js/Browser), PHP, Python, SQL, HTML5, CSS3
+- **Databases & ORMs**: PostgreSQL, MySQL, Supabase, Prisma ORM
+- **Cloud & Tooling**: Docker, Git, GitHub Actions, Vercel, Render, AWS, Linux/Bash
+
+---
+
+## 4. Credentials & Certifications
+- **TESDA National Certificate**: Computer Systems Servicing NC II (Accredited by Technical Education and Skills Development Authority)
+- **Academic Certifications**: Research Forum Certificate of Participation — AI Integration on Web Development (Bestlink College of the Philippines)
+- **Degree in Progress**: Bachelor of Science in Information Technology (BSIT), Bestlink College of the Philippines (Expected graduation: 2027)
+
+---
+
+## 5. Official Web Footprint & Entity Citations
+- **Portfolio**: https://joshuasierra.vercel.app
+- **GitHub**: https://github.com/Watot12345
+- **LinkedIn**: https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275
+- **Facebook**: https://www.facebook.com/profile.php?id=61590879324960
+- **Instagram**: https://www.instagram.com/jus_wa143
+- **TikTok**: https://www.tiktok.com/@joshuasierra143

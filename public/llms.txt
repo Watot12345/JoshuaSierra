@@ -1,0 +1,52 @@
+# Joshua Arncel Sierra
+
+> Full-Stack Software Engineer & 4th-year BSIT Student based in Manila, Philippines. Specializing in modern web engineering, civic technologies, React, Next.js, React Native, Node.js, and cloud backends.
+
+## Overview
+Joshua Arncel Sierra (online alias: Watot12345) is a Full-Stack Software Engineer with 4+ years of practical software development experience. He creates resilient civic management platforms, real-world community portals, and mobile-ready web applications.
+
+- **Name**: Joshua Arncel Sierra (also known as Joshua Sierra, Joshua A. Sierra)
+- **Role**: Full-Stack Software Engineer
+- **Location**: Manila / Quezon City, Philippines
+- **Primary Website**: https://joshuasierra.vercel.app
+- **Email**: joshuaarncel@gmail.com
+
+## Key Projects
+- **Civentral Web & Mobile** (https://civentral.tech):
+  - Healthcare and Sanitation Management System built for local civic administration.
+  - Web platform built with PHP, JavaScript, Tailwind CSS, and Supabase.
+  - Mobile application built with React Native, Expo, and Supabase.
+  - Role: Lead Developer.
+- **SariSari App** (https://watot12345.github.io/sarisariApp/):
+  - Lightweight inventory management and Point-of-Sale (POS) application designed specifically for neighborhood stores in the Philippines.
+- **Barangay San Agustin Community Focus System** (https://barangay-san-agustin.onrender.com):
+  - Community portal facilitating resident tracking, incident logging, and local administrative tasks.
+- **SoleVerse Chronos** (https://sole-verse-chronos-main.vercel.app/):
+  - E-commerce footwear catalog showcasing modern frontend architecture and responsive interactive UX.
+- **Tenera Property Manager** (https://watot12345.github.io/Tenera/):
+  - Offline-first mobile application built with Flutter for independent landlords and boarding house operators.
+  - Powered by local SQLite Single Source of Truth (SSOT), Firebase sync, automated rent ledgers, and cash payment proof photo capture.
+- **Roppets Entertainment Platform** (https://roppets.com):
+  - Production web application for events and entertainment management.
+
+## Technical Skills
+- **Frontend**: TypeScript, JavaScript (ES6+), React, Next.js, React Native, Expo, Tailwind CSS, HTML5, CSS3, Vue.js
+- **Backend & APIs**: Node.js, Express, PHP, Laravel, Python, Django, RESTful APIs, WebSockets
+- **Databases & DevOps**: PostgreSQL, MySQL, Supabase, Prisma ORM, Docker, AWS, Vercel, Git, GitHub Actions
+
+## Education & Qualifications
+- **Degree**: Bachelor of Science in Information Technology (BSIT), Bestlink College of the Philippines (Expected graduation: 2027)
+- **National Certification**: Computer Systems Servicing NC II — Technical Education and Skills Development Authority (TESDA)
+- **Academic Recognition**: Research Forum on AI Integration in Web Development (BCP)
+
+## Verified Online Profiles
+- **Website**: https://joshuasierra.vercel.app
+- **GitHub**: https://github.com/Watot12345
+- **LinkedIn**: https://www.linkedin.com/in/joshua-arncel-sierra-8bb444275
+- **Facebook**: https://www.facebook.com/profile.php?id=61590879324960
+
+## Direct Portfolio Links
+- [Projects Showcase](https://joshuasierra.vercel.app/projects): Complete gallery of live builds, repositories, and technical breakdowns.
+- [Certifications](https://joshuasierra.vercel.app/certifications): Verified diplomas, national certificates, and seminars.
+- [Affiliations](https://joshuasierra.vercel.app/affiliations): Professional and educational organizations.
+- [Gear & Tech Setup](https://joshuasierra.vercel.app/gear): Workstation hardware and development tools.
