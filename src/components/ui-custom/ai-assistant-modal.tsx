@@ -225,6 +225,9 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const [isTtsSupported, setIsTtsSupported] = useState(false);
   const [autoVoiceReply, setAutoVoiceReply] = useState(false);
+  const autoVoiceReplyRef = useRef(false);
+  const activeUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const speakTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
@@ -242,7 +245,30 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       .trim();
   };
 
+  // Unlock speechSynthesis during a synchronous user gesture so async AI replies can speak
+  const unlockSpeechSynthesis = () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    try {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+        const primer = new SpeechSynthesisUtterance(" ");
+        primer.volume = 0;
+        primer.rate = 10;
+        window.speechSynthesis.speak(primer);
+      }
+    } catch {
+      // Ignore browser speech primer errors
+    }
+  };
+
   const stopSpeaking = () => {
+    if (speakTimeoutRef.current) {
+      clearTimeout(speakTimeoutRef.current);
+      speakTimeoutRef.current = null;
+    }
+    activeUtteranceRef.current = null;
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
@@ -258,45 +284,64 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       return;
     }
 
+    const wasSpeaking =
+      window.speechSynthesis.speaking || window.speechSynthesis.pending;
     stopSpeaking();
 
     const cleanText = stripMarkdown(text);
     if (!cleanText) return;
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "en-US";
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    const startUtterance = () => {
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = "en-US";
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
 
-    // Pick pleasant English voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice =
-      voices.find(
-        (v) =>
-          v.lang.startsWith("en") &&
-          (v.name.includes("Natural") ||
-            v.name.includes("Google") ||
-            v.name.includes("Samantha") ||
-            v.name.includes("Daniel"))
-      ) || voices.find((v) => v.lang.startsWith("en"));
+      // Pick pleasant English voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice =
+        voices.find(
+          (v) =>
+            v.lang.startsWith("en") &&
+            (v.name.includes("Natural") ||
+              v.name.includes("Google") ||
+              v.name.includes("Samantha") ||
+              v.name.includes("Daniel"))
+        ) || voices.find((v) => v.lang.startsWith("en"));
 
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+
+      utterance.onstart = () => {
+        setSpeakingMessageId(msgId);
+      };
+
+      utterance.onend = () => {
+        activeUtteranceRef.current = null;
+        setSpeakingMessageId(null);
+      };
+
+      utterance.onerror = () => {
+        activeUtteranceRef.current = null;
+        setSpeakingMessageId(null);
+      };
+
+      // Retain reference so Chromium/Safari does not GC the utterance mid-speech
+      activeUtteranceRef.current = utterance;
+
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      window.speechSynthesis.speak(utterance);
+    };
+
+    // Delay slightly after cancel() to avoid Chromium dropping the new utterance
+    if (wasSpeaking) {
+      speakTimeoutRef.current = setTimeout(startUtterance, 60);
+    } else {
+      startUtterance();
     }
-
-    utterance.onstart = () => {
-      setSpeakingMessageId(msgId);
-    };
-
-    utterance.onend = () => {
-      setSpeakingMessageId(null);
-    };
-
-    utterance.onerror = () => {
-      setSpeakingMessageId(null);
-    };
-
-    window.speechSynthesis.speak(utterance);
   };
 
   // Check speech recognition & synthesis capability on mount
@@ -492,6 +537,10 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
     setInput("");
     setIsLoading(true);
 
+    if (autoVoiceReplyRef.current) {
+      unlockSpeechSynthesis();
+    }
+
     try {
       const res = await fetch("/api/ai-chat", {
         method: "POST",
@@ -519,7 +568,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       setMessages((prev) => [...prev, assistantMsg]);
 
       // If user enabled auto voice reply, read the response aloud
-      if (autoVoiceReply && assistantMsg.content) {
+      if (autoVoiceReplyRef.current && assistantMsg.content) {
         speakText(assistantMsg.content, assistantMsg.id);
       }
     } catch (err) {
@@ -595,7 +644,12 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
                   if (speakingMessageId) {
                     stopSpeaking();
                   }
-                  setAutoVoiceReply((prev) => !prev);
+                  const next = !autoVoiceReply;
+                  autoVoiceReplyRef.current = next;
+                  setAutoVoiceReply(next);
+                  if (next) {
+                    unlockSpeechSynthesis();
+                  }
                 }}
                 className={cn(
                   "rounded-lg p-1.5 transition-colors cursor-pointer",
