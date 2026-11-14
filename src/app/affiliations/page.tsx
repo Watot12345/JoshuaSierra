@@ -6,6 +6,7 @@ import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { ActiveDot } from "@/components/ui-custom/active-dot";
 import { socialLinks } from "@/data/portfolio";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Affiliations",
@@ -107,6 +108,12 @@ const AFFILIATIONS: AffiliationItem[] = [
 export default function AffiliationsPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Affiliations", path: "/affiliations" },
+        ]}
+      />
       <AnimatedBackground />
 
       {/* Navigation (Fixed Left Sidebar on Desktop lg+, Sticky Header & Slide Drawer on Mobile) */}

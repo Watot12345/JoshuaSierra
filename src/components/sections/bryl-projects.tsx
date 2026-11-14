@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
 import { ActiveDot } from "@/components/ui-custom/active-dot";
+import { LiveSitePreview } from "@/components/ui-custom/live-site-preview";
 import { cn } from "@/lib/utils";
 
 interface ProjectItem {
@@ -289,24 +290,13 @@ export function BrylProjects() {
               )}
             </div>
 
-            {/* Media Banner Thumbnail */}
-            <div data-sound="tick" className="overflow-hidden rounded-xl border border-border bg-muted aspect-[16/9] cursor-pointer group/img">
-              {project.image ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-105"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="flex h-full w-full flex-col items-center justify-center p-3 font-mono text-xs">
-                  <span className="text-xs font-semibold text-foreground text-center">
-                    {project.title}
-                  </span>
-                </div>
-              )}
-            </div>
+            {/* Interactive Live Site Preview (with Image toggle fallback) */}
+            <LiveSitePreview
+              title={project.title}
+              liveUrl={project.liveUrl}
+              image={project.image}
+              defaultMode="live"
+            />
 
             {/* Title & Description */}
             <div className="mt-4">

@@ -3,6 +3,7 @@ import { AnimatedBackground } from "@/components/ui-custom/animated-background";
 import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { ProjectsCatalog } from "@/components/sections/projects-catalog";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Projects", path: "/projects" },
+        ]}
+      />
       <AnimatedBackground />
 
       {/* Navigation */}

@@ -15,6 +15,7 @@ import {
 import { ALL_PROJECTS, type ProjectCatalogItem } from "@/data/projects-data";
 import { TechIconBadgeList } from "@/components/ui-custom/tech-icon-badge";
 import { ActiveDot } from "@/components/ui-custom/active-dot";
+import { LiveSitePreview } from "@/components/ui-custom/live-site-preview";
 import { cn } from "@/lib/utils";
 
 type CategoryFilter = "all" | "gov" | "personal" | "client" | "school";
@@ -225,17 +226,14 @@ export function ProjectsCatalog() {
                   )}
                 </div>
 
-                {/* Media thumbnail */}
-                <div data-sound="tick" className="overflow-hidden rounded-xl border border-border bg-muted aspect-[16/9] cursor-pointer">
-                  {project.image ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
+                {/* Interactive live site preview (with image fallback toggle) */}
+                <LiveSitePreview
+                  title={project.title}
+                  liveUrl={project.liveUrl}
+                  image={project.image}
+                  defaultMode="live"
+                  viewportClassName="aspect-[16/9]"
+                  fallbackContent={
                     <div className="flex h-full w-full flex-col items-center justify-center p-3 font-mono text-xs">
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card shadow-xs">
                         {project.category === "personal" ? (
@@ -250,8 +248,8 @@ export function ProjectsCatalog() {
                         {project.title}
                       </span>
                     </div>
-                  )}
-                </div>
+                  }
+                />
 
                 {/* Title & Description */}
                 <div className="mt-3.5">

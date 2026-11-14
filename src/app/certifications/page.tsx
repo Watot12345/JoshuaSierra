@@ -5,6 +5,7 @@ import { AnimatedBackground } from "@/components/ui-custom/animated-background";
 import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { socialLinks } from "@/data/portfolio";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Certifications",
@@ -86,6 +87,12 @@ const CERTIFICATIONS: CertificationItem[] = [
 export default function CertificationsPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Certifications", path: "/certifications" },
+        ]}
+      />
       <AnimatedBackground />
 
       {/* Navigation (Fixed Left Sidebar on Desktop lg+, Sticky Header & Slide Drawer on Mobile) */}

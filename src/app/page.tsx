@@ -8,6 +8,7 @@ import { BrylStack } from "@/components/sections/bryl-stack";
 import { BrylEducation } from "@/components/sections/bryl-education";
 import { GithubContributions } from "@/components/sections/github-contributions";
 import { BrylTestimonials } from "@/components/sections/bryl-testimonials";
+import { BrylFaq } from "@/components/sections/bryl-faq";
 import { BrylContact } from "@/components/sections/bryl-contact";
 
 /**
@@ -33,6 +34,7 @@ export default function Home() {
           <BrylEducation />
           <GithubContributions />
           <BrylTestimonials />
+          <BrylFaq />
           <BrylContact />
         </main>
       </div>

@@ -51,3 +51,5 @@ Allow: /
 
 # Sitemaps & Machine-Readable AI Context
 Sitemap: https://joshuasierra.vercel.app/sitemap.xml
+# llms.txt: https://joshuasierra.vercel.app/llms.txt
+# llms-full.txt: https://joshuasierra.vercel.app/llms-full.txt

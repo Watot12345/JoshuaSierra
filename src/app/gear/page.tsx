@@ -5,6 +5,7 @@ import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { BackToTop } from "@/components/layouts/back-to-top";
 import { BrylGear } from "@/components/sections/bryl-gear";
 import { socialLinks } from "@/data/portfolio";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Workspace & Gear",
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
 export default function GearPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Workspace & Gear", path: "/gear" },
+        ]}
+      />
       <AnimatedBackground />
 
       {/* Navigation (Fixed Left Sidebar on Desktop lg+, Sticky Header & Slide Drawer on Mobile) */}
