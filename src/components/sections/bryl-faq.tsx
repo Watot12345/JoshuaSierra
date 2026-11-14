@@ -50,7 +50,6 @@ export function BrylFaq() {
         {FAQ_ITEMS.map((item) => (
           <details
             key={item.question}
-            open
             className="group rounded-xl border border-border bg-card px-4 py-3.5 transition-colors hover:border-foreground/30"
           >
             <summary className="cursor-pointer list-none font-mono text-xs sm:text-sm font-semibold text-foreground flex items-center justify-between gap-3">
