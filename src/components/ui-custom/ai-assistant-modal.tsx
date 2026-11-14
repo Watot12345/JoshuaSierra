@@ -228,6 +228,9 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
   const autoVoiceReplyRef = useRef(false);
   const activeUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const speakTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
+  const ttsAbortRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
@@ -245,28 +248,55 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       .trim();
   };
 
-  // Unlock speechSynthesis during a synchronous user gesture so async AI replies can speak
+  // Unlock HTML5 Audio & speechSynthesis during a synchronous user gesture
   const unlockSpeechSynthesis = () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (typeof window === "undefined") return;
     try {
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
+      if (!audioRef.current) {
+        audioRef.current = new Audio();
       }
-      if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
-        const primer = new SpeechSynthesisUtterance(" ");
-        primer.volume = 0;
-        primer.rate = 10;
-        window.speechSynthesis.speak(primer);
+      // Prime audio element with a 1-sample silent WAV so async play() is allowed
+      const audio = audioRef.current;
+      if (audio.paused && !audio.src) {
+        audio.src =
+          "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+        audio.volume = 0;
+        const p = audio.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(() => {});
+        }
       }
     } catch {
-      // Ignore browser speech primer errors
+      // Ignore audio primer errors
+    }
+
+    if ("speechSynthesis" in window) {
+      try {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+      } catch {
+        // Ignore browser speech primer errors
+      }
     }
   };
 
   const stopSpeaking = () => {
+    if (ttsAbortRef.current) {
+      ttsAbortRef.current.abort();
+      ttsAbortRef.current = null;
+    }
     if (speakTimeoutRef.current) {
       clearTimeout(speakTimeoutRef.current);
       speakTimeoutRef.current = null;
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current);
+      audioUrlRef.current = null;
     }
     activeUtteranceRef.current = null;
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -275,8 +305,55 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
     setSpeakingMessageId(null);
   };
 
-  const speakText = (text: string, msgId: string) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const speakWithBrowserFallback = (cleanText: string, msgId: string) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setSpeakingMessageId(null);
+      return;
+    }
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) {
+      setSpeakingMessageId(null);
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = "en-US";
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    const preferredVoice =
+      voices.find(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (v.name.includes("Natural") ||
+            v.name.includes("Google") ||
+            v.name.includes("Samantha") ||
+            v.name.includes("Daniel"))
+      ) || voices.find((v) => v.lang.startsWith("en"));
+
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    utterance.onstart = () => setSpeakingMessageId(msgId);
+    utterance.onend = () => {
+      activeUtteranceRef.current = null;
+      setSpeakingMessageId(null);
+    };
+    utterance.onerror = () => {
+      activeUtteranceRef.current = null;
+      setSpeakingMessageId(null);
+    };
+
+    activeUtteranceRef.current = utterance;
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const speakText = async (text: string, msgId: string) => {
+    if (typeof window === "undefined") return;
 
     // If currently speaking this message, toggle off
     if (speakingMessageId === msgId) {
@@ -284,63 +361,62 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
       return;
     }
 
-    const wasSpeaking =
-      window.speechSynthesis.speaking || window.speechSynthesis.pending;
     stopSpeaking();
 
     const cleanText = stripMarkdown(text);
     if (!cleanText) return;
 
-    const startUtterance = () => {
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = "en-US";
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
+    setSpeakingMessageId(msgId);
 
-      // Pick pleasant English voice if available
-      const voices = window.speechSynthesis.getVoices();
-      const preferredVoice =
-        voices.find(
-          (v) =>
-            v.lang.startsWith("en") &&
-            (v.name.includes("Natural") ||
-              v.name.includes("Google") ||
-              v.name.includes("Samantha") ||
-              v.name.includes("Daniel"))
-        ) || voices.find((v) => v.lang.startsWith("en"));
+    const controller = new AbortController();
+    ttsAbortRef.current = controller;
 
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+    try {
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: cleanText }),
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        throw new Error(`TTS HTTP ${res.status}`);
       }
 
-      utterance.onstart = () => {
-        setSpeakingMessageId(msgId);
-      };
+      const blob = await res.blob();
+      if (controller.signal.aborted) return;
 
-      utterance.onend = () => {
-        activeUtteranceRef.current = null;
+      const objectUrl = URL.createObjectURL(blob);
+      audioUrlRef.current = objectUrl;
+
+      if (!audioRef.current) {
+        audioRef.current = new Audio();
+      }
+      const audio = audioRef.current;
+      audio.volume = 1;
+      audio.src = objectUrl;
+
+      audio.onended = () => {
+        if (audioUrlRef.current === objectUrl) {
+          URL.revokeObjectURL(objectUrl);
+          audioUrlRef.current = null;
+        }
         setSpeakingMessageId(null);
       };
 
-      utterance.onerror = () => {
-        activeUtteranceRef.current = null;
+      audio.onerror = () => {
+        if (audioUrlRef.current === objectUrl) {
+          URL.revokeObjectURL(objectUrl);
+          audioUrlRef.current = null;
+        }
         setSpeakingMessageId(null);
       };
 
-      // Retain reference so Chromium/Safari does not GC the utterance mid-speech
-      activeUtteranceRef.current = utterance;
-
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
-      }
-      window.speechSynthesis.speak(utterance);
-    };
-
-    // Delay slightly after cancel() to avoid Chromium dropping the new utterance
-    if (wasSpeaking) {
-      speakTimeoutRef.current = setTimeout(startUtterance, 60);
-    } else {
-      startUtterance();
+      await audio.play();
+    } catch (err) {
+      if ((err as Error)?.name === "AbortError") return;
+      // Fallback to browser Web Speech API if available with voices
+      speakWithBrowserFallback(cleanText, msgId);
     }
   };
 
@@ -351,7 +427,7 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
         window.SpeechRecognition || window.webkitSpeechRecognition
       );
       setIsSpeechSupported(hasSpeechRec);
-      setIsTtsSupported("speechSynthesis" in window);
+      setIsTtsSupported(true);
     }
   }, []);
 
@@ -799,9 +875,13 @@ export function AiAssistantModal({ isOpen, onClose }: AiAssistantModalProps) {
                   className="h-full w-full object-contain"
                 />
               </div>
-              <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-xs text-muted-foreground shadow-xs">
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
-                <span className="font-mono text-xs">Joshua is typing...</span>
+              <div
+                aria-label="Joshua is typing"
+                className="flex items-center gap-1 rounded-xl rounded-tl-xs border border-border bg-card px-4 py-3 shadow-xs"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.3s]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.15s]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce" />
               </div>
             </div>
           )}
