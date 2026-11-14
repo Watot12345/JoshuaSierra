@@ -279,6 +279,11 @@ const jsonLdWebsite = {
   publisher: {
     "@id": `${SITE_URL}/#person`,
   },
+  copyrightHolder: {
+    "@id": `${SITE_URL}/#person`,
+  },
+  copyrightYear: 2026,
+  copyrightNotice: "© 2026 Joshua Arncel Sierra. All rights reserved.",
 };
 
 const jsonLdSiteNavigation = {

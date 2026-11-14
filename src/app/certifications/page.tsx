@@ -243,7 +243,7 @@ export default function CertificationsPage() {
           {/* Footer */}
           <footer className="mt-14 border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
             <div className="flex items-center gap-2">
-              <span>&copy; {new Date().getFullYear()} Joshua Sierra</span>
+              <span>&copy; {new Date().getFullYear()} Joshua Arncel Sierra. All rights reserved.</span>
               <span>·</span>
               <Link
                 href="/"

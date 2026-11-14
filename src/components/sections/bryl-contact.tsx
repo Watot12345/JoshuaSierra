@@ -194,7 +194,7 @@ export function BrylContact() {
 
       {/* Footer */}
       <footer className="mt-14 border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
-        <span>&copy; {new Date().getFullYear()} Joshua Sierra</span>
+        <span>&copy; {new Date().getFullYear()} Joshua Arncel Sierra. All rights reserved.</span>
 
         {/* Social Icons Strip in Footer */}
         <div className="flex items-center gap-2">
