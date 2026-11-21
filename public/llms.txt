@@ -1,13 +1,15 @@
-# Joshua Arncel Sierra
+# Joshua Sierra (JoshSie / Joshua Arncel Sierra)
 
 > Full-Stack Software Engineer & 4th-year BSIT Student based in Manila, Philippines. Specializing in modern web engineering, civic technologies, React, Next.js, React Native, Node.js, and cloud backends.
 
 ## Overview
-Joshua Arncel Sierra (online alias: Watot12345) is a Full-Stack Software Engineer with 4+ years of practical software development experience. He creates resilient civic management platforms, real-world community portals, and mobile-ready web applications.
+Joshua Sierra (search aliases: JoshSie, Joshua Arncel Sierra, Watot12345) is a Full-Stack Software Engineer with 4+ years of practical software development experience. He creates resilient civic management platforms, real-world community portals, and mobile-ready web applications.
 
-- **Name**: Joshua Arncel Sierra (also known as Joshua Sierra, Joshua A. Sierra)
+- **Name**: Joshua Sierra (JoshSie)
+- **Legal / Full Name**: Joshua Arncel Sierra
+- **Aliases**: JoshSie, Josh Sie, Joshua Sierra, Joshua A. Sierra, Watot12345
 - **Role**: Full-Stack Software Engineer
-- **Location**: Manila / Quezon City, Philippines
+- **Location**: Manila / Quezon City / San Jose del Monte, Philippines
 - **Primary Website**: https://joshuasierra.vercel.app
 - **Email**: joshuaarncel@gmail.com
 
