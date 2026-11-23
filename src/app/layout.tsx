@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   title: {
-    default: "Joshua Sierra (JoshSie) — Full-Stack Software Engineer",
-    template: "%s | Joshua Sierra (JoshSie)",
+    default: "Joshua Sierra — Full-Stack Software Engineer",
+    template: "%s | Joshua Sierra",
   },
   description:
-    "Portfolio of Joshua Sierra (JoshSie / Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
+    "Portfolio of Joshua Sierra (Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
   keywords: [
     "JoshSie",
     "Josh Sie",
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     "Tenera",
     "Tenera Property Manager",
   ],
-  authors: [{ name: "Joshua Sierra (JoshSie)", url: SITE_URL }],
-  creator: "Joshua Sierra (JoshSie)",
+  authors: [{ name: "Joshua Sierra", url: SITE_URL }],
+  creator: "Joshua Sierra",
   publisher: "Joshua Sierra",
   formatDetection: {
     email: false,
@@ -94,17 +94,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Joshua Sierra (JoshSie) — Full-Stack Software Engineer",
+    title: "Joshua Sierra — Full-Stack Software Engineer",
     description:
-      "Portfolio of Joshua Sierra (JoshSie / Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
+      "Portfolio of Joshua Sierra (Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
     url: SITE_URL,
-    siteName: "Joshua Sierra (JoshSie)",
+    siteName: "Joshua Sierra",
     images: [
       {
         url: "/profile.png",
         width: 800,
         height: 800,
-        alt: "Joshua Sierra (JoshSie) — Full-Stack Software Engineer",
+        alt: "Joshua Sierra — Full-Stack Software Engineer",
       },
     ],
     locale: "en_US",
@@ -112,9 +112,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joshua Sierra (JoshSie) — Full-Stack Software Engineer",
+    title: "Joshua Sierra — Full-Stack Software Engineer",
     description:
-      "Portfolio of Joshua Sierra (JoshSie / Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
+      "Portfolio of Joshua Sierra (Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
     images: ["/profile.png"],
     creator: "@joshuasierra143",
   },
