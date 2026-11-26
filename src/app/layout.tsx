@@ -29,10 +29,6 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Joshua Sierra (Joshua Arncel Sierra), a Full-Stack Software Engineer and BSIT student in Manila, Philippines. Building Civentral, Tenera, SariSari App, and civic platforms.",
   keywords: [
-    "JoshSie",
-    "Josh Sie",
-    "JoshSie Developer",
-    "JoshSie Portfolio",
     "Joshua Sierra",
     "Joshua Sierra Developer",
     "Joshua Sierra Portfolio",
@@ -132,13 +128,10 @@ const jsonLdPerson = {
   "@id": `${SITE_URL}/#person`,
   name: "Joshua Sierra",
   alternateName: [
-    "JoshSie",
-    "Josh Sie",
     "Joshua Arncel Sierra",
     "Joshua A. Sierra",
     "Joshua A Sierra",
     "Watot12345",
-    "JoshSie Developer",
     "Joshua Sierra Full-Stack Software Engineer",
     "Joshua Sierra Developer",
   ],

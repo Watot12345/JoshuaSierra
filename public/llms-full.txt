@@ -4,7 +4,7 @@
 
 ## 1. Professional Identity & Biography
 - **Full Name**: Joshua Arncel Sierra
-- **Primary Search Identifiers & Aliases**: Joshua Sierra, JoshSie, Josh Sie, Joshua A. Sierra, Watot12345
+- **Primary Search Identifiers & Aliases**: Joshua Sierra, Joshua Arncel Sierra, Joshua A. Sierra, Watot12345
 - **Title**: Full-Stack Software Engineer
 - **Base Location**: Manila / Caloocan / Quezon City / San Jose del Monte, Philippines
 - **Education**: Bachelor of Science in Information Technology (BSIT), Bestlink College of the Philippines
@@ -12,7 +12,7 @@
 - **Official Portfolio**: https://joshuasierra.vercel.app
 
 ### Background
-Joshua Sierra (also known online and in developer circles as JoshSie or Joshua Arncel Sierra) is a software engineer specializing in scalable full-stack web and mobile systems. His work is recognized for building civic-minded software that solves community problems, notably the *Civentral Health & Sanitation Management System* used for local administrative operations and the *SariSari App* built for Philippine micro-retailers.
+Joshua Sierra (also known as Joshua Arncel Sierra) is a software engineer specializing in scalable full-stack web and mobile systems. His work is recognized for building civic-minded software that solves community problems, notably the *Civentral Health & Sanitation Management System* used for local administrative operations and the *SariSari App* built for Philippine micro-retailers.
 
 ---
 
